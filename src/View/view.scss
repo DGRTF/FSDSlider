@@ -1,0 +1,20 @@
+.slider-view
+{
+    &-horizontal
+    {
+        width: 150px;
+        // display: inline-block;
+        position: absolute;
+        text-align: center;
+        top: 20px;
+    }
+
+    &-vertical
+    {
+        width: 150px;
+        // display: inline-block;
+        position: absolute;
+        text-align: center;
+        left: 20px;
+    }
+}
