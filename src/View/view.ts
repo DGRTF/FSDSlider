@@ -1,51 +1,55 @@
-import { IModelObserver } from "../Model/model";
-import { IView, IControlObserverCoordinate } from "../Control/control";
+import { IModelObserver } from '../Model/model';
+import { IControlObserverCoordinate } from '../Control/control';
 
 
-
+export interface IView {
+  GetValue(selectValue: string): void;
+  ShowView(): void;
+  HiddenView(): void;
+}
 
 export class View implements IView, IModelObserver, IControlObserverCoordinate {
-    private selectValueElement: HTMLElement;
-    private parentElement: HTMLElement;
-    private currentMargin: number;
-    private orientation: boolean;
+  private selectValueElement: HTMLElement;
 
-    constructor(parentElement: HTMLElement, orientation: boolean = true) {
-        this.orientation = orientation;
-        this.parentElement = parentElement;
-        this.init();
-    }
+  private parentElement: HTMLElement;
 
-    private init() {
-        // здесь создаётся див, потому что он может центрировать текст в отличие от инпута
-        this.selectValueElement = document.createElement("div");
-        if (this.orientation)
-            this.selectValueElement.className += "slider-view-horizontal";
-        else
-            this.selectValueElement.className += "slider-view-vertical"
-        this.parentElement.appendChild(this.selectValueElement);
-    }
+  private currentMargin: number;
 
-    GetValue(selectValue: string) {
-        this.selectValueElement.innerText = selectValue;
-    }
+  private orientation: boolean;
 
-    SetCoordinate(coordinate: number) {
-        if (this.orientation) {
-            this.currentMargin = coordinate - this.selectValueElement.offsetWidth / 2;
-            this.selectValueElement.style.left = String(this.currentMargin) + "px";
-        }
-        else {
-            this.currentMargin = coordinate - this.selectValueElement.offsetHeight / 2;
-            this.selectValueElement.style.top = String(this.currentMargin) + "px";
-        }
-    }
+  constructor(parentElement: HTMLElement, orientation: boolean = true) {
+    this.orientation = orientation;
+    this.parentElement = parentElement;
+    this.init();
+  }
 
-    HiddenView() {
-        this.selectValueElement.hidden = true;
-    }
+  private init() {
+    // здесь создаётся див, потому что он может центрировать текст в отличие от инпут
+    this.selectValueElement = document.createElement('div');
+    if (this.orientation) this.selectValueElement.className += 'slider-view-horizontal';
+    else this.selectValueElement.className += 'slider-view-vertical';
+    this.parentElement.appendChild(this.selectValueElement);
+  }
 
-    ShowView() {
-        this.selectValueElement.hidden = false;
+  GetValue(selectValue: string) {
+    this.selectValueElement.innerText = selectValue;
+  }
+
+  HiddenView() {
+    this.selectValueElement.hidden = true;
+  }
+
+  ShowView() {
+    this.selectValueElement.hidden = false;
+  }
+
+  SetCoordinatePercent(coordinatePercent: number) {
+    if (this.orientation) {
+      this.currentMargin = this.parentElement.offsetWidth / 100 * coordinatePercent - this.selectValueElement.offsetWidth / 2;
+      this.selectValueElement.style.left = `${this.currentMargin}px`;
+    } else {
+      this.currentMargin = this.parentElement.offsetHeight / 100 * coordinatePercent - this.selectValueElement.offsetHeight / 2;
+      this.selectValueElement.style.top = `${this.currentMargin}px`;
     }
+  }
 }

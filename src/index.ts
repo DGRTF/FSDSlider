@@ -1,54 +1,134 @@
-import { ModelNumber } from "./Model/model";
-import { ControlX, Control, ControlY } from "./Control/control";
-import { View } from "./View/view";
+import { ModelNumber, IModel } from './Model/model';
+import { ControlFacade } from './Control/controlFacade';
+import { View, IView } from './View/view';
 
-import "./View/view.scss";
-import "./index.scss";
+import './View/view.scss';
+import './index.scss';
+import './Control/control.scss';
 
-let parentElementPlugin = <HTMLElement>document.querySelector(".parent");
-let parentElementPluginY = <HTMLElement>document.querySelector(".parentY");
-function Init({ parentElement, minValue = 0, maxValue = 100, orientation = true, quantityHandle = 1 }:
-    { parentElement: HTMLElement, minValue?: number, maxValue?: number, orientation?: boolean, quantityHandle?: number }) {
+const parentElementPlugin = <HTMLElement>document.querySelector('.parent');
+const parentElementPluginY = <HTMLElement>document.querySelector('.parentY');
 
-    let modelNumber = new ModelNumber(minValue, maxValue);
 
-    let view = new View(parentElement, orientation);
-    let controlOne;
-    let control = new Control(parentElement, orientation);
+(function ($) {
 
-    if (orientation) {
-        controlOne = new ControlX(parentElement, modelNumber);
+  class Methods {
+
+    private modelArr: IModel[];
+
+    private viewArr: IView[];
+
+    private controlFacade: ControlFacade;
+
+    Initialize(sliderOb:
+      {
+        parentElement: HTMLElement, minValue?: number, maxValue?: number,
+        orientation?: boolean, range?: boolean
+      }) {
+
+      if (sliderOb.minValue === null || sliderOb.minValue === undefined) {
+        sliderOb.minValue = 0;
+      }
+
+      if (sliderOb.maxValue === null || sliderOb.maxValue === undefined) {
+        sliderOb.maxValue = 100;
+      }
+
+      if (sliderOb.orientation === null || sliderOb.orientation === undefined) {
+        sliderOb.orientation = true;
+      }
+
+      if (sliderOb.range === null || sliderOb.range === undefined) {
+        sliderOb.range = false;
+      }
+
+      this.controlFacade = new ControlFacade(sliderOb.parentElement, sliderOb.orientation, sliderOb.range)
+
+      const modelNumber = new ModelNumber(sliderOb.minValue, sliderOb.maxValue);
+
+      const view = new View(sliderOb.parentElement, sliderOb.orientation);
+
+      this.controlFacade.AddObserverHandle(view, 0);
+      this.controlFacade.AddObserverHandle(modelNumber, 0);
+      modelNumber.AddObserver(view);
+
+      if (sliderOb.range) {
+        const modelNumber1 = new ModelNumber(sliderOb.minValue, sliderOb.maxValue);
+
+        const view1 = new View(sliderOb.parentElement, sliderOb.orientation);
+
+        this.controlFacade.AddObserverHandle(view1, 1);
+        this.controlFacade.AddObserverHandle(modelNumber1, 1);
+        modelNumber1.AddObserver(view1);
+
+        this.modelArr = [modelNumber, modelNumber1];
+        this.viewArr = [view, view1];
+      }
+      else {
+        this.modelArr = [modelNumber];
+        this.viewArr = [view];
+      }
+
+      this.SetValuePercent(20, 0);
+      this.SetValuePercent(80, 1);
     }
-    else {
-        controlOne = new ControlY(parentElement, modelNumber);
+
+    ShowValue(numb: number) {
+      if (numb < this.viewArr.length && numb >= 0) {
+        this.viewArr[numb].ShowView();
+      }
     }
 
-    controlOne.AddObserver(view);
-    modelNumber.AddObserver(view);
-    view.HiddenView();
-    view.ShowView();
-    // controlOne.SetCurrentMarginPercent(50);
-    // controlOne.SetMinMargin(10);
-
-    let modelNumber1 = new ModelNumber(minValue, maxValue);
-
-    let view1 = new View(parentElement, orientation);
-
-    let controlOne1;
-    if (orientation) {
-        controlOne1 = new ControlX(parentElement, modelNumber1);
+    HiddenValue(numb: number) {
+      if (numb < this.viewArr.length && numb >= 0) {
+        this.viewArr[numb].HiddenView();
+      }
     }
-    else {
-        controlOne1 = new ControlY(parentElement, modelNumber1);
+
+    SetValuePercent(percent: number, numb: number) {
+      this.controlFacade.SetCurrentMarginPercent(percent, numb);
     }
-    controlOne1.AddObserver(view1);
-    modelNumber1.AddObserver(view1);
-    view1.HiddenView();
-    view1.ShowView();
-    // controlOne1.SetCurrentMarginPercent(10);
-}
 
-Init({ parentElement: parentElementPlugin, minValue: -150, maxValue: 150 });
+    SetValue(selectValue: number, numb: number) {
+      if (numb < this.modelArr.length && numb >= 0) {
+        let percent = this.modelArr[numb].PercentInValue(selectValue);
+        this.controlFacade.SetCurrentMarginPercent(percent, numb);
+      }
+    }
+  }
 
-Init({ parentElement: parentElementPluginY, minValue: -150, maxValue: 150, orientation: false });
+  let methods = new Methods();
 
+  return $.fn.RangeSliderInit = function (method: any, ...params: any[]) {
+    if ((methods as any)[method]) {
+      return (methods as any)[method].call(methods, ...params);
+    } else if (typeof method === 'object' || !method) {
+      return methods.Initialize.call(methods, method);
+    } else {
+      $.error('Метод с именем ' + method + ' не существует для jQuery.tooltip');
+    }
+  }
+
+}(jQuery));
+
+
+
+$('.parent').RangeSliderInit({
+  parentElement: parentElementPlugin, minValue: -100, maxValue: 100, range: true
+});
+
+$('.parent').RangeSliderInit("HiddenValue", 1);
+$('.parent').RangeSliderInit("HiddenValue", 0);
+
+$('.parent').RangeSliderInit("ShowValue", 0);
+$('.parent').RangeSliderInit("ShowValue", 1);
+
+$('.parent').RangeSliderInit("SetValuePercent", 60, 1);
+
+$('.parent').RangeSliderInit("SetValue", -10, 1);
+
+
+
+$('.parentY').RangeSliderInit({
+  parentElement: parentElementPluginY, minValue: -100, maxValue: 100, orientation: false, range: false
+});
