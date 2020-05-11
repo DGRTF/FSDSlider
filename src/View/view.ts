@@ -24,7 +24,7 @@ export class View implements IView, IModelObserver, IControlObserverCoordinate {
   }
 
   private init() {
-    // здесь создаётся див, потому что он может центрировать текст в отличие от инпут
+    // здесь создаётся див, потому что он может центрировать текст в отличие от input
     this.selectValueElement = document.createElement('div');
     if (this.orientation) this.selectValueElement.className += 'slider-view-horizontal';
     else this.selectValueElement.className += 'slider-view-vertical';
@@ -48,7 +48,7 @@ export class View implements IView, IModelObserver, IControlObserverCoordinate {
       this.currentMargin = this.parentElement.offsetWidth / 100 * coordinatePercent - this.selectValueElement.offsetWidth / 2;
       this.selectValueElement.style.left = `${this.currentMargin}px`;
     } else {
-      this.currentMargin = this.parentElement.offsetHeight / 100 * coordinatePercent - this.selectValueElement.offsetHeight / 2;
+      this.currentMargin = this.parentElement.offsetHeight / 100 * (100 - coordinatePercent) - this.selectValueElement.offsetHeight / 2;
       this.selectValueElement.style.top = `${this.currentMargin}px`;
     }
   }

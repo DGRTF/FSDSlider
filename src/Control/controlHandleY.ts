@@ -1,4 +1,4 @@
-import {IHandle, IControlObservable, IControlObserverCoordinate, IControlMax, IControlMin} from "./control";
+import { IHandle, IControlObservable, IControlObserverCoordinate, IControlMax, IControlMin } from "./control";
 
 
 
@@ -65,11 +65,11 @@ export class HandleY implements IControlObservable, IHandle, IControlMin, IContr
     this.currentMargin = this.handleY - this.mouseY + event.pageY;
     this.currentMargin -= this.parentElement.getBoundingClientRect().top;
     this.maxSpace = this.parentElement.offsetHeight;
-    if (this.currentMargin <= this.maxSpace
+    if (this.currentMargin <= this.maxSpace - this.handle.offsetHeight / 2
       && this.currentMargin >= 0 - this.handle.offsetHeight / 2) {
       if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
         this.handle.style.top = `${this.currentMargin}px`;
-        this.setSelectValue = this.currentMargin + this.handle.offsetHeight / 2;
+        this.setSelectValue = this.parentElement.offsetHeight - this.currentMargin - this.handle.offsetHeight / 2;
         this.setSelectValue = (this.setSelectValue / this.maxSpace) * 100;
         this.Notify();
       }
@@ -82,7 +82,7 @@ export class HandleY implements IControlObservable, IHandle, IControlMin, IContr
   SetCurrentMarginPercent(percent: number) {
     if (percent <= 100 && percent >= 0) {
       this.maxSpace = this.parentElement.offsetHeight;
-      this.currentMargin = (this.maxSpace * percent) / 100 - this.handle.offsetHeight / 2;
+      this.currentMargin = (this.maxSpace * (100 - percent)) / 100 - this.handle.offsetHeight / 2;
       if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
         this.setSelectValue = percent;
         this.handle.style.top = `${this.currentMargin}px`;
@@ -91,27 +91,13 @@ export class HandleY implements IControlObservable, IHandle, IControlMin, IContr
     }
   }
 
-  // SetCurrentMarginPercent111111111(percent: number) {
-  //   if (percent <= 100 && percent >= 0) {
-  //     this.maxSpace = this.parentElement.offsetWidth;
-  //     this.currentMargin = (this.maxSpace * percent) / 100 - this.handle.offsetWidth / 2;
-  //     if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
-  //       this.setSelectValue = percent;
-  //       this.handle.style.left = `${this.currentMargin}px`;
-  //       this.Notify();
-  //     }
-  //   }
-  // }
-
-
   SetMinMargin(minMargin: number) {
-    this.minMargin = this.parentElement.offsetHeight * minMargin / 100 - this.handle.offsetHeight / 2;
+    this.minMargin = this.parentElement.offsetHeight * (100 - minMargin) / 100 - this.handle.offsetHeight / 2;
   }
 
   SetMaxMargin(maxMargin: number) {
-    this.maxMargin = this.parentElement.offsetHeight * maxMargin / 100 - this.handle.offsetHeight / 2;
+    this.maxMargin = this.parentElement.offsetHeight * (100 - maxMargin) / 100 - this.handle.offsetHeight / 2;
   }
-
 
   AddObserver(controlObserver: IControlObserverCoordinate) {
     this.observer.push(controlObserver);
@@ -135,27 +121,27 @@ export class HandleY implements IControlObservable, IHandle, IControlMin, IContr
 
 
   //get values for tests
-    GetMinMargin(): number {
-      return this.minMargin;
-    }
-  
-    GetMaxMargin(): number {
-      return this.maxMargin;
-    }
-  
-    GetHandleStyleTop(): string {
-      return this.handle.style.top;
-    }
-  
-    GetHandleOffsetHeight(): number {
-      return this.handle.offsetHeight;
-    }
-  
-    GetObserver(): IControlObserverCoordinate[] {
-      let observer: IControlObserverCoordinate[] = [];
-      this.observer.forEach((el, index) => {
-        observer[index] = el;
-      });
-      return observer;
-    }
+  GetMinMargin(): number {
+    return this.minMargin;
+  }
+
+  GetMaxMargin(): number {
+    return this.maxMargin;
+  }
+
+  GetHandleStyleTop(): string {
+    return this.handle.style.top;
+  }
+
+  GetHandleOffsetHeight(): number {
+    return this.handle.offsetHeight;
+  }
+
+  GetObserver(): IControlObserverCoordinate[] {
+    let observer: IControlObserverCoordinate[] = [];
+    this.observer.forEach((el, index) => {
+      observer[index] = el;
+    });
+    return observer;
+  }
 }

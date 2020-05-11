@@ -6,7 +6,7 @@ export class MinMargin implements IControlObserverCoordinate {
     this.minValue = minValue;
   }
 
-  minValue: IControlMin[];
+  private minValue: IControlMin[];
 
   SetCoordinatePercent(coordinatePercent: number) {
     if (this.minValue !== null) {

@@ -48,18 +48,35 @@ export class Control {
   private Init() {
     this.trackElement = document.createElement('div');
     this.parentElement.appendChild(this.trackElement);
-    const progressFirst = new ProgressFirst(this.trackElement, this.orientation);
+
+    let progressFirst;
+    if (this.handleArr.length === 2) {
+      progressFirst = new ProgressFirst(this.trackElement, this.orientation);
+    }
+    else {
+      progressFirst = new ProgressFirst(this.trackElement, this.orientation, false);
+    }
 
     this.range = document.createElement('div');
     this.range.style.width = "100%";
     this.range.style.height = "100%";
-    this.range.style.background = "red";
+    this.range.style.background = "rgb(148, 175, 250)";
     this.trackElement.appendChild(this.range);
 
-    const progressLast = new ProgressLast(this.trackElement, this.orientation);
+    let progressLast;
+    if (this.handleArr.length === 2) {
+      progressLast = new ProgressLast(this.trackElement, this.orientation, false);
+    } else {
+      progressLast = new ProgressLast(this.trackElement, this.orientation);
+    }
 
-    this.handleArr[0].AddObserver(progressFirst);
-    this.handleArr[this.handleArr.length - 1].AddObserver(progressLast);
+    if (this.orientation) {
+      this.handleArr[0].AddObserver(progressFirst);
+      this.handleArr[this.handleArr.length - 1].AddObserver(progressLast);
+    } else {
+      this.handleArr[0].AddObserver(progressLast);
+      this.handleArr[this.handleArr.length - 1].AddObserver(progressFirst);
+    }
 
     this.AddClasses();
   }

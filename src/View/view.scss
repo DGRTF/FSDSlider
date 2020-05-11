@@ -3,18 +3,20 @@
     &-horizontal
     {
         width: 150px;
-        // display: inline-block;
         position: absolute;
         text-align: center;
         top: 20px;
+        color: rgb(98, 117, 161);
     }
 
     &-vertical
     {
-        width: 150px;
-        // display: inline-block;
+        width: 30px;
+        height: 18px;
+        line-height: 18px;
         position: absolute;
         text-align: center;
         left: 20px;
+        color: rgb(98, 117, 161);
     }
 }

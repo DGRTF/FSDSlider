@@ -6,7 +6,7 @@ export class MaxMargin implements IControlObserverCoordinate {
     this.maxValue = maxValue;
   }
 
-  maxValue: IControlMax[];
+  private maxValue: IControlMax[];
 
   SetCoordinatePercent(coordinatePercent: number) {
     if (this.maxValue !== null) {

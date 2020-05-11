@@ -64,7 +64,8 @@ export class HandleX implements IControlObservable, IHandle, IControlMin, IContr
     this.currentMargin = this.handleX - this.mouseX + event.pageX;
     this.currentMargin -= this.parentElement.getBoundingClientRect().left;
     this.maxSpace = this.parentElement.offsetWidth;
-    if (this.currentMargin <= this.maxSpace && this.currentMargin >= 0 - this.handle.offsetWidth / 2) {
+    if (this.currentMargin <= this.maxSpace 
+      && this.currentMargin >= 0 - this.handle.offsetWidth / 2) {
       if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
         this.handle.style.left = `${this.currentMargin}px`;
         this.setSelectValue = (this.currentMargin + this.handle.offsetWidth / 2);

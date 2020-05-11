@@ -1,6 +1,6 @@
 import { IControlObserverCoordinate } from "../Control/control";
 
-interface IModelObservable {
+export interface IModelObservable {
   AddObserver(modelObserver: IModelObserver): void;
   DeleteObserver(modelObserver: IModelObserver): void;
   Notify(): void;
@@ -11,11 +11,16 @@ export interface IModelObserver {
 }
 
 export interface IModel {
-  // selectValue: string;
   PercentInValue(selectValue: number): number;
+  SetStep(step: number): void;
+  SetMaxValue(maxValue: number): void;
+  SetMinValue(minValue: number): void;
+  GetSelectValue(): string;
+  // AddHandlerChangeValue(listener: EventListenerOrEventListenerObject): void;
 }
 
 export class ModelNumber implements IModel, IModelObservable, IControlObserverCoordinate {
+
   private minValue: number;
 
   private step: number;
@@ -30,19 +35,21 @@ export class ModelNumber implements IModel, IModelObservable, IControlObserverCo
 
   private observer: IModelObserver[];
 
+  changeValue: Event;
+
   constructor(minValue: number, maxValue: number,
-    observer: IModelObserver[] = [], step: number = 10) {
+    observer: IModelObserver[] = []) {
     this.minValue = minValue;
     this.maxValue = maxValue;
-    this.step = step;
+    this.step = 1;
     this.differentValue = Math.abs(maxValue - minValue);
     this.observer = observer;
     this.selectValue = '';
-    this.numDigitsAfterDecimal();
+    this.Init();
   }
 
 
-  private numDigitsAfterDecimal() {
+  private Init() {
     const afterDecimalStr = this.step.toString().split('.')[1] || '';
     const minValueStr = this.minValue.toString().split('.')[1] || '';
     if (afterDecimalStr.length >= minValueStr.length) this.precision = afterDecimalStr.length;
@@ -84,7 +91,12 @@ export class ModelNumber implements IModel, IModelObservable, IControlObserverCo
         el.GetValue(this.selectValue);
       });
     }
+    // document.dispatchEvent(this.changeValue);
   }
+
+  // AddHandlerChangeValue(listener: EventListenerOrEventListenerObject) {
+  //   document.addEventListener("changeValue", listener)
+  // }
 
   PercentInValue(selectValue: number): number {
     let percent = null;
@@ -92,6 +104,30 @@ export class ModelNumber implements IModel, IModelObservable, IControlObserverCo
       percent = (selectValue - this.minValue) / this.differentValue * 100;
     }
     return percent;
+  }
+
+  SetStep(step: number) {
+    if (step <= this.maxValue && step >= this.minValue) {
+      this.step = step;
+    }
+  }
+
+  SetMaxValue(maxValue: number) {
+    if (maxValue >= this.minValue) {
+      this.maxValue = maxValue;
+      this.differentValue = Math.abs(this.maxValue - this.minValue)
+    }
+  }
+
+  SetMinValue(minValue: number) {
+    if (minValue <= this.maxValue) {
+      this.minValue = minValue;
+      this.differentValue = Math.abs(this.maxValue - this.minValue)
+    }
+  }
+
+  GetSelectValue(): string {
+    return this.selectValue;
   }
 
 
@@ -104,10 +140,6 @@ export class ModelNumber implements IModel, IModelObservable, IControlObserverCo
       observer[index] = el;
     });
     return observer;
-  }
-
-  GetSelectValue(): string{
-    return this.selectValue;
   }
 
 }

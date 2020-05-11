@@ -1,10 +1,11 @@
-import { ModelNumber, IModel } from './Model/model';
+import { ModelNumber, IModel, IModelObservable } from './Model/model';
 import { ControlFacade } from './Control/controlFacade';
 import { View, IView } from './View/view';
 
 import './View/view.scss';
 import './index.scss';
 import './Control/control.scss';
+import { AddListener } from './Model/AddLIstener';
 
 const parentElementPlugin = <HTMLElement>document.querySelector('.parent');
 const parentElementPluginY = <HTMLElement>document.querySelector('.parentY');
@@ -17,6 +18,8 @@ const parentElementPluginY = <HTMLElement>document.querySelector('.parentY');
     private modelArr: IModel[];
 
     private viewArr: IView[];
+
+    private modelObserverArr: IModelObservable[];
 
     private controlFacade: ControlFacade;
 
@@ -63,13 +66,16 @@ const parentElementPluginY = <HTMLElement>document.querySelector('.parentY');
 
         this.modelArr = [modelNumber, modelNumber1];
         this.viewArr = [view, view1];
+        this.modelObserverArr = [modelNumber, modelNumber1];
       }
       else {
         this.modelArr = [modelNumber];
         this.viewArr = [view];
+        this.modelObserverArr = [modelNumber];
       }
 
       this.SetValuePercent(20, 0);
+      // this.SetValuePercent(0, 0);
       this.SetValuePercent(80, 1);
     }
 
@@ -95,6 +101,35 @@ const parentElementPluginY = <HTMLElement>document.querySelector('.parentY');
         this.controlFacade.SetCurrentMarginPercent(percent, numb);
       }
     }
+
+    SetStep(step: number) {
+      this.modelArr.forEach(el => {
+        el.SetStep(step);
+      })
+    }
+
+    SetMaxValue(maxValue: number) {
+      this.modelArr.forEach((el, iter) => {
+        el.SetMaxValue(maxValue);
+        let percent = el.PercentInValue(Number(el.GetSelectValue()));
+        this.SetValuePercent(percent, iter);
+      });
+    }
+
+    SetMinValue(minValue: number) {
+      this.modelArr.forEach((el, iter) => {
+        el.SetMinValue(minValue);
+        let percent = el.PercentInValue(Number(el.GetSelectValue()));
+        this.SetValuePercent(percent, iter);
+      });
+    }
+
+    AddHandlerChangeValue(listener: (selectValue: string) => void, numb: number) {
+      if (numb < this.modelObserverArr.length && numb >= 0) {
+        this.modelObserverArr[numb].AddObserver(new AddListener(listener));
+      }
+    }
+
   }
 
   let methods = new Methods();
@@ -128,7 +163,34 @@ $('.parent').RangeSliderInit("SetValuePercent", 60, 1);
 $('.parent').RangeSliderInit("SetValue", -10, 1);
 
 
+$('.parent').RangeSliderInit("SetStep", 1);
+
+$('.parent').RangeSliderInit("SetMaxValue", 1000);
+
+$('.parent').RangeSliderInit("AddHandlerChangeValue", (selectValue: string) => {
+  console.log(selectValue);
+}, 0);
+
+$('.parent').RangeSliderInit("AddHandlerChangeValue", (selectValue: string) => {
+  console.log(selectValue);
+}, 1);
 
 $('.parentY').RangeSliderInit({
-  parentElement: parentElementPluginY, minValue: -100, maxValue: 100, orientation: false, range: false
+  parentElement: parentElementPluginY, minValue: -100, maxValue: 100, orientation: false, range: true
 });
+
+// $('.parentY').RangeSliderInit("SetValuePercent", 0, 0);
+
+$('.parentY').RangeSliderInit("SetStep", 10);
+
+$('.parentY').RangeSliderInit("SetMaxValue", 990);
+
+$('.parentY').RangeSliderInit("SetStep", 1);
+
+$('.parentY').RangeSliderInit("AddHandlerChangeValue", (selectValue: string) => {
+  console.log(selectValue);
+}, 0);
+
+$('.parentY').RangeSliderInit("AddHandlerChangeValue", (selectValue: string) => {
+  console.log(selectValue);
+}, 1);
