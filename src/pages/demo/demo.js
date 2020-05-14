@@ -101,10 +101,10 @@ class Demo {
       let change = true;
       el.addEventListener("click", () => {
         if (change) {
-          i.RangeSliderInit("HiddenValue", index);
+          this.slider.RangeSliderInit("HiddenValue", index);
           change = false;
         } else {
-          i.RangeSliderInit("ShowValue", index);
+          this.slider.RangeSliderInit("ShowValue", index);
           change = true;
         }
       });

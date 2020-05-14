@@ -53,6 +53,15 @@ input
     outline: none;
 }
 
+div
+{
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 .value
 {
     width: 100px;
