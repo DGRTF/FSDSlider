@@ -1,6 +1,19 @@
-import { HandleX } from "../../Control/controlHandleX";
+import HandleX from "../../Control/controlHandleX";
+import { IControlObserverCoordinate } from "../../Control/control";
 
 require('jsdom-global')();
+
+class Observer implements IControlObserverCoordinate {
+
+  coordinatePercent: number = null;
+
+  SetCoordinatePercent(coordinatePercent: number) {
+    this.coordinatePercent = coordinatePercent;
+    console.warn(coordinatePercent);
+  }
+
+}
+
 
 
 describe('Class HandleX', () => {
@@ -9,7 +22,7 @@ describe('Class HandleX', () => {
 
   Object.defineProperties(parentElement, {
     offsetWidth: {
-      get () { return parseFloat("200px") || 0 }
+      get() { return parseFloat("200px") || 0 }
     },
   })
 
@@ -34,15 +47,30 @@ describe('Class HandleX', () => {
     expect(handle.GetMaxMargin()).toEqual(40 - handle.GetHandleOffsetWidth() / 2);
   });
 
+
+  let deleteObserver = new Observer();
+
   test('HandleX.AddObserver(controlObserver: IControlObserverCoordinate) Добавляет наблюдателя в массив', () => {
-    handle.AddObserver(null);
-    handle.AddObserver(null);
-    handle.AddObserver(null);
+    handle.AddObserver(new Observer());
+    handle.AddObserver(new Observer());
+    handle.AddObserver(deleteObserver);
     expect(handle.GetObserver().length).toEqual(3);
   });
 
   test('HandleX.DeleteObserver(controlObserver: IControlObserverCoordinate) Удаляет наблюдателя из массива', () => {
-    handle.DeleteObserver(null);
+    handle.DeleteObserver(deleteObserver);
     expect(handle.GetObserver().length).toEqual(2);
   });
+
+  let observer = new Observer();
+    
+  test('HandleY.Notify() Уведомляет наблюдателя', () => {
+    handle.AddObserver(observer);
+    console.warn(handle.GetObserver().length);
+    handle.SetCurrentMarginPercent(40);
+    // handle.Notify();
+    expect(observer.coordinatePercent).toEqual(20);
+  });
+
+
 });

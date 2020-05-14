@@ -1,6 +1,19 @@
-import { HandleY } from "../../Control/controlHandleY";
+import HandleY from "../../Control/controlHandleY";
+import { IControlObserverCoordinate } from "../../Control/control";
 
 require('jsdom-global')();
+
+class Observer implements IControlObserverCoordinate {
+
+  coordinatePercent: number = null;
+
+  SetCoordinatePercent(coordinatePercent: number) {
+    this.coordinatePercent = coordinatePercent;
+    console.warn(coordinatePercent);
+  }
+
+}
+
 
 
 describe('Class HandleY', () => {
@@ -9,7 +22,7 @@ describe('Class HandleY', () => {
 
   Object.defineProperties(parentElement, {
     offsetHeight: {
-      get () { return parseFloat("200px") || 0 }
+      get() { return parseFloat("200px") || 0 }
     },
   })
 
@@ -17,7 +30,8 @@ describe('Class HandleY', () => {
 
   test('HandleY.SetCurrentMarginPercent(percent: number) задаёт отступ по входному процентному значению (от 0 до 100)', () => {
     let valuesPercent: number[] = [0, -10, 20, 80, 100, 120];
-    let outputValues: number[] = [0, 0, 40, 160, 200, 200];
+    let outputValues: number[] = [200, 200, 160, 40, 0, 0];
+    console.warn("object");
     valuesPercent.forEach((el, index) => {
       handle.SetCurrentMarginPercent(el);
       expect(handle.GetHandleStyleTop()).toEqual(`${outputValues[index]}px`);
@@ -25,24 +39,50 @@ describe('Class HandleY', () => {
   });
 
   test('HandleX.SetMinMargin(minMargin: number) задаёт минимально возможный отступ по входному процентному значению (от 0 до 100)', () => {
-    handle.SetMinMargin(10);
-    expect(handle.GetMinMargin()).toEqual(20 - handle.GetHandleOffsetHeight() / 2);
+    let valuesPercent: number[] = [0, -10, 20, 80, 100, 120];
+    let outputValues: number[] = [200, 200, 160, 40, 0, 0];
+    valuesPercent.forEach((el, index) => {
+      handle.SetMinMargin(el);
+      expect(handle.GetMinMargin()).toEqual(outputValues[index]);
+    });
   });
 
   test('HandleX.SetMaxMargin(maxMargin: number) задаёт максимально возможный отступ по входному процентному значению (от 0 до 100)', () => {
-    handle.SetMaxMargin(20);
-    expect(handle.GetMaxMargin()).toEqual(40 - handle.GetHandleOffsetHeight() / 2);
+    let valuesPercent: number[] = [0, -10, 20, 80, 100, 120];
+    let outputValues: number[] = [200, 200, 160, 40, 0, 0];
+    console.warn("object");
+    valuesPercent.forEach((el, index) => {
+      handle.SetMaxMargin(el);
+      expect(handle.GetMaxMargin()).toEqual(outputValues[index]);
+    });
   });
 
+
+
+  let deleteObserver = new Observer();
+
   test('HandleX.AddObserver(controlObserver: IControlObserverCoordinate) Добавляет наблюдателя в массив', () => {
-    handle.AddObserver(null);
-    handle.AddObserver(null);
-    handle.AddObserver(null);
+    handle.AddObserver(new Observer());
+    handle.AddObserver(new Observer());
+    handle.AddObserver(deleteObserver);
+    console.warn("object");
     expect(handle.GetObserver().length).toEqual(3);
   });
 
   test('HandleY.DeleteObserver(controlObserver: IControlObserverCoordinate) Удаляет наблюдателя из массива', () => {
-    handle.DeleteObserver(null);
+    handle.DeleteObserver(deleteObserver);
     expect(handle.GetObserver().length).toEqual(2);
   });
+
+  let observer = new Observer();
+
+  test('HandleY.Notify() Уведомляет наблюдателя', () => {
+    handle.AddObserver(observer);
+    console.warn(handle.GetObserver().length);
+    handle.SetCurrentMarginPercent(40);
+    // handle.Notify();
+    expect(observer.coordinatePercent).toEqual(20);
+  });
+
+
 });

@@ -1,5 +1,5 @@
-import { ProgressFirst } from './progressFirst';
-import { ProgressLast } from './progressLast';
+import ProgressFirst from './progressFirst';
+import ProgressLast from './progressLast';
 
 export interface IControlObserverCoordinate {
   SetCoordinatePercent(coordinate: number): void;
@@ -24,10 +24,9 @@ export interface IControlMax {
 }
 
 
-
 export class Control {
   constructor(
-    parentElement: HTMLElement, orientation: boolean = true, handleArr: IControlObservable[]
+    parentElement: HTMLElement, orientation: boolean = true, handleArr: IControlObservable[],
   ) {
     this.parentElement = parentElement;
     this.orientation = orientation;
@@ -52,15 +51,14 @@ export class Control {
     let progressFirst;
     if (this.handleArr.length === 2) {
       progressFirst = new ProgressFirst(this.trackElement, this.orientation);
-    }
-    else {
+    } else {
       progressFirst = new ProgressFirst(this.trackElement, this.orientation, false);
     }
 
     this.range = document.createElement('div');
-    this.range.style.width = "100%";
-    this.range.style.height = "100%";
-    this.range.style.background = "rgb(148, 175, 250)";
+    this.range.style.width = '100%';
+    this.range.style.height = '100%';
+    this.range.style.background = 'rgb(148, 175, 250)';
     this.trackElement.appendChild(this.range);
 
     let progressLast;
@@ -84,10 +82,8 @@ export class Control {
   private AddClasses() {
     if (this.orientation) {
       this.trackElement.className += ' slider-track-element';
-    }
-    else {
+    } else {
       this.trackElement.className += ' slider-track-element-vertical';
     }
   }
-
 }

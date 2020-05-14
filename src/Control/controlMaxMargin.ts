@@ -1,7 +1,7 @@
-import { IControlMax, IControlObserverCoordinate } from "./control";
+import { IControlMax, IControlObserverCoordinate } from './control';
 
 
-export class MaxMargin implements IControlObserverCoordinate {
+export default class MaxMargin implements IControlObserverCoordinate {
   constructor(maxValue: IControlMax[] = null) {
     this.maxValue = maxValue;
   }
@@ -10,10 +10,33 @@ export class MaxMargin implements IControlObserverCoordinate {
 
   SetCoordinatePercent(coordinatePercent: number) {
     if (this.maxValue !== null) {
-      this.maxValue.forEach(el => {
+      this.maxValue.forEach((el) => {
         el.SetMaxMargin(coordinatePercent);
       });
     }
+  }
+
+  AddMaxMarginObserver(maxValue: IControlMax){
+    this.maxValue.push(maxValue);
+  }
+
+  DeleteMaxMarginObserver(maxValue: IControlMax){
+    const index = this.maxValue.indexOf(maxValue);
+    if (index > -1) {
+      this.maxValue.splice(index, 1);
+    }
+  }
+
+  
+
+  // for tests
+
+  GetObserver(): IControlMax[] {
+    const observer: IControlMax[] = [];
+    this.maxValue.forEach((el, index) => {
+      observer[index] = el;
+    });
+    return observer;
   }
 
 }

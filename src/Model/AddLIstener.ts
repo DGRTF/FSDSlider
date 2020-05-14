@@ -1,6 +1,6 @@
 import { IModelObserver } from "./model";
 
-export class AddListener implements IModelObserver {
+export default class AddListener implements IModelObserver {
   constructor(listener: (selectValue: string) => void) {
     this.listener = listener;
   }

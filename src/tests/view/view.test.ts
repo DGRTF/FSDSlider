@@ -1,4 +1,4 @@
-import { View } from "../../View/view";
+import { View } from '../../View/view';
 
 require('jsdom-global')();
 
@@ -7,10 +7,10 @@ describe('Class View', () => {
 
   Object.defineProperties(parentElement, {
     offsetWidth: {
-      get () { return parseFloat("200px") || 0 }
+      get() { return parseFloat('200px') || 0; },
     },
   });
-  
+
   const view = new View(parentElement);
   const viewElement = <HTMLElement>parentElement.firstChild;
 
@@ -30,8 +30,12 @@ describe('Class View', () => {
   });
 
   test('View.SetCoordinate(coordinate: number) Задаёт отступ HTML-элемента ', () => {
-    view.SetCoordinatePercent(20);
-    expect(viewElement.style.left).toEqual('40px');
+    const valuesArr: number[] = [0, -10, 20, 100, 30, 101];
+    const answerArr: number[] = [0, 0, 40, 200, 60, 60];
+    valuesArr.forEach((el, index) => {
+      view.SetCoordinatePercent(el);
+      expect(viewElement.style.left).toEqual(`${answerArr[index]}px`);
+    });
   });
 
 
@@ -39,14 +43,18 @@ describe('Class View', () => {
 
   Object.defineProperties(parentElementVertical, {
     offsetHeight: {
-      get () { return parseFloat("200px") || 0 }
+      get() { return parseFloat('200px') || 0; },
     },
   });
 
   const viewVertical = new View(parentElementVertical, false);
   const viewElementVertical = <HTMLElement>parentElementVertical.firstChild;
   test('View.SetCoordinate(coordinate: number) Задаёт отступ HTML-элемента для вертикального расположения', () => {
-    viewVertical.SetCoordinatePercent(100);
-    expect(viewElementVertical.style.top).toEqual('200px');
+    const valuesArr: number[] = [100, -10, 20, 100, 30, 101];
+    const answerArr: number[] = [0, 0, 160, 0, 140, 140];
+    valuesArr.forEach((el, index) => {
+      viewVertical.SetCoordinatePercent(el);
+      expect(viewElementVertical.style.top).toEqual(`${answerArr[index]}px`);
+    });
   });
 });

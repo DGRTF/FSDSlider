@@ -1,8 +1,9 @@
-import { IHandle, IControlObservable, IControlObserverCoordinate, IControlMax, IControlMin } from "./control";
+import {
+  IHandle, IControlObservable, IControlObserverCoordinate, IControlMax, IControlMin,
+} from './control';
 
 
-
-export class HandleY implements IControlObservable, IHandle, IControlMin, IControlMax {
+export default class HandleY implements IControlObservable, IHandle, IControlMin, IControlMax {
   private handle: HTMLElement;
 
   private parentElement: HTMLElement;
@@ -69,7 +70,8 @@ export class HandleY implements IControlObservable, IHandle, IControlMin, IContr
       && this.currentMargin >= 0 - this.handle.offsetHeight / 2) {
       if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
         this.handle.style.top = `${this.currentMargin}px`;
-        this.setSelectValue = this.parentElement.offsetHeight - this.currentMargin - this.handle.offsetHeight / 2;
+        this.setSelectValue = this.parentElement.offsetHeight
+          - this.currentMargin - this.handle.offsetHeight / 2;
         this.setSelectValue = (this.setSelectValue / this.maxSpace) * 100;
         this.Notify();
       }
@@ -86,17 +88,23 @@ export class HandleY implements IControlObservable, IHandle, IControlMin, IContr
       if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
         this.setSelectValue = percent;
         this.handle.style.top = `${this.currentMargin}px`;
-        this.Notify();
       }
     }
+    this.Notify();
   }
 
   SetMinMargin(minMargin: number) {
-    this.minMargin = this.parentElement.offsetHeight * (100 - minMargin) / 100 - this.handle.offsetHeight / 2;
+    if (minMargin <= 100 && minMargin >= 0) {
+      this.minMargin = this.parentElement.offsetHeight * (100 - minMargin);
+      this.minMargin = this.minMargin / 100 - this.handle.offsetHeight / 2;
+    }
   }
 
   SetMaxMargin(maxMargin: number) {
-    this.maxMargin = this.parentElement.offsetHeight * (100 - maxMargin) / 100 - this.handle.offsetHeight / 2;
+    if (maxMargin <= 100 && maxMargin >= 0) {
+      this.maxMargin = this.parentElement.offsetHeight * (100 - maxMargin);
+      this.maxMargin = this.maxMargin / 100 - this.handle.offsetHeight / 2;
+    }
   }
 
   AddObserver(controlObserver: IControlObserverCoordinate) {
@@ -116,11 +124,11 @@ export class HandleY implements IControlObservable, IHandle, IControlMin, IContr
         el.SetCoordinatePercent(this.setSelectValue);
       });
     }
+    // console.warn(this.setSelectValue);
   }
 
 
-
-  //get values for tests
+  // get values for tests
   GetMinMargin(): number {
     return this.minMargin;
   }
@@ -138,7 +146,7 @@ export class HandleY implements IControlObservable, IHandle, IControlMin, IContr
   }
 
   GetObserver(): IControlObserverCoordinate[] {
-    let observer: IControlObserverCoordinate[] = [];
+    const observer: IControlObserverCoordinate[] = [];
     this.observer.forEach((el, index) => {
       observer[index] = el;
     });

@@ -1,0 +1,67 @@
+@import "./../../blockUI/checkbox/checkbox.scss";
+
+.parent
+{
+    // margin: auto;
+    width: 50%;
+}
+
+.parentY
+{
+    margin: auto;
+    height: 300px;
+}
+
+.add-parent
+{
+    margin: auto;
+    width: 100px;
+}
+
+.slider
+{
+    display: flex;
+    height: 350px;
+    // width: 700px;
+}
+
+.panel-settings
+{
+    height: 250px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.container-value
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+input
+{
+    width: 100px;
+    height: 25px;
+    border: 1px solid rgb(7, 127, 226);
+    color: rgb(98, 117, 161);
+    border-radius: 4px;
+    padding-left: 10px;
+    padding-right: 5px;
+    outline: none;
+}
+
+.value
+{
+    width: 100px;
+    height: 25px;
+    border: 1px solid rgb(7, 127, 226);
+    color: rgb(98, 117, 161);
+    border-radius: 4px;
+    text-align: center;
+    line-height: 25px;
+    box-sizing: border-box;
+    outline: none;
+}

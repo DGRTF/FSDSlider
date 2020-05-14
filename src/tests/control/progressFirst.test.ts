@@ -1,4 +1,4 @@
-import { ProgressFirst } from "../../Control/progressFirst";
+import ProgressFirst from "../../Control/progressFirst";
 
 require('jsdom-global')();
 
@@ -9,7 +9,7 @@ describe('Class ProgressFirst', () => {
 
   Object.defineProperties(parentElement, {
     offsetWidth: {
-      get () { return parseFloat("200px") || 0 }
+      get() { return parseFloat("200px") || 0 }
     },
   })
 
@@ -30,7 +30,7 @@ describe('Class ProgressFirst', () => {
 
   Object.defineProperties(parentElementVertical, {
     offsetHeight: {
-      get () { return parseFloat("200px") || 0 }
+      get() { return parseFloat("200px") || 0 }
     },
   })
 
@@ -38,7 +38,7 @@ describe('Class ProgressFirst', () => {
 
   test('ProgressFirst.SetCoordinatePercent(percent: number) задаёт отступ по входному процентному значению (от 0 до 100)', () => {
     let valuesPercent: number[] = [0, -10, 20, 80, 100, 120];
-    let outputValues: number[] = [0, 0, 40, 160, 200, 200];
+    let outputValues: number[] = [200, 200, 160, 40, 0, 0];
     valuesPercent.forEach((el, index) => {
       progressFirstVertical.SetCoordinatePercent(el);
       expect(progressFirstVertical.GetWidthOrHeight()).toEqual(`${outputValues[index]}px`);

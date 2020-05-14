@@ -1,7 +1,7 @@
-import { IControlObserverCoordinate, IControlMin } from "./control";
+import { IControlObserverCoordinate, IControlMin } from './control';
 
 
-export class MinMargin implements IControlObserverCoordinate {
+export default class MinMargin implements IControlObserverCoordinate {
   constructor(minValue: IControlMin[] = null) {
     this.minValue = minValue;
   }
@@ -10,10 +10,33 @@ export class MinMargin implements IControlObserverCoordinate {
 
   SetCoordinatePercent(coordinatePercent: number) {
     if (this.minValue !== null) {
-      this.minValue.forEach(el => {
+      this.minValue.forEach((el) => {
         el.SetMinMargin(coordinatePercent);
       });
     }
   }
 
+  AddMinMarginObserver(minValue: IControlMin) {
+    this.minValue.push(minValue);
+  }
+
+  DeleteMinMarginObserver(minValue: IControlMin) {
+    const index = this.minValue.indexOf(minValue);
+    if (index > -1) {
+      this.minValue.splice(index, 1);
+    }
+  }
+
+
+
+  // for tests
+
+  GetObserver(): IControlMin[] {
+    const observer: IControlMin[] = [];
+    this.minValue.forEach((el, index) => {
+      observer[index] = el;
+    });
+    return observer;
+  }
+  
 }

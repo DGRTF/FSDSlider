@@ -59,17 +59,26 @@ export class ModelNumber implements IModel, IModelObservable, IControlObserverCo
 
   SetCoordinatePercent(percent: number): void {
     if (percent <= 100 && percent >= 0) {
+      const currentValue = (this.differentValue * percent) / 100;
+      let stepValue: number;
 
-      const stepValue = Math.floor((this.differentValue * percent) / 100 / this.step);
-      let val;
+      if ((currentValue % this.step) / this.step > 0.5) {
+        stepValue = ((this.differentValue * percent) / 100 - (currentValue % this.step)) / this.step+1;
+      }
+      else {
+        stepValue = ((this.differentValue * percent) / 100 - (currentValue % this.step)) / this.step;
+      }
+
+      let val: number;
 
       if (this.precision > 0) {
         val = this.step * stepValue + this.minValue;
         this.selectValue = val.toFixed(this.precision);
       } else {
-        val = this.step * stepValue;
-        this.selectValue = String(val + this.minValue);
+        val = this.step * stepValue + this.minValue;
+        this.selectValue = `${val}`;
       }
+
       this.Notify();
     }
   }
@@ -86,17 +95,12 @@ export class ModelNumber implements IModel, IModelObservable, IControlObserverCo
   }
 
   Notify(): void {
-    if (this.observer !== null || this.observer !== undefined) {
+    if (this.observer !== null && this.observer !== undefined) {
       this.observer.forEach((el) => {
         el.GetValue(this.selectValue);
       });
     }
-    // document.dispatchEvent(this.changeValue);
   }
-
-  // AddHandlerChangeValue(listener: EventListenerOrEventListenerObject) {
-  //   document.addEventListener("changeValue", listener)
-  // }
 
   PercentInValue(selectValue: number): number {
     let percent = null;
@@ -115,14 +119,15 @@ export class ModelNumber implements IModel, IModelObservable, IControlObserverCo
   SetMaxValue(maxValue: number) {
     if (maxValue >= this.minValue) {
       this.maxValue = maxValue;
-      this.differentValue = Math.abs(this.maxValue - this.minValue)
+      this.differentValue = Math.abs(this.maxValue - this.minValue);
     }
   }
 
   SetMinValue(minValue: number) {
     if (minValue <= this.maxValue) {
       this.minValue = minValue;
-      this.differentValue = Math.abs(this.maxValue - this.minValue)
+      this.differentValue = Math.abs(this.maxValue - this.minValue);
+      this.Init();
     }
   }
 

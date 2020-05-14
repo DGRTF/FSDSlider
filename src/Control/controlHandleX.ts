@@ -1,7 +1,9 @@
-import { IHandle, IControlObservable, IControlObserverCoordinate, IControlMax, IControlMin } from "./control";
+import {
+  IHandle, IControlObservable, IControlObserverCoordinate, IControlMax, IControlMin,
+} from './control';
 
 
-export class HandleX implements IControlObservable, IHandle, IControlMin, IControlMax {
+export default class HandleX implements IControlObservable, IHandle, IControlMin, IControlMax {
   private handle: HTMLElement;
 
   private parentElement: HTMLElement;
@@ -64,11 +66,11 @@ export class HandleX implements IControlObservable, IHandle, IControlMin, IContr
     this.currentMargin = this.handleX - this.mouseX + event.pageX;
     this.currentMargin -= this.parentElement.getBoundingClientRect().left;
     this.maxSpace = this.parentElement.offsetWidth;
-    if (this.currentMargin <= this.maxSpace 
+    if (this.currentMargin <= this.maxSpace
       && this.currentMargin >= 0 - this.handle.offsetWidth / 2) {
       if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
         this.handle.style.left = `${this.currentMargin}px`;
-        this.setSelectValue = (this.currentMargin + this.handle.offsetWidth / 2);
+        this.setSelectValue = this.currentMargin + this.handle.offsetWidth / 2;
         this.setSelectValue = (this.setSelectValue / this.maxSpace) * 100;
         this.Notify();
       }
@@ -80,21 +82,28 @@ export class HandleX implements IControlObservable, IHandle, IControlMin, IContr
   SetCurrentMarginPercent(percent: number) {
     if (percent <= 100 && percent >= 0) {
       this.maxSpace = this.parentElement.offsetWidth;
-      this.currentMargin = (this.maxSpace * percent) / 100 - this.handle.offsetWidth / 2;
+      this.currentMargin = this.maxSpace * percent;
+      this.currentMargin = this.currentMargin / 100 - this.handle.offsetWidth / 2;
       if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
         this.setSelectValue = percent;
         this.handle.style.left = `${this.currentMargin}px`;
-        this.Notify();
       }
     }
+    this.Notify();
   }
 
   SetMinMargin(minMargin: number) {
-    this.minMargin = this.parentElement.offsetWidth * minMargin / 100 - this.handle.offsetWidth / 2;
+    if (minMargin <= 100 && minMargin >= 0) {
+      this.minMargin = (this.parentElement.offsetWidth * minMargin);
+      this.minMargin = this.minMargin / 100 - this.handle.offsetWidth / 2;
+    }
   }
 
   SetMaxMargin(maxMargin: number) {
-    this.maxMargin = this.parentElement.offsetWidth * maxMargin / 100 - this.handle.offsetWidth / 2;
+    if (maxMargin <= 100 && maxMargin >= 0) {
+      this.maxMargin = (this.parentElement.offsetWidth * maxMargin);
+      this.maxMargin = this.maxMargin / 100 - this.handle.offsetWidth / 2;
+    }
   }
 
   AddObserver(controlObserver: IControlObserverCoordinate) {
@@ -117,8 +126,7 @@ export class HandleX implements IControlObservable, IHandle, IControlMin, IContr
   }
 
 
-
-  //get values for tests
+  // get values for tests
   GetMinMargin(): number {
     return this.minMargin;
   }
@@ -136,7 +144,7 @@ export class HandleX implements IControlObservable, IHandle, IControlMin, IContr
   }
 
   GetObserver(): IControlObserverCoordinate[] {
-    let observer: IControlObserverCoordinate[] = [];
+    const observer: IControlObserverCoordinate[] = [];
     this.observer.forEach((el, index) => {
       observer[index] = el;
     });

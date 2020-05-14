@@ -6,7 +6,7 @@ const webpack = require('webpack');
 
 module.exports =
 {
-    entry: { index: './src/index.ts' },
+    entry: { index: './src/pages/demo/demo.js' },
     resolve: {
         extensions: [ '.tsx', '.ts', '.js' ],
       },
@@ -20,7 +20,7 @@ module.exports =
     [
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: './src/index.pug',
+            template: './src/pages/demo/demo.pug',
         }),
 
         new MiniCssExtractPlugin({

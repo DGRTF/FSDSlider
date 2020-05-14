@@ -1,10 +1,13 @@
-import { IHandle, IControlObservable, IControlObserverCoordinate, Control } from "./control";
-import { HandleX } from "./controlHandleX";
-import { HandleY } from "./controlHandleY";
-import { MinMargin } from "./controlMinMargin";
-import { MaxMargin } from "./controlMaxMargin";
+import {
+  IHandle, IControlObservable, IControlObserverCoordinate, Control,
+} from './control';
+import HandleX from './controlHandleX';
+import HandleY from './controlHandleY';
+import MinMargin from './controlMinMargin';
+import MaxMargin from './controlMaxMargin';
 
-export class ControlFacade {
+
+export default class ControlFacade {
   constructor(parentElement: HTMLElement,
     orientation: boolean = true, range: boolean = false) {
     this.parentElement = parentElement;
@@ -54,8 +57,7 @@ export class ControlFacade {
         controlOne1.AddObserver(minMargin);
         maxMargin = new MaxMargin([controlOne1]);
         controlOne.AddObserver(maxMargin);
-      }
-      else{
+      } else {
         minMargin = new MinMargin([controlOne1]);
         controlOne.AddObserver(minMargin);
         maxMargin = new MaxMargin([controlOne]);
@@ -63,15 +65,13 @@ export class ControlFacade {
       }
       this.handleArr = [controlOne, controlOne1];
       this.handleArrObservable = [controlOne, controlOne1];
-    }
-    else {
+    } else {
       control = new Control(this.parentElement, this.orientation, [controlOne]);
 
       this.handleArr = [controlOne];
       this.handleArrObservable = [controlOne];
     }
   }
-
 
 
   SetCurrentMarginPercent(percent: number, numb: number) {

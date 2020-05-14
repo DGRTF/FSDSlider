@@ -1,19 +1,19 @@
 import { ModelNumber, IModel, IModelObservable } from './Model/model';
-import { ControlFacade } from './Control/controlFacade';
+import ControlFacade from './Control/controlFacade';
 import { View, IView } from './View/view';
 
 import './View/view.scss';
 import './index.scss';
 import './Control/control.scss';
-import { AddListener } from './Model/AddLIstener';
+import AddListener from './Model/addListener';
 
-const parentElementPlugin = <HTMLElement>document.querySelector('.parent');
-const parentElementPluginY = <HTMLElement>document.querySelector('.parentY');
-
-
-(function ($) {
+$(document).ready(function ($) {
 
   class Methods {
+
+    constructor(parentElement: JQuery) {
+      this.parentElement = parentElement[0];
+    }
 
     private modelArr: IModel[];
 
@@ -23,11 +23,24 @@ const parentElementPluginY = <HTMLElement>document.querySelector('.parentY');
 
     private controlFacade: ControlFacade;
 
+    private parentElement: HTMLElement;
+
+    private size: number;
+
     Initialize(sliderOb:
       {
-        parentElement: HTMLElement, minValue?: number, maxValue?: number,
+        minValue?: number, maxValue?: number,
         orientation?: boolean, range?: boolean
       }) {
+
+      this.size = this.parentElement.offsetWidth;
+      setInterval(() => {
+        if (this.parentElement.offsetWidth !== this.size) {
+          for (let i = 0; i < this.modelArr.length; i++) {
+            this.SetValue(Number(this.GetSelectValue(i)), i);
+          }
+        }
+      }, 50);
 
       if (sliderOb.minValue === null || sliderOb.minValue === undefined) {
         sliderOb.minValue = 0;
@@ -45,11 +58,11 @@ const parentElementPluginY = <HTMLElement>document.querySelector('.parentY');
         sliderOb.range = false;
       }
 
-      this.controlFacade = new ControlFacade(sliderOb.parentElement, sliderOb.orientation, sliderOb.range)
+      this.controlFacade = new ControlFacade(this.parentElement, sliderOb.orientation, sliderOb.range)
 
       const modelNumber = new ModelNumber(sliderOb.minValue, sliderOb.maxValue);
 
-      const view = new View(sliderOb.parentElement, sliderOb.orientation);
+      const view = new View(this.parentElement, sliderOb.orientation);
 
       this.controlFacade.AddObserverHandle(view, 0);
       this.controlFacade.AddObserverHandle(modelNumber, 0);
@@ -58,7 +71,7 @@ const parentElementPluginY = <HTMLElement>document.querySelector('.parentY');
       if (sliderOb.range) {
         const modelNumber1 = new ModelNumber(sliderOb.minValue, sliderOb.maxValue);
 
-        const view1 = new View(sliderOb.parentElement, sliderOb.orientation);
+        const view1 = new View(this.parentElement, sliderOb.orientation);
 
         this.controlFacade.AddObserverHandle(view1, 1);
         this.controlFacade.AddObserverHandle(modelNumber1, 1);
@@ -75,8 +88,8 @@ const parentElementPluginY = <HTMLElement>document.querySelector('.parentY');
       }
 
       this.SetValuePercent(20, 0);
-      // this.SetValuePercent(0, 0);
       this.SetValuePercent(80, 1);
+
     }
 
     ShowValue(numb: number) {
@@ -109,18 +122,27 @@ const parentElementPluginY = <HTMLElement>document.querySelector('.parentY');
     }
 
     SetMaxValue(maxValue: number) {
-      this.modelArr.forEach((el, iter) => {
-        el.SetMaxValue(maxValue);
-        let percent = el.PercentInValue(Number(el.GetSelectValue()));
-        this.SetValuePercent(percent, iter);
-      });
+      let percent: number;
+      for (let i = this.modelArr.length - 1; i >= 0; i--) {
+        this.modelArr[i].SetMaxValue(maxValue);
+        if (maxValue < Number(this.modelArr[i].GetSelectValue())) {
+          percent = 100;
+        } else {
+          percent = this.modelArr[i].PercentInValue(Number(this.modelArr[i].GetSelectValue()));
+        }
+        this.SetValuePercent(percent, i);
+      }
     }
 
     SetMinValue(minValue: number) {
       this.modelArr.forEach((el, iter) => {
         el.SetMinValue(minValue);
-        let percent = el.PercentInValue(Number(el.GetSelectValue()));
-        this.SetValuePercent(percent, iter);
+        if (minValue > Number(el.GetSelectValue())) {
+          this.SetValue(minValue, iter);
+        } else {
+          this.SetValue(Number(el.GetSelectValue()), iter);
+        }
+
       });
     }
 
@@ -130,67 +152,34 @@ const parentElementPluginY = <HTMLElement>document.querySelector('.parentY');
       }
     }
 
+    GetSelectValue(numb: number): string {
+      if (numb < this.modelArr.length && numb >= 0) {
+        return this.modelArr[numb].GetSelectValue();
+      }
+    }
   }
 
-  let methods = new Methods();
+  let methods: Methods = null;
+
+  let methodsArr: Methods[] = [];
+  let jThis: JQuery<HTMLElement>[] = [];
 
   return $.fn.RangeSliderInit = function (method: any, ...params: any[]) {
-    if ((methods as any)[method]) {
+    if (typeof method === 'object' || !method) {
+      methods = new Methods(this);
+      methodsArr.push(methods);
+      jThis.push(this);
+      methods.Initialize.call(methods, method);
+      return this;
+    } else if ((methods as any)[method]) {
+      const index = jThis.indexOf(this);
+      if (index > -1) {
+        methods = methodsArr[index];
+      }
       return (methods as any)[method].call(methods, ...params);
-    } else if (typeof method === 'object' || !method) {
-      return methods.Initialize.call(methods, method);
     } else {
       $.error('Метод с именем ' + method + ' не существует для jQuery.tooltip');
     }
   }
 
 }(jQuery));
-
-
-
-$('.parent').RangeSliderInit({
-  parentElement: parentElementPlugin, minValue: -100, maxValue: 100, range: true
-});
-
-$('.parent').RangeSliderInit("HiddenValue", 1);
-$('.parent').RangeSliderInit("HiddenValue", 0);
-
-$('.parent').RangeSliderInit("ShowValue", 0);
-$('.parent').RangeSliderInit("ShowValue", 1);
-
-$('.parent').RangeSliderInit("SetValuePercent", 60, 1);
-
-$('.parent').RangeSliderInit("SetValue", -10, 1);
-
-
-$('.parent').RangeSliderInit("SetStep", 1);
-
-$('.parent').RangeSliderInit("SetMaxValue", 1000);
-
-$('.parent').RangeSliderInit("AddHandlerChangeValue", (selectValue: string) => {
-  console.log(selectValue);
-}, 0);
-
-$('.parent').RangeSliderInit("AddHandlerChangeValue", (selectValue: string) => {
-  console.log(selectValue);
-}, 1);
-
-$('.parentY').RangeSliderInit({
-  parentElement: parentElementPluginY, minValue: -100, maxValue: 100, orientation: false, range: true
-});
-
-// $('.parentY').RangeSliderInit("SetValuePercent", 0, 0);
-
-$('.parentY').RangeSliderInit("SetStep", 10);
-
-$('.parentY').RangeSliderInit("SetMaxValue", 990);
-
-$('.parentY').RangeSliderInit("SetStep", 1);
-
-$('.parentY').RangeSliderInit("AddHandlerChangeValue", (selectValue: string) => {
-  console.log(selectValue);
-}, 0);
-
-$('.parentY').RangeSliderInit("AddHandlerChangeValue", (selectValue: string) => {
-  console.log(selectValue);
-}, 1);
