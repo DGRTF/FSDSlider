@@ -2,7 +2,7 @@ import "./../../index.ts";
 import "./demo.scss";
 
 let i = $('.parent').RangeSliderInit({
-  minValue: -100, maxValue: 100, range: true
+  minValue: -10000, maxValue: 10000, range: true
 });
 
 let showCurrentValueMax = document.querySelector(".js-max-select-value-one");

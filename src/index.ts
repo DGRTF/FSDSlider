@@ -25,22 +25,11 @@ $(document).ready(function ($) {
 
     private parentElement: HTMLElement;
 
-    private size: number;
-
     Initialize(sliderOb:
       {
         minValue?: number, maxValue?: number,
         orientation?: boolean, range?: boolean
       }) {
-
-      this.size = this.parentElement.offsetWidth;
-      setInterval(() => {
-        if (this.parentElement.offsetWidth !== this.size) {
-          for (let i = 0; i < this.modelArr.length; i++) {
-            this.SetValue(Number(this.GetSelectValue(i)), i);
-          }
-        }
-      }, 50);
 
       if (sliderOb.minValue === null || sliderOb.minValue === undefined) {
         sliderOb.minValue = 0;
@@ -123,27 +112,40 @@ $(document).ready(function ($) {
 
     SetMaxValue(maxValue: number) {
       let percent: number;
-      for (let i = this.modelArr.length - 1; i >= 0; i--) {
-        this.modelArr[i].SetMaxValue(maxValue);
-        if (maxValue < Number(this.modelArr[i].GetSelectValue())) {
-          percent = 100;
-        } else {
-          percent = this.modelArr[i].PercentInValue(Number(this.modelArr[i].GetSelectValue()));
+      if (maxValue < Number(this.modelArr[0].GetSelectValue())) {
+        for (let i = this.modelArr.length - 1; i >= 0; i--) {
+          this.modelArr[i].SetMaxValue(maxValue);
+          if (maxValue < Number(this.modelArr[i].GetSelectValue())) {
+            percent = 100;
+          } else {
+            percent = this.modelArr[i].PercentInValue(Number(this.modelArr[i].GetSelectValue()));
+          }
+          this.SetValuePercent(percent, i);
         }
-        this.SetValuePercent(percent, i);
+      } else {
+        this.modelArr.forEach((el, item) => {
+          el.SetMaxValue(maxValue);
+          this.SetValue(Number(el.GetSelectValue()), item);
+        });
       }
     }
 
     SetMinValue(minValue: number) {
-      this.modelArr.forEach((el, iter) => {
-        el.SetMinValue(minValue);
-        if (minValue > Number(el.GetSelectValue())) {
-          this.SetValue(minValue, iter);
-        } else {
-          this.SetValue(Number(el.GetSelectValue()), iter);
+      if (minValue > Number(this.modelArr[0].GetSelectValue())) {
+        this.modelArr.forEach((el, item) => {
+          el.SetMinValue(minValue);
+          if (minValue > Number(el.GetSelectValue()))
+            this.SetValuePercent(0, item);
+          else
+            this.SetValue(Number(el.GetSelectValue()), item);
+        });
+      } else {
+        for (let i = this.modelArr.length - 1; i >= 0; i--) {
+          this.modelArr[i].SetMinValue(minValue);
+          this.SetValue(Number(this.modelArr[i].GetSelectValue()), i);
         }
+      }
 
-      });
     }
 
     AddHandlerChangeValue(listener: (selectValue: string) => void, numb: number) {

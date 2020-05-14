@@ -1,5 +1,5 @@
 import {
-  IHandle, IControlObservable, IControlObserverCoordinate, Control,
+  IHandle, IControlObservable, IControlObserverCoordinate, Control, IControlMax,
 } from './control';
 import HandleX from './controlHandleX';
 import HandleY from './controlHandleY';
@@ -26,7 +26,13 @@ export default class ControlFacade {
 
   private handleArrObservable: IControlObservable[];
 
+  private handleMaxMargin: IControlMax = null;
+
+  private size: number;
+
   private Init() {
+
+    this.IntervalCheckSize();
     let controlOne;
 
     if (this.orientation) {
@@ -65,12 +71,27 @@ export default class ControlFacade {
       }
       this.handleArr = [controlOne, controlOne1];
       this.handleArrObservable = [controlOne, controlOne1];
+      this.handleMaxMargin = controlOne1;
     } else {
       control = new Control(this.parentElement, this.orientation, [controlOne]);
 
       this.handleArr = [controlOne];
       this.handleArrObservable = [controlOne];
     }
+  }
+
+  private IntervalCheckSize(){
+    this.size = this.parentElement.offsetWidth;
+    setInterval(() => {
+      if (this.parentElement.offsetWidth !== this.size) {
+        if (this.handleMaxMargin !== null)
+          this.handleMaxMargin.SetMaxMargin(100);
+        this.handleArr.forEach(el => {
+          el.SetCurrentMarginPercent(el.GetSetSelectValue());
+          this.size = this.parentElement.offsetWidth;
+        });
+      }
+    }, 50);
   }
 
 

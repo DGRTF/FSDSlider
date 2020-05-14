@@ -13,6 +13,7 @@ export interface IControlObservable {
 
 export interface IHandle {
   SetCurrentMarginPercent(percent: number): void;
+  GetSetSelectValue(): number;
 }
 
 export interface IControlMin {

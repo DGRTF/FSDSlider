@@ -113,6 +113,7 @@ export class ModelNumber implements IModel, IModelObservable, IControlObserverCo
   SetStep(step: number) {
     if (step <= this.maxValue && step >= this.minValue) {
       this.step = step;
+      this.Init();
     }
   }
 

@@ -41,10 +41,17 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
     this.AddContentHtml();
 
     this.handle.addEventListener('mousedown', this.AddEventMouseMove.bind(this));
+    this.handle.addEventListener("touchstart", this.AddEventTouchMove.bind(this));
 
     document.addEventListener('mouseup', () => {
       document.removeEventListener('mousemove', this.move);
     });
+
+    document.addEventListener('touchcancel', () => {
+      alert("touch end");
+      document.removeEventListener('touchmove', this.moveTouch);
+    });
+
   }
 
   private AddClasses() {
@@ -77,7 +84,30 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
     }
   }
 
+  private AddEventTouchMove(event: TouchEvent) {
+    this.mouseX = event.targetTouches[0].pageX;
+    document.addEventListener("touchmove", this.moveTouch);
+    this.handleX = this.handle.getBoundingClientRect().left;
+  }
+
+  private MoveBlockTouch(event: TouchEvent) {
+    this.currentMargin = this.handleX - this.mouseX + event.targetTouches[0].pageX;
+    this.currentMargin -= this.parentElement.getBoundingClientRect().left;
+    this.maxSpace = this.parentElement.offsetWidth;
+    if (this.currentMargin <= this.maxSpace
+      && this.currentMargin >= 0 - this.handle.offsetWidth / 2) {
+      if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
+        this.handle.style.left = `${this.currentMargin}px`;
+        this.setSelectValue = this.currentMargin + this.handle.offsetWidth / 2;
+        this.setSelectValue = (this.setSelectValue / this.maxSpace) * 100;
+        this.Notify();
+      }
+    }
+  }
+
   private move = this.MoveBlock.bind(this);
+
+  private moveTouch = this.MoveBlockTouch.bind(this);
 
   SetCurrentMarginPercent(percent: number) {
     if (percent <= 100 && percent >= 0) {
@@ -123,6 +153,10 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
         el.SetCoordinatePercent(this.setSelectValue);
       });
     }
+  }
+
+  GetSetSelectValue(): number {
+    return this.setSelectValue;
   }
 
 
