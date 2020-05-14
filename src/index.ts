@@ -112,7 +112,7 @@ $(document).ready(function ($) {
 
     SetMaxValue(maxValue: number) {
       let percent: number;
-      if (maxValue < Number(this.modelArr[0].GetSelectValue())) {
+      if (maxValue < Number(this.modelArr[this.modelArr.length-1].GetSelectValue())) {
         for (let i = this.modelArr.length - 1; i >= 0; i--) {
           this.modelArr[i].SetMaxValue(maxValue);
           if (maxValue < Number(this.modelArr[i].GetSelectValue())) {

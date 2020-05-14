@@ -26,7 +26,7 @@ export default class ControlFacade {
 
   private handleArrObservable: IControlObservable[];
 
-  private handleMaxMargin: IControlMax = null;
+  private handleMaxMargin: IControlMax[] = null;
 
   private size: number;
 
@@ -71,12 +71,13 @@ export default class ControlFacade {
       }
       this.handleArr = [controlOne, controlOne1];
       this.handleArrObservable = [controlOne, controlOne1];
-      this.handleMaxMargin = controlOne1;
+      this.handleMaxMargin = [controlOne, controlOne1];
     } else {
       control = new Control(this.parentElement, this.orientation, [controlOne]);
 
       this.handleArr = [controlOne];
       this.handleArrObservable = [controlOne];
+      this.handleMaxMargin = [controlOne];
     }
   }
 
@@ -85,7 +86,7 @@ export default class ControlFacade {
     setInterval(() => {
       if (this.parentElement.offsetWidth !== this.size) {
         if (this.handleMaxMargin !== null)
-          this.handleMaxMargin.SetMaxMargin(100);
+          this.handleMaxMargin[0].SetMaxMargin(100);
         this.handleArr.forEach(el => {
           el.SetCurrentMarginPercent(el.GetSetSelectValue());
           this.size = this.parentElement.offsetWidth;
