@@ -1,16 +1,16 @@
 ## **Слайдер**
 
-[Demo](https://dgrtf.github.io/FSDSlider/)
+[Демонстрация](https://dgrtf.github.io/FSDSlider/)
 
 JQuery плагин слайдер.
 
-### *Содержание*
+### Содержание.
 - [Использование](#использование)
 - [API](#API)
 - [UML диаграмма](#диаграмма)
 
 
-### Использование
+### Использование.
 Создаем слайдер:
 ```javascript
 $('#slider').slider();
@@ -33,7 +33,8 @@ const slider = $('#slider').slider({
 
 ```
 
-### API
+### API.
+
 #### События:
 - изменение значения `'AddHandlerChangeValue'`
 
