@@ -1,6 +1,6 @@
 ## **Слайдер**
 
-Demos: [смотреть](https://dgrtf.github.io/FSDSlider/)
+[Demo](https://dgrtf.github.io/FSDSlider/)
 
 JQuery плагин слайдер.
 
