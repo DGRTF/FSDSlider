@@ -63,7 +63,7 @@ export class ModelNumber implements IModel, IModelObservable, IControlObserverCo
       let stepValue: number;
 
       if ((currentValue % this.step) / this.step > 0.5) {
-        stepValue = ((this.differentValue * percent) / 100 - (currentValue % this.step)) / this.step+1;
+        stepValue = ((this.differentValue * percent) / 100 - (currentValue % this.step)) / this.step + 1;
       }
       else {
         stepValue = ((this.differentValue * percent) / 100 - (currentValue % this.step)) / this.step;
@@ -79,8 +79,11 @@ export class ModelNumber implements IModel, IModelObservable, IControlObserverCo
         this.selectValue = `${val}`;
       }
 
-      this.Notify();
-    }
+    } else if (percent < 0) {
+      this.selectValue = `${this.minValue}`;
+    } else
+      this.selectValue = `${this.maxValue}`;
+    this.Notify();
   }
 
   AddObserver(modelObserver: IModelObserver): void {

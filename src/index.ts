@@ -75,7 +75,7 @@ $(document).ready(function ($) {
         this.viewArr = [view];
         this.modelObserverArr = [modelNumber];
       }
-
+      
       this.SetValuePercent(20, 0);
       this.SetValuePercent(80, 1);
 
