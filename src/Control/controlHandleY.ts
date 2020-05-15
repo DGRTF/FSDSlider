@@ -72,16 +72,13 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
     this.currentMargin = this.handleY - this.mouseY + event.pageY;
     this.currentMargin -= this.parentElement.getBoundingClientRect().top;
     this.maxSpace = this.parentElement.offsetHeight;
-    this.setSelectValue = this.parentElement.offsetHeight
-      - this.currentMargin - this.handle.offsetHeight / 2;
-    this.setSelectValue = (this.setSelectValue / this.maxSpace) * 100;
     if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
       this.handle.style.top = `${this.currentMargin}px`;
       this.setSelectValue = this.parentElement.offsetHeight
         - this.currentMargin - this.handle.offsetHeight / 2;
       this.setSelectValue = (this.setSelectValue / this.maxSpace) * 100;
+      this.Notify();
     }
-    this.Notify();
   }
 
   private AddEventTouchMove(event: TouchEvent) {
@@ -94,16 +91,21 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
     this.currentMargin = this.handleY - this.mouseY + event.targetTouches[0].pageY;
     this.currentMargin -= this.parentElement.getBoundingClientRect().top;
     this.maxSpace = this.parentElement.offsetHeight;
-    // if (this.currentMargin <= this.maxSpace - this.handle.offsetHeight / 2
-    //   && this.currentMargin >= 0 - this.handle.offsetHeight / 2) {
     if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
       this.handle.style.top = `${this.currentMargin}px`;
       this.setSelectValue = this.parentElement.offsetHeight
         - this.currentMargin - this.handle.offsetHeight / 2;
       this.setSelectValue = (this.setSelectValue / this.maxSpace) * 100;
-      this.Notify();
+    }else{
+      if(this.currentMargin < this.minMargin){
+        this.handle.style.left = `${this.minMargin}px`;
+        this.setSelectValue = (this.minMargin + this.handle.offsetWidth / 2) / this.maxSpace * 100;
+      }else{
+        this.handle.style.left = `${this.maxMargin}px`;
+        this.setSelectValue = (this.maxMargin + this.handle.offsetWidth / 2) / this.maxSpace * 100;
+      }
     }
-    // }
+    this.Notify();
   }
 
   private move = this.MoveBlock.bind(this);

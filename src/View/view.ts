@@ -6,6 +6,7 @@ export interface IView {
   GetValue(selectValue: string): void;
   ShowView(): void;
   HiddenView(): void;
+  AddClassesCss(classes: string): void;
 }
 
 export class View implements IView, IModelObserver, IControlObserverCoordinate {
@@ -58,4 +59,9 @@ export class View implements IView, IModelObserver, IControlObserverCoordinate {
       }
     }
   }
+
+  AddClassesCss(classes: string){
+    this.selectValueElement.className += classes;
+  }
+
 }

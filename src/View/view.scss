@@ -2,7 +2,6 @@
 {
     &-horizontal
     {
-        // display: inline-block;
         width: 150px;
         position: absolute;
         text-align: center;
@@ -12,7 +11,6 @@
 
     &-vertical
     {
-        // display: inline-block;
         width: 30px;
         height: 18px;
         line-height: 18px;
@@ -20,5 +18,15 @@
         text-align: center;
         left: 20px;
         color: rgb(98, 117, 161);
+    }
+
+    &-vertical-offset
+    {
+        left: -50px;
+    }
+
+    &-horizontal-offset
+    {
+        top: -23px;
     }
 }

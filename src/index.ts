@@ -75,6 +75,12 @@ $(document).ready(function ($) {
         this.viewArr = [view];
         this.modelObserverArr = [modelNumber];
       }
+
+      if(sliderOb.orientation){
+        this.AddClassesCssView(" slider-view-horizontal-offset", 0);
+      }else{
+        this.AddClassesCssView(" slider-view-vertical-offset", 0);
+      }
       
       this.SetValuePercent(20, 0);
       this.SetValuePercent(80, 1);
@@ -159,6 +165,13 @@ $(document).ready(function ($) {
         return this.modelArr[numb].GetSelectValue();
       }
     }
+
+    AddClassesCssView(classes: string, item: number){
+      if (item < this.viewArr.length && item >= 0) {
+        this.viewArr[item].AddClassesCss(classes);
+      }
+    }
+
   }
 
   let methods: Methods = null;
