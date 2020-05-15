@@ -4,7 +4,7 @@ import "./demo.scss";
 
 class Demo {
   constructor(
-    { parentElement, minValue = -10000, maxValue = 10000, range = true, orientation = false }
+    { parentElement, minValue = -10000, maxValue = 10000, range = true, orientation = true }
   ) {
     this.range = range;
     this.orientation = orientation;
@@ -20,14 +20,11 @@ class Demo {
   Init() {
     this.slider = $(this.parentElement).find('.parent');
     this.slider.RangeSliderInit({
-      minValue: this.minValue, maxValue: this.maxValue, range: this.range
+      minValue: this.minValue, maxValue: this.maxValue, range: this.range, orientation: this.orientation
     });
 
     this.showCurrentValueMax = this.parentElement.querySelector(".js-max-select-value-one");
     this.showCurrentValueMin = this.parentElement.querySelector(".js-min-select-value-one");
-
-    this.showCurrentValueMax.value = this.minValue;
-    this.showCurrentValueMin.value = this.maxValue;
 
     this._ShowCurrentValue();
     this._SetMinPossibleValue();
@@ -59,6 +56,7 @@ class Demo {
 
   _SetMinPossibleValue() {
     let minValueOne = this.parentElement.querySelector(".js-min-value-one");
+    minValueOne.value = this.minValue;
     minValueOne.addEventListener("change", (element) => {
       this.slider.RangeSliderInit("SetMinValue", Number(element.currentTarget.value));
     });
@@ -66,6 +64,7 @@ class Demo {
 
   _SetMaxPossibleValue() {
     let maxValueOne = this.parentElement.querySelector(".js-max-value-one");
+    maxValueOne.value = this.maxValue;
     maxValueOne.addEventListener("change", (element) => {
       this.slider.RangeSliderInit("SetMaxValue", Number(element.currentTarget.value));
     });
@@ -120,6 +119,10 @@ parent.forEach((el, item) => {
     new Demo({ parentElement: el, range: false });
   }
   else {
-    new Demo({ parentElement: el });
+    if (item === 1) {
+      new Demo({ parentElement: el, orientation: false});
+    } else {
+      new Demo({ parentElement: el });
+    }
   }
 });

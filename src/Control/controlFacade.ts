@@ -86,11 +86,11 @@ export default class ControlFacade {
     setInterval(() => {
       if (this.parentElement.offsetWidth !== this.size) {
         if (this.handleMaxMargin !== null)
-          this.handleMaxMargin[0].SetMaxMargin(100);
+          this.handleMaxMargin[this.handleMaxMargin.length-1].SetMaxMargin(100);
         this.handleArr.forEach(el => {
           el.SetCurrentMarginPercent(el.GetSetSelectValue());
-          this.size = this.parentElement.offsetWidth;
         });
+        this.size = this.parentElement.offsetWidth;
       }
     }, 50);
   }

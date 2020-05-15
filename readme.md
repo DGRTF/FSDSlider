@@ -28,7 +28,7 @@ const slider = $('#slider').slider({
     min: 0, // минимально возможное значение
     max: 100, // максимально возможное значение
     range: false, // диапазон
-    orientation: false, // ориентация (true - горизонтальная)
+    orientation: true, // ориентация (true - горизонтальная)
 });
 
 ```
