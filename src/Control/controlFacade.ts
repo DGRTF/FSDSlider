@@ -5,6 +5,7 @@ import HandleX from './controlHandleX';
 import HandleY from './controlHandleY';
 import MinMargin from './controlMinMargin';
 import MaxMargin from './controlMaxMargin';
+import ScaleSetMargin from './scaleSetMargin';
 
 
 export default class ControlFacade {
@@ -52,12 +53,15 @@ export default class ControlFacade {
     }
 
     let control;
+      
+    let scaleSetMargin = new ScaleSetMargin(this.parentElement, this.orientation);
 
     if (this.range) {
       control = new Control(this.parentElement, this.orientation, [controlOne, controlOne1]);
 
       let minMargin;
       let maxMargin;
+      
       if (!this.orientation) {
         minMargin = new MinMargin([controlOne]);
         controlOne1.AddObserver(minMargin);
@@ -72,12 +76,17 @@ export default class ControlFacade {
       this.handleArr = [controlOne, controlOne1];
       this.handleArrObservable = [controlOne, controlOne1];
       this.handleMaxMargin = [controlOne, controlOne1];
+
+      scaleSetMargin.AddHandle(controlOne1);
+      scaleSetMargin.AddHandle(controlOne);
     } else {
       control = new Control(this.parentElement, this.orientation, [controlOne]);
 
       this.handleArr = [controlOne];
       this.handleArrObservable = [controlOne];
       this.handleMaxMargin = [controlOne];
+      
+      scaleSetMargin.AddHandle(controlOne);
     }
   }
 
