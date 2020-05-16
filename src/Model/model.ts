@@ -58,15 +58,15 @@ export class ModelNumber implements IModel, IModelObservable, IControlObserverCo
 
 
   SetCoordinatePercent(percent: number): void {
-    if (percent <= 100 && percent >= 0) {
-      const currentValue = (this.differentValue * percent) / 100;
+    if (percent <= 1 && percent >= 0) {
+      const currentValue = this.differentValue * percent;
       let stepValue: number;
 
       if ((currentValue % this.step) / this.step > 0.5) {
-        stepValue = ((this.differentValue * percent) / 100 - (currentValue % this.step)) / this.step + 1;
+        stepValue = (this.differentValue * percent - (currentValue % this.step)) / this.step + 1;
       }
       else {
-        stepValue = ((this.differentValue * percent) / 100 - (currentValue % this.step)) / this.step;
+        stepValue = (this.differentValue * percent - (currentValue % this.step)) / this.step;
       }
 
       let val: number;
@@ -108,7 +108,7 @@ export class ModelNumber implements IModel, IModelObservable, IControlObserverCo
   PercentInValue(selectValue: number): number {
     let percent = null;
     if (selectValue <= this.maxValue && selectValue >= this.minValue) {
-      percent = (selectValue - this.minValue) / this.differentValue * 100;
+      percent = (selectValue - this.minValue) / this.differentValue;
     }
     return percent;
   }

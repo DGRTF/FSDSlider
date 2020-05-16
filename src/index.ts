@@ -82,8 +82,8 @@ $(document).ready(function ($) {
         this.AddClassesCssView(" slider-view-vertical-offset", 0);
       }
       
-      this.SetValuePercent(20, 0);
-      this.SetValuePercent(80, 1);
+      this.SetValuePercent(.2, 0);
+      this.SetValuePercent(.8, 1);
 
     }
 

@@ -27,13 +27,14 @@ export default class ControlFacade {
 
   private handleArrObservable: IControlObservable[];
 
-  private handleMaxMargin: IControlMax[] = null;
+  private handleMaxMargin: IControlMax[] = [];
 
   private size: number;
 
   private Init() {
 
-    this.IntervalCheckSize();
+    if (this.orientation)
+      this.IntervalCheckSize();
     let controlOne;
 
     if (this.orientation) {
@@ -53,7 +54,7 @@ export default class ControlFacade {
     }
 
     let control;
-      
+
     let scaleSetMargin = new ScaleSetMargin(this.parentElement, this.orientation);
 
     if (this.range) {
@@ -61,7 +62,7 @@ export default class ControlFacade {
 
       let minMargin;
       let maxMargin;
-      
+
       if (!this.orientation) {
         minMargin = new MinMargin([controlOne]);
         controlOne1.AddObserver(minMargin);
@@ -85,20 +86,25 @@ export default class ControlFacade {
       this.handleArr = [controlOne];
       this.handleArrObservable = [controlOne];
       this.handleMaxMargin = [controlOne];
-      
+
       scaleSetMargin.AddHandle(controlOne);
     }
   }
 
-  private IntervalCheckSize(){
+  private IntervalCheckSize() {
     this.size = this.parentElement.offsetWidth;
     setInterval(() => {
       if (this.parentElement.offsetWidth !== this.size) {
-        if (this.handleMaxMargin !== null)
-          this.handleMaxMargin[this.handleMaxMargin.length-1].SetMaxMargin(100);
-        this.handleArr.forEach(el => {
-          el.SetCurrentMarginPercent(el.GetSetSelectValue());
-        });
+        this.handleMaxMargin[this.handleMaxMargin.length - 1].SetMaxMargin(1);
+        if (this.parentElement.offsetWidth > this.size){
+          for (let i = this.handleArr.length-1; i >= 0; i--) {
+            this.handleArr[i].SetCurrentMarginPercent(this.handleArr[i].GetSetSelectValue())
+          }
+        }
+        else
+          this.handleArr.forEach(el => {
+            el.SetCurrentMarginPercent(el.GetSetSelectValue());
+          });
         this.size = this.parentElement.offsetWidth;
       }
     }, 50);

@@ -71,12 +71,10 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
   private MoveBlock(event: MouseEvent) {
     this.currentMargin = this.handleY - this.mouseY + event.pageY;
     this.currentMargin -= this.parentElement.getBoundingClientRect().top;
-    this.maxSpace = this.parentElement.offsetHeight;
     if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
       this.handle.style.top = `${this.currentMargin}px`;
-      this.setSelectValue = this.parentElement.offsetHeight
-        - this.currentMargin - this.handle.offsetHeight / 2;
-      this.setSelectValue = (this.setSelectValue / this.maxSpace) * 100;
+      this.setSelectValue = this.currentMargin + this.handle.offsetHeight / 2;
+      this.setSelectValue = 1 - this.setSelectValue / this.parentElement.offsetHeight;
       this.Notify();
     }
   }
@@ -96,11 +94,11 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
       this.setSelectValue = this.parentElement.offsetHeight
         - this.currentMargin - this.handle.offsetHeight / 2;
       this.setSelectValue = (this.setSelectValue / this.maxSpace) * 100;
-    }else{
-      if(this.currentMargin < this.minMargin){
+    } else {
+      if (this.currentMargin < this.minMargin) {
         this.handle.style.left = `${this.minMargin}px`;
         this.setSelectValue = (this.minMargin + this.handle.offsetWidth / 2) / this.maxSpace * 100;
-      }else{
+      } else {
         this.handle.style.left = `${this.maxMargin}px`;
         this.setSelectValue = (this.maxMargin + this.handle.offsetWidth / 2) / this.maxSpace * 100;
       }
@@ -113,10 +111,13 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
   private moveTouch = this.MoveBlockTouch.bind(this);
 
   SetCurrentMarginPercent(percent: number) {
-    if (percent <= 100 && percent >= 0) {
-      this.maxSpace = this.parentElement.offsetHeight;
-      this.currentMargin = (this.maxSpace * (100 - percent)) / 100 - this.handle.offsetHeight / 2;
+    console.warn(percent);
+    if (percent <= 1 && percent >= 0) {
+      this.currentMargin = this.parentElement.offsetHeight * (1 - percent) - this.handle.offsetHeight / 2;
+      console.warn(this.minMargin);
+    console.warn(this.maxMargin);
       if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
+        console.warn(percent);
         this.setSelectValue = percent;
         this.handle.style.top = `${this.currentMargin}px`;
       }
@@ -125,16 +126,16 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
   }
 
   SetMinMargin(minMargin: number) {
-    if (minMargin <= 100 && minMargin >= 0) {
-      this.minMargin = this.parentElement.offsetHeight * (100 - minMargin);
-      this.minMargin = this.minMargin / 100 - this.handle.offsetHeight / 2;
+    if (minMargin <= 1 && minMargin >= 0) {
+      this.minMargin = this.parentElement.offsetHeight * (1 - minMargin);
+      this.minMargin = this.minMargin - this.handle.offsetHeight / 2;
     }
   }
 
   SetMaxMargin(maxMargin: number) {
-    if (maxMargin <= 100 && maxMargin >= 0) {
-      this.maxMargin = this.parentElement.offsetHeight * (100 - maxMargin);
-      this.maxMargin = this.maxMargin / 100 - this.handle.offsetHeight / 2;
+    if (maxMargin <= 1 && maxMargin >= 0) {
+      this.maxMargin = this.parentElement.offsetHeight * (1 - maxMargin);
+      this.maxMargin = this.maxMargin - this.handle.offsetHeight / 2;
     }
   }
 

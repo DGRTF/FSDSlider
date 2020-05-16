@@ -57,9 +57,6 @@ export class Control {
     }
 
     this.range = document.createElement('div');
-    this.range.style.width = '100%';
-    this.range.style.height = '100%';
-    this.range.style.background = 'rgb(115, 177, 192)';
     this.trackElement.appendChild(this.range);
 
     let progressLast;
@@ -81,6 +78,7 @@ export class Control {
   }
 
   private AddClasses() {
+    this.range.className = "slider-progress-range";
     if (this.orientation) {
       this.trackElement.className += ' slider-track-element';
     } else {

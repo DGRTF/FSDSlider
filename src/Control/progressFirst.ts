@@ -34,11 +34,11 @@ export default class ProgressFirst implements IControlObserverCoordinate {
   }
 
   SetCoordinatePercent(coordinatePercent: number) {
-    if (coordinatePercent <= 100 && coordinatePercent >= 0) {
+    if (coordinatePercent <= 1 && coordinatePercent >= 0) {
       if (this.orientation) {
-        this.progressElement.style.minWidth = `${(this.parentElement.offsetWidth * coordinatePercent) / 100}px`;
+        this.progressElement.style.minWidth = `${this.parentElement.offsetWidth * coordinatePercent}px`;
       } else {
-        this.progressElement.style.minHeight = `${(this.parentElement.offsetHeight * (100 - coordinatePercent)) / 100}px`;
+        this.progressElement.style.minHeight = `${this.parentElement.offsetHeight * (1 - coordinatePercent)}px`;
       }
     }
   }

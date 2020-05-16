@@ -1,10 +1,5 @@
 import { IHandle } from "./control";
 
-interface SetMargin {
-  SetCurrentMarginPercent(percent: number): void;
-}
-
-
 export default class ScaleSetMargin {
   constructor(parentElement: HTMLElement, orientation: boolean = true) {
     this.parentElement = parentElement;
@@ -18,6 +13,12 @@ export default class ScaleSetMargin {
 
   private scale: HTMLElement;
 
+  private lineFirst: HTMLElement;
+
+  private centralLine: HTMLElement;
+
+  private lineLast: HTMLElement;
+
   private movePercent: IHandle[] = [];
 
   private percent: number;
@@ -26,16 +27,31 @@ export default class ScaleSetMargin {
 
   private Init() {
     this.scale = document.createElement("div");
+    this.lineFirst = document.createElement("div");
+    this.centralLine = document.createElement("div");
+    this.lineLast = document.createElement("div");
+
+    this.scale.appendChild(this.lineFirst);
+    this.scale.appendChild(this.centralLine);
+    this.scale.appendChild(this.lineLast);
+
     this.parentElement.appendChild(this.scale);
     this.AdddClasses();
     this.AdddHandle();
   }
 
   private AdddClasses() {
-    if (this.orientation)
+    if (this.orientation) {
       this.scale.className = " slider-scaleSetMargin-horizontal";
-    else
+      this.lineFirst.className = " slider-scaleSetMargin-line"
+      this.centralLine.className = " slider-scaleSetMargin-central-line"
+      this.lineLast.className = " slider-scaleSetMargin-line"
+    } else {
       this.scale.className = " slider-scaleSetMargin-vertical";
+      this.lineFirst.className = " slider-scaleSetMargin-line-vertical"
+      this.centralLine.className = " slider-scaleSetMargin-central-line-vertical"
+      this.lineLast.className = " slider-scaleSetMargin-line-vertical"
+    }
   }
 
   private AdddHandle() {
@@ -44,9 +60,9 @@ export default class ScaleSetMargin {
 
   private PercentInit(event: MouseEvent) {
     if (this.orientation)
-      this.percent = (event.pageX - this.parentElement.getBoundingClientRect().left) / this.parentElement.offsetWidth * 100;
+      this.percent = (event.clientX - this.parentElement.getBoundingClientRect().left) / this.parentElement.offsetWidth;
     else
-      this.percent = (event.pageY - this.parentElement.getBoundingClientRect().top) / this.parentElement.offsetHeight * 100;
+      this.percent = 1 - (event.clientY - this.parentElement.getBoundingClientRect().top) / this.parentElement.offsetHeight;
 
     this.SearchNear();
   }
@@ -68,8 +84,10 @@ export default class ScaleSetMargin {
 
   private Move() {
     this.movePercent.forEach(el => {
-      if (Math.abs(el.GetSetSelectValue() - this.percent) === this.marginPercentArr[0])
+      if (Math.abs(el.GetSetSelectValue() - this.percent) === this.marginPercentArr[0]) {
+        console.warn(this.percent);
         el.SetCurrentMarginPercent(this.percent);
+      }
     });
   }
 
