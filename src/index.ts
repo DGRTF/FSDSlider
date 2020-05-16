@@ -172,6 +172,14 @@ $(document).ready(function ($) {
       }
     }
 
+    HideScale() {
+      this.controlFacade.HideScale();
+    }
+  
+    ShowScale() {
+      this.controlFacade.ShowScale();
+    }
+
   }
 
   let methods: Methods = null;

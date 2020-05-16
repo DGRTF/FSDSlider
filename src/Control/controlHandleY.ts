@@ -111,13 +111,9 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
   private moveTouch = this.MoveBlockTouch.bind(this);
 
   SetCurrentMarginPercent(percent: number) {
-    console.warn(percent);
     if (percent <= 1 && percent >= 0) {
       this.currentMargin = this.parentElement.offsetHeight * (1 - percent) - this.handle.offsetHeight / 2;
-      console.warn(this.minMargin);
-    console.warn(this.maxMargin);
       if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
-        console.warn(percent);
         this.setSelectValue = percent;
         this.handle.style.top = `${this.currentMargin}px`;
       }

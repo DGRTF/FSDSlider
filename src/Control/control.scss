@@ -102,8 +102,8 @@
         position: absolute;
         height: 20px;
         width: 100%;
-        border-left: 1px solid black;
-        border-right:1px solid black;
+        border-left: 1px solid rgb(7, 127, 226);
+        border-right:1px solid rgb(7, 127, 226);
         top: 40px;
         box-sizing: border-box;
     }
@@ -117,8 +117,8 @@
         position: absolute;
         height: 100%;
         width: 20px;
-        border-top: 1px solid black;
-        border-bottom: 1px solid black;
+        border-top: 1px solid rgb(7, 127, 226);
+        border-bottom: 1px solid rgb(7, 127, 226);
         left: 60px;
         box-sizing: border-box;
 
@@ -126,30 +126,35 @@
 
     &-scaleSetMargin
     {
+        &-hidden
+        {
+            display: none;
+        }
+
         &-central-line
         {
-            border-right: 1px solid black;
+            border-right: 1px solid rgb(7, 127, 226);
             height: 100%;
             box-sizing: border-box;
         }
 
         &-line
         {
-            border-top: 1px solid black;
+            border-top: 1px solid rgb(7, 127, 226);
             box-sizing: border-box;
             width: 45%;
         }
 
         &-central-line-vertical
         {
-            border-top: 1px solid black;
+            border-top: 1px solid rgb(7, 127, 226);
             width: 100%;
             box-sizing: border-box;
         }
 
         &-line-vertical
         {
-            border-left: 1px solid black;
+            border-left: 1px solid rgb(7, 127, 226);
             box-sizing: border-box;
             height: 45%;
         }

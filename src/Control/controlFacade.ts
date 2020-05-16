@@ -31,6 +31,8 @@ export default class ControlFacade {
 
   private size: number;
 
+  private scale: ScaleSetMargin;
+
   private Init() {
 
     if (this.orientation)
@@ -55,7 +57,7 @@ export default class ControlFacade {
 
     let control;
 
-    let scaleSetMargin = new ScaleSetMargin(this.parentElement, this.orientation);
+    this.scale = new ScaleSetMargin(this.parentElement, this.orientation);
 
     if (this.range) {
       control = new Control(this.parentElement, this.orientation, [controlOne, controlOne1]);
@@ -78,8 +80,8 @@ export default class ControlFacade {
       this.handleArrObservable = [controlOne, controlOne1];
       this.handleMaxMargin = [controlOne, controlOne1];
 
-      scaleSetMargin.AddHandle(controlOne1);
-      scaleSetMargin.AddHandle(controlOne);
+      this.scale.AddHandle(controlOne1);
+      this.scale.AddHandle(controlOne);
     } else {
       control = new Control(this.parentElement, this.orientation, [controlOne]);
 
@@ -87,7 +89,7 @@ export default class ControlFacade {
       this.handleArrObservable = [controlOne];
       this.handleMaxMargin = [controlOne];
 
-      scaleSetMargin.AddHandle(controlOne);
+      this.scale.AddHandle(controlOne);
     }
   }
 
@@ -128,4 +130,13 @@ export default class ControlFacade {
       this.handleArrObservable[numb].DeleteObserver(observer);
     }
   }
+
+  HideScale() {
+    this.scale.HideScale();
+  }
+
+  ShowScale() {
+    this.scale.ShowScale();
+  }
+
 }

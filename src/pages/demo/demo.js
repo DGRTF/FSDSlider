@@ -33,6 +33,7 @@ class Demo {
     this._SetMaxValue();
     this._SetStep();
     this._ShowOrHiddenValue();
+    this._ShowOrHiddenScale();
   }
 
   _ShowCurrentValue() {
@@ -108,6 +109,22 @@ class Demo {
         }
       });
     });
+
+  }
+
+  _ShowOrHiddenScale() {
+    let check = this.parentElement.querySelectorAll(".checkbox__label_move")[2];
+
+    let change = true;
+    check.addEventListener("click", () => {
+        if (change) {
+          this.slider.RangeSliderInit("HideScale");
+          change = false;
+        } else {
+          this.slider.RangeSliderInit("ShowScale");
+          change = true;
+        }
+      });
 
   }
 }

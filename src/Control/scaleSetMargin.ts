@@ -84,14 +84,21 @@ export default class ScaleSetMargin {
 
   private Move() {
     this.movePercent.forEach(el => {
-      if (Math.abs(el.GetSetSelectValue() - this.percent) === this.marginPercentArr[0]) {
-        console.warn(this.percent);
+      if (Math.abs(el.GetSetSelectValue() - this.percent) === this.marginPercentArr[0])
         el.SetCurrentMarginPercent(this.percent);
-      }
     });
   }
 
   AddHandle(handle: IHandle) {
     this.movePercent.push(handle);
   }
+
+  HideScale() {
+    this.scale.classList.add("slider-scaleSetMargin-hidden");
+  }
+
+  ShowScale() {
+    this.scale.classList.remove("slider-scaleSetMargin-hidden");
+  }
+
 }
