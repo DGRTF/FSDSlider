@@ -75,8 +75,17 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
       this.handle.style.top = `${this.currentMargin}px`;
       this.setSelectValue = this.currentMargin + this.handle.offsetHeight / 2;
       this.setSelectValue = 1 - this.setSelectValue / this.parentElement.offsetHeight;
-      this.Notify();
+    } else {
+      if (this.currentMargin < this.minMargin) {
+        this.handle.style.top = `${this.minMargin}px`;
+        this.setSelectValue = 1 - (this.minMargin + this.handle.offsetHeight / 2) / this.parentElement.offsetHeight;
+      } else {
+        this.handle.style.top = `${this.maxMargin}px`;
+        this.setSelectValue = 1 - (this.maxMargin + this.handle.offsetHeight / 2) / this.parentElement.offsetHeight;
+      }
     }
+    console.warn(this.setSelectValue);
+    this.Notify();
   }
 
   private AddEventTouchMove(event: TouchEvent) {

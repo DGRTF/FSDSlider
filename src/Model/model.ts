@@ -58,7 +58,7 @@ export class ModelNumber implements IModel, IModelObservable, IControlObserverCo
 
 
   SetCoordinatePercent(percent: number): void {
-    if (percent <= 1 && percent >= 0) {
+    if (percent < 1 && percent > 0) {
       const currentValue = this.differentValue * percent;
       let stepValue: number;
 
@@ -79,7 +79,7 @@ export class ModelNumber implements IModel, IModelObservable, IControlObserverCo
         this.selectValue = `${val}`;
       }
 
-    } else if (percent < 0) {
+    } else if (percent <= 0) {
       this.selectValue = `${this.minValue}`;
     } else
       this.selectValue = `${this.maxValue}`;
