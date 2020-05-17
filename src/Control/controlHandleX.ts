@@ -159,6 +159,8 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
     return this.setSelectValue;
   }
 
+
+
   // get values for tests
   GetMinMargin(): number {
     return this.minMargin;

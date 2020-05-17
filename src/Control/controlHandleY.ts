@@ -84,7 +84,6 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
         this.setSelectValue = 1 - (this.maxMargin + this.handle.offsetHeight / 2) / this.parentElement.offsetHeight;
       }
     }
-    console.warn(this.setSelectValue);
     this.Notify();
   }
 

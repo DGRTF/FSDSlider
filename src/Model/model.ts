@@ -16,10 +16,13 @@ export interface IModel {
   SetMaxValue(maxValue: number): void;
   SetMinValue(minValue: number): void;
   GetSelectValue(): string;
-  // AddHandlerChangeValue(listener: EventListenerOrEventListenerObject): void;
 }
 
-export class ModelNumber implements IModel, IModelObservable, IControlObserverCoordinate {
+export interface IValue {
+  ValueInPercent(percent: number): number;
+}
+
+export class ModelNumber implements IModel, IModelObservable, IControlObserverCoordinate, IValue {
 
   private minValue: number;
 
@@ -137,6 +140,14 @@ export class ModelNumber implements IModel, IModelObservable, IControlObserverCo
 
   GetSelectValue(): string {
     return this.selectValue;
+  }
+
+  ValueInPercent(percent: number): number {
+    let value: number = null;
+    if (percent <= 1 && percent >= 0) {
+      value = this.minValue + this.differentValue * percent;
+    }
+    return value;
   }
 
 

@@ -6,6 +6,7 @@ import './View/view.scss';
 import './index.scss';
 import './Control/control.scss';
 import AddListener from './Model/addListener';
+import ScaleValue from './View/scaleValue';
 
 $(document).ready(function ($) {
 
@@ -24,6 +25,8 @@ $(document).ready(function ($) {
     private controlFacade: ControlFacade;
 
     private parentElement: HTMLElement;
+
+    private scale: ScaleValue;
 
     Initialize(sliderOb:
       {
@@ -57,6 +60,7 @@ $(document).ready(function ($) {
       this.controlFacade.AddObserverHandle(modelNumber, 0);
       modelNumber.AddObserver(view);
 
+
       if (sliderOb.range) {
         const modelNumber1 = new ModelNumber(sliderOb.minValue, sliderOb.maxValue);
 
@@ -76,14 +80,17 @@ $(document).ready(function ($) {
         this.modelObserverArr = [modelNumber];
       }
 
-      if(sliderOb.orientation){
+      if (sliderOb.orientation) {
         this.AddClassesCssView(" slider-view-horizontal-offset", 0);
-      }else{
+      } else {
         this.AddClassesCssView(" slider-view-vertical-offset", 0);
       }
-      
+
       this.SetValuePercent(.2, 0);
       this.SetValuePercent(.8, 1);
+
+      
+      this.scale = new ScaleValue(this.parentElement, modelNumber, sliderOb.orientation);
 
     }
 
@@ -119,7 +126,7 @@ $(document).ready(function ($) {
 
     SetMaxValue(maxValue: number) {
       let percent: number;
-      if (maxValue < Number(this.modelArr[this.modelArr.length-1].GetSelectValue())) {
+      if (maxValue < Number(this.modelArr[this.modelArr.length - 1].GetSelectValue())) {
         for (let i = this.modelArr.length - 1; i >= 0; i--) {
           this.modelArr[i].SetMaxValue(maxValue);
           if (maxValue < Number(this.modelArr[i].GetSelectValue())) {
@@ -129,11 +136,13 @@ $(document).ready(function ($) {
           }
           this.SetValuePercent(percent, i);
         }
+        this.scale.SetValues();
       } else {
         this.modelArr.forEach((el, item) => {
           el.SetMaxValue(maxValue);
           this.SetValue(Number(el.GetSelectValue()), item);
         });
+        this.scale.SetValues();
       }
     }
 
@@ -146,11 +155,13 @@ $(document).ready(function ($) {
           else
             this.SetValue(Number(el.GetSelectValue()), item);
         });
+        this.scale.SetValues();
       } else {
         for (let i = this.modelArr.length - 1; i >= 0; i--) {
           this.modelArr[i].SetMinValue(minValue);
           this.SetValue(Number(this.modelArr[i].GetSelectValue()), i);
         }
+        this.scale.SetValues();
       }
 
     }
@@ -167,7 +178,7 @@ $(document).ready(function ($) {
       }
     }
 
-    AddClassesCssView(classes: string, item: number){
+    AddClassesCssView(classes: string, item: number) {
       if (item < this.viewArr.length && item >= 0) {
         this.viewArr[item].AddClassesCss(classes);
       }
@@ -176,7 +187,7 @@ $(document).ready(function ($) {
     HideScale() {
       this.controlFacade.HideScale();
     }
-  
+
     ShowScale() {
       this.controlFacade.ShowScale();
     }

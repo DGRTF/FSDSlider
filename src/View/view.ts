@@ -3,7 +3,6 @@ import { IControlObserverCoordinate } from '../Control/control';
 
 
 export interface IView {
-  GetValue(selectValue: string): void;
   ShowView(): void;
   HiddenView(): void;
   AddClassesCss(classes: string): void;

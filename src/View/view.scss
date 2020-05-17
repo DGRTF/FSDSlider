@@ -29,4 +29,57 @@
     {
         top: -23px;
     }
+
+
+
+    &-scale-value
+    {
+        position: absolute;
+        top: 70px;
+        width: 100%;
+    }
+
+    &-scale-value-vertical
+    {
+        position: absolute;
+        left: 100px;
+        height: 100%;
+    }
+
+    &-scale-values
+    {
+        width: 150px;
+        position: absolute;
+        text-align: center;
+        color: rgb(98, 117, 161);
+    }
+
+    &-scale-central-value
+    {
+        position: relative;
+        margin: auto;
+        right: auto;
+    }
+
+    &-scale-min-value
+    {
+        left: -75px;
+    }
+
+    &-scale-max-value
+    {
+        right: -75px;
+        top: 0;
+    }
+
+    &-scale-min-value-vertical
+    {
+        bottom: -10px;
+    }
+
+    &-scale-max-value-vertical
+    {
+        top: -10px;
+    }
+
 }
