@@ -64,6 +64,7 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
   }
 
   private AddEventMouseMove(event: MouseEvent) {
+    this.handle.classList.add("slider-foreground");
     this.mouseX = event.clientX;
     document.addEventListener('mousemove', this.move);
     this.handleX = this.handle.getBoundingClientRect().left;
@@ -128,12 +129,14 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
     if (minMargin <= 1 && minMargin >= 0) {
       this.minMargin = this.parentElement.offsetWidth * minMargin - this.handle.offsetWidth / 2;
     }
+    this.handle.classList.remove("slider-foreground");
   }
 
   SetMaxMargin(maxMargin: number) {
     if (maxMargin <= 1 && maxMargin >= 0) {
       this.maxMargin = this.parentElement.offsetWidth * maxMargin - this.handle.offsetWidth / 2;
     }
+    this.handle.classList.remove("slider-foreground");
   }
 
   AddObserver(controlObserver: IControlObserverCoordinate) {

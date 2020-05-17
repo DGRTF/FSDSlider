@@ -63,6 +63,7 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
   }
 
   private AddEventMouseMove(event: MouseEvent) {
+    this.handle.classList.add("slider-foreground");
     this.mouseY = event.pageY;
     document.addEventListener('mousemove', this.move);
     this.handleY = this.handle.getBoundingClientRect().top;
@@ -134,6 +135,7 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
       this.minMargin = this.parentElement.offsetHeight * (1 - minMargin);
       this.minMargin = this.minMargin - this.handle.offsetHeight / 2;
     }
+    this.handle.classList.remove("slider-foreground");
   }
 
   SetMaxMargin(maxMargin: number) {
@@ -141,6 +143,7 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
       this.maxMargin = this.parentElement.offsetHeight * (1 - maxMargin);
       this.maxMargin = this.maxMargin - this.handle.offsetHeight / 2;
     }
+    this.handle.classList.remove("slider-foreground");
   }
 
   AddObserver(controlObserver: IControlObserverCoordinate) {
