@@ -88,10 +88,10 @@ export default class ScaleValue {
   }
 
   HideScale(){
-    this.valuesContainer.hidden = true;
+    this.valuesContainer.classList.add("slider-view-hide");
   }
 
   ShowScale(){
-    this.valuesContainer.hidden = false;
+    this.valuesContainer.classList.remove("slider-view-hide");
   }
 }

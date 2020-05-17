@@ -42,44 +42,55 @@
     &-scale-value-vertical
     {
         position: absolute;
+        top: 0px;
         left: 100px;
         height: 100%;
+        display: flex;
+        align-items: center;
     }
 
     &-scale-values
     {
-        width: 150px;
+        width: 60px;
         position: absolute;
         text-align: center;
         color: rgb(98, 117, 161);
+        box-sizing: border-box;
+        border: 1px solid rgb(7, 127, 226);
+        border-radius: 3px;
+        height: 18px;
+        line-height: 18px;
     }
 
     &-scale-central-value
     {
         position: relative;
         margin: auto;
-        right: auto;
     }
 
     &-scale-min-value
     {
-        left: -75px;
+        left: -30px;
     }
 
     &-scale-max-value
     {
-        right: -75px;
+        right: -30px;
         top: 0;
     }
 
     &-scale-min-value-vertical
     {
-        bottom: -10px;
+        bottom: -9px;
     }
 
     &-scale-max-value-vertical
     {
-        top: -10px;
+        top: -9px;
     }
 
+    &-hide
+    {
+        display: none;
+    }
 }

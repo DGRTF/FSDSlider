@@ -89,7 +89,6 @@ $(document).ready(function ($) {
       this.SetValuePercent(.2, 0);
       this.SetValuePercent(.8, 1);
 
-      
       this.scale = new ScaleValue(this.parentElement, modelNumber, sliderOb.orientation);
 
     }
@@ -186,10 +185,12 @@ $(document).ready(function ($) {
 
     HideScale() {
       this.controlFacade.HideScale();
+      this.scale.HideScale();
     }
 
     ShowScale() {
       this.controlFacade.ShowScale();
+      this.scale.ShowScale();
     }
 
   }
