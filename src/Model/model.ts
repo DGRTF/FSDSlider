@@ -11,7 +11,7 @@ export interface IModelObserver {
 }
 
 export interface IModel {
-  PercentInValue(selectValue: number): number;
+  PercentInValue(selectValue: string): number;
   SetStep(step: number): void;
   SetMaxValue(maxValue: number): void;
   SetMinValue(minValue: number): void;
@@ -19,7 +19,7 @@ export interface IModel {
 }
 
 export interface IValue {
-  ValueInPercent(percent: number): number;
+  ValueInPercent(percent: number): string;
 }
 
 export class ModelNumber implements IModel, IModelObservable, IControlObserverCoordinate, IValue {
@@ -108,11 +108,13 @@ export class ModelNumber implements IModel, IModelObservable, IControlObserverCo
     }
   }
 
-  PercentInValue(selectValue: number): number {
+  PercentInValue(selectValue: string): number {
     let percent = null;
-    if (selectValue <= this.maxValue && selectValue >= this.minValue) {
-      percent = (selectValue - this.minValue) / this.differentValue;
-    }
+    let numberValue = Number(selectValue);
+    if (numberValue !== NaN)
+      if (numberValue <= this.maxValue && numberValue >= this.minValue) {
+        percent = (numberValue - this.minValue) / this.differentValue;
+      }
     return percent;
   }
 
@@ -142,10 +144,10 @@ export class ModelNumber implements IModel, IModelObservable, IControlObserverCo
     return this.selectValue;
   }
 
-  ValueInPercent(percent: number): number {
-    let value: number = null;
+  ValueInPercent(percent: number): string {
+    let value: string = null;
     if (percent <= 1 && percent >= 0) {
-      value = this.minValue + this.differentValue * percent;
+      value = `${this.minValue + this.differentValue * percent}`;
     }
     return value;
   }

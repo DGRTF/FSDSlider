@@ -28,7 +28,7 @@ describe('Class ModelNumber', () => {
     let valuesPercent: number[] = [-10, -120, 20, 80, 100, 120];
     let outputValues: number[] = [45, null, 60, 90, 100, null];
     valuesPercent.forEach((el, index) => {
-      let percent = modelNumber.PercentInValue(el);
+      let percent = modelNumber.PercentInValue(`${el}`);
       expect(percent).toEqual(outputValues[index]);
     });
   });

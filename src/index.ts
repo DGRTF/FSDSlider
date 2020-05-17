@@ -111,7 +111,7 @@ $(document).ready(function ($) {
 
     SetValue(selectValue: number, numb: number) {
       if (numb < this.modelArr.length && numb >= 0) {
-        let percent = this.modelArr[numb].PercentInValue(selectValue);
+        let percent = this.modelArr[numb].PercentInValue(`${selectValue}`);
         this.controlFacade.SetCurrentMarginPercent(percent, numb);
       }
     }
@@ -131,7 +131,7 @@ $(document).ready(function ($) {
           if (maxValue < Number(this.modelArr[i].GetSelectValue())) {
             percent = 100;
           } else {
-            percent = this.modelArr[i].PercentInValue(Number(this.modelArr[i].GetSelectValue()));
+            percent = this.modelArr[i].PercentInValue(this.modelArr[i].GetSelectValue());
           }
           this.SetValuePercent(percent, i);
         }

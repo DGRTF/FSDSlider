@@ -75,9 +75,9 @@ export default class ScaleValue {
 
   SetValues() {
     if (this.model !== null) {
-      this.minValue.innerText = `${this.model.ValueInPercent(0)}`;
-      this.middleValue.innerText = `${this.model.ValueInPercent(.5)}`;
-      this.maxValue.innerText = `${this.model.ValueInPercent(1)}`;
+      this.minValue.innerText = this.model.ValueInPercent(0);
+      this.middleValue.innerText = this.model.ValueInPercent(.5);
+      this.maxValue.innerText = this.model.ValueInPercent(1);
     }
   }
 
