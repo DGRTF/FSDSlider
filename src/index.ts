@@ -114,6 +114,7 @@ $(document).ready(function ($) {
       this.modelArr.forEach(el => {
         el.SetStep(step);
       })
+      this.controlFacade.UpdateHandle();
     }
 
     SetMaxValue(maxValue: number) {

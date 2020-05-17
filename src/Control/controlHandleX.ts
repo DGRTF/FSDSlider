@@ -75,11 +75,11 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
     if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
       this.handle.style.left = `${this.currentMargin}px`;
       this.setSelectValue = (this.currentMargin + this.handle.offsetWidth / 2) / this.parentElement.offsetWidth;
-    }else{
-      if(this.currentMargin < this.minMargin){
+    } else {
+      if (this.currentMargin < this.minMargin) {
         this.handle.style.left = `${this.minMargin}px`;
         this.setSelectValue = (this.minMargin + this.handle.offsetWidth / 2) / this.parentElement.offsetWidth;
-      }else{
+      } else {
         this.handle.style.left = `${this.maxMargin}px`;
         this.setSelectValue = (this.maxMargin + this.handle.offsetWidth / 2) / this.parentElement.offsetWidth;
       }
@@ -158,7 +158,6 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
   GetSetSelectValue(): number {
     return this.setSelectValue;
   }
-
 
   // get values for tests
   GetMinMargin(): number {

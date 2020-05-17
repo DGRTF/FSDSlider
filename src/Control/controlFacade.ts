@@ -98,8 +98,8 @@ export default class ControlFacade {
     setInterval(() => {
       if (this.parentElement.offsetWidth !== this.size) {
         this.handleMaxMargin[this.handleMaxMargin.length - 1].SetMaxMargin(1);
-        if (this.parentElement.offsetWidth > this.size){
-          for (let i = this.handleArr.length-1; i >= 0; i--) {
+        if (this.parentElement.offsetWidth > this.size) {
+          for (let i = this.handleArr.length - 1; i >= 0; i--) {
             this.handleArr[i].SetCurrentMarginPercent(this.handleArr[i].GetSetSelectValue())
           }
         }
@@ -137,6 +137,12 @@ export default class ControlFacade {
 
   ShowScale() {
     this.scale.ShowScale();
+  }
+
+  UpdateHandle() {
+    this.handleArr.forEach(el => {
+      el.SetCurrentMarginPercent(el.GetSetSelectValue());
+    });
   }
 
 }
