@@ -30,7 +30,7 @@ describe('Class MaxMargin', () => {
   });
 
   test('maxMargin.SetCoordinatePercent(coordinatePercent: number) Делегирует методу наблюдателя отступ в процентах', () => {
-    maxMargin.SetCoordinatePercent(20);
-    expect(observerMax.maxMargin).toEqual(20);
+    maxMargin.SetCoordinatePercent(.2);
+    expect(observerMax.maxMargin).toEqual(.2);
   });
 });

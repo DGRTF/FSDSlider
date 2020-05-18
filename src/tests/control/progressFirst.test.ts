@@ -16,8 +16,8 @@ describe('Class ProgressFirst', () => {
   const progressFirst = new ProgressFirst(parentElement);
 
   test('ProgressFirst.SetCoordinatePercent(percent: number) задаёт отступ по входному процентному значению (от 0 до 100)', () => {
-    let valuesPercent: number[] = [0, -10, 20, 80, 100, 120];
-    let outputValues: number[] = [0, 0, 40, 160, 200, 200];
+    let valuesPercent: number[] = [0, -.1, .2, -.8, 1.2, 1];
+    let outputValues: number[] = [0, 0, 40, 40, 40, 200];
     valuesPercent.forEach((el, index) => {
       progressFirst.SetCoordinatePercent(el);
       expect(progressFirst.GetWidthOrHeight()).toEqual(`${outputValues[index]}px`);
@@ -37,8 +37,8 @@ describe('Class ProgressFirst', () => {
   const progressFirstVertical = new ProgressFirst(parentElementVertical, false);
 
   test('ProgressFirst.SetCoordinatePercent(percent: number) задаёт отступ по входному процентному значению (от 0 до 100)', () => {
-    let valuesPercent: number[] = [0, -10, 20, 80, 100, 120];
-    let outputValues: number[] = [200, 200, 160, 40, 0, 0];
+    let valuesPercent: number[] = [0, -.1, .2, -.8, 1.2, 1];
+    let outputValues: number[] = [200, 200, 160, 160, 160, 0];
     valuesPercent.forEach((el, index) => {
       progressFirstVertical.SetCoordinatePercent(el);
       expect(progressFirstVertical.GetWidthOrHeight()).toEqual(`${outputValues[index]}px`);

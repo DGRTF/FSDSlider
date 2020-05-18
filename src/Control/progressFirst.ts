@@ -46,9 +46,8 @@ export default class ProgressFirst implements IControlObserverCoordinate {
   // for tests
 
   GetWidthOrHeight(): string {
-    if (this.orientation) {
+    if (this.orientation)
       return this.progressElement.style.minWidth;
-    }
     return this.progressElement.style.minHeight;
   }
 }

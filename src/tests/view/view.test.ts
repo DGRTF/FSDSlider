@@ -30,8 +30,8 @@ describe('Class View', () => {
   });
 
   test('View.SetCoordinate(coordinate: number) Задаёт отступ HTML-элемента ', () => {
-    const valuesArr: number[] = [0, -10, 20, 100, 30, 101];
-    const answerArr: number[] = [0, 0, 40, 200, 60, 60];
+    const valuesArr: number[] = [0, 1, -.2, .3, 1.2];
+    const answerArr: number[] = [0, 200, 200, 60, 60];
     valuesArr.forEach((el, index) => {
       view.SetCoordinatePercent(el);
       expect(viewElement.style.left).toEqual(`${answerArr[index]}px`);
@@ -50,8 +50,8 @@ describe('Class View', () => {
   const viewVertical = new View(parentElementVertical, false);
   const viewElementVertical = <HTMLElement>parentElementVertical.firstChild;
   test('View.SetCoordinate(coordinate: number) Задаёт отступ HTML-элемента для вертикального расположения', () => {
-    const valuesArr: number[] = [100, -10, 20, 100, 30, 101];
-    const answerArr: number[] = [0, 0, 160, 0, 140, 140];
+    const valuesArr: number[] = [1, .3, -.1, .2, 1.2, 0];
+    const answerArr: number[] = [0, 140, 140, 160, 160, 200];
     valuesArr.forEach((el, index) => {
       viewVertical.SetCoordinatePercent(el);
       expect(viewElementVertical.style.top).toEqual(`${answerArr[index]}px`);

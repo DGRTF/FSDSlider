@@ -46,8 +46,7 @@ export class View implements IView, IModelObserver, IControlObserverCoordinate {
   SetCoordinatePercent(coordinatePercent: number) {
     if (coordinatePercent <= 1 && coordinatePercent >= 0) {
       if (this.orientation) {
-        this.currentMargin = this.parentElement.offsetWidth;
-        this.currentMargin *= coordinatePercent;
+        this.currentMargin = this.parentElement.offsetWidth * coordinatePercent;
         this.currentMargin -= this.selectValueElement.offsetWidth / 2;
         this.selectValueElement.style.left = `${this.currentMargin}px`;
       } else {
@@ -59,7 +58,7 @@ export class View implements IView, IModelObserver, IControlObserverCoordinate {
     }
   }
 
-  AddClassesCss(classes: string){
+  AddClassesCss(classes: string) {
     this.selectValueElement.className += classes;
   }
 

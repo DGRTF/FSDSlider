@@ -29,18 +29,19 @@ export default class ProgressLast implements IControlObserverCoordinate {
     } else {
       this.progressElement.className += ' slider-progress-vertical slider-progress-vertical-last';
     }
+    
     this.parentElement.appendChild(this.progressElement);
   }
 
   SetCoordinatePercent(coordinatePercent: number) {
-    if (coordinatePercent <= 100 && coordinatePercent >= 0) {
+    if (coordinatePercent <= 1 && coordinatePercent >= 0) {
       if (this.orientation) {
         this.width = -this.parentElement.clientWidth * coordinatePercent;
-        this.width = this.width + this.parentElement.clientWidth;
+        this.width += this.parentElement.clientWidth;
         this.progressElement.style.minWidth = `${this.width}px`;
       } else {
         this.width = -this.parentElement.clientHeight * (1 - coordinatePercent);
-        this.width = this.width + this.parentElement.clientHeight;
+        this.width += this.parentElement.clientHeight;
         this.progressElement.style.minHeight = `${this.width}px`;
       }
     }
@@ -50,9 +51,8 @@ export default class ProgressLast implements IControlObserverCoordinate {
   // for tests
 
   GetWidthOrHeight(): string {
-    if (this.orientation) {
+    if (this.orientation)
       return this.progressElement.style.minWidth;
-    }
     return this.progressElement.style.minHeight;
   }
 }

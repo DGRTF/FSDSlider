@@ -4,8 +4,8 @@ describe('Class ModelNumber', () => {
   const modelNumber = new ModelNumber(-100, 100);
 
   test('ModelNumber.SetCoordinatePercent(percent: number) Получает процентное значение и задаёт свойству selectValue соответствующее значение', () => {
-    let valuesPercent: number[] = [0, -10, 20, 80, 100, 120];
-    let outputValues: number[] = [-100, -100, -60, 60, 100, 100];
+    let valuesPercent: number[] = [0, 1, -.2, .8, 1.2];
+    let outputValues: number[] = [-100, 100, -100, 60, 100];
     valuesPercent.forEach((el, index) => {
       modelNumber.SetCoordinatePercent(el);
       expect(modelNumber.GetSelectValue()).toEqual(`${outputValues[index]}`);
@@ -26,7 +26,7 @@ describe('Class ModelNumber', () => {
 
   test('ModelNumber.PercentInValue(selectValue: number) Получает значение и возвращает из него процентное', () => {
     let valuesPercent: number[] = [-10, -120, 20, 80, 100, 120];
-    let outputValues: number[] = [45, null, 60, 90, 100, null];
+    let outputValues: number[] = [.45, null, .6, .9, 1, null];
     valuesPercent.forEach((el, index) => {
       let percent = modelNumber.PercentInValue(`${el}`);
       expect(percent).toEqual(outputValues[index]);

@@ -132,7 +132,7 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
 
   SetMinMargin(minMargin: number) {
     if (minMargin <= 1 && minMargin >= 0) {
-      this.minMargin = this.parentElement.offsetHeight * (1 - minMargin);
+      this.minMargin = this.parentElement.offsetHeight * (100 - minMargin * 100) / 100; // сложное выражение из-за неточности вычислений
       this.minMargin = this.minMargin - this.handle.offsetHeight / 2;
     }
     this.handle.classList.remove("slider-foreground");

@@ -30,7 +30,7 @@ describe('Class MinMargin', () => {
   });
 
   test('minMargin.SetCoordinatePercent(coordinatePercent: number) Делегирует методу наблюдателя отступ в процентах', () => {
-    minMargin.SetCoordinatePercent(20);
-    expect(observerMin.minMargin).toEqual(20);
+    minMargin.SetCoordinatePercent(.2);
+    expect(observerMin.minMargin).toEqual(.2);
   });
 });

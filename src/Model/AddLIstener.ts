@@ -5,7 +5,7 @@ export default class AddListener implements IModelObserver {
     this.listener = listener;
   }
 
-  listener: (selectValue: string) => void;
+  private listener: (selectValue: string) => void;
 
   GetValue(selectValue: string) {
     this.listener(selectValue);

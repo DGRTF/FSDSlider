@@ -32,11 +32,7 @@ export default class MinMargin implements IControlObserverCoordinate {
   // for tests
 
   GetObserver(): IControlMin[] {
-    const observer: IControlMin[] = [];
-    this.minValue.forEach((el, index) => {
-      observer[index] = el;
-    });
-    return observer;
+    return this.minValue.slice();
   }
   
 }

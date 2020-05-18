@@ -32,11 +32,7 @@ export default class MaxMargin implements IControlObserverCoordinate {
   // for tests
 
   GetObserver(): IControlMax[] {
-    const observer: IControlMax[] = [];
-    this.maxValue.forEach((el, index) => {
-      observer[index] = el;
-    });
-    return observer;
+    return this.maxValue.slice();
   }
 
 }
