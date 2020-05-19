@@ -14,7 +14,6 @@ describe('Class ProgressLast', () => {
   })
 
   const progressLast = new ProgressLast(parentElement);
-  console.warn(parentElement.offsetWidth);
 
   test('ProgressLast.SetCoordinatePercent(percent: number) задаёт отступ по входному процентному значению (от 0 до 1)', () => {
     let valuesPercent: number[] = [0, -.1, .2, -.8, 1.2, 1];

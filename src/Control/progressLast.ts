@@ -36,12 +36,12 @@ export default class ProgressLast implements IControlObserverCoordinate {
   SetCoordinatePercent(coordinatePercent: number) {
     if (coordinatePercent <= 1 && coordinatePercent >= 0) {
       if (this.orientation) {
-        this.width = -this.parentElement.clientWidth * coordinatePercent;
-        this.width += this.parentElement.clientWidth;
+        this.width = -this.parentElement.offsetWidth * coordinatePercent;
+        this.width += this.parentElement.offsetWidth;
         this.progressElement.style.minWidth = `${this.width}px`;
       } else {
-        this.width = -this.parentElement.clientHeight * (1 - coordinatePercent);
-        this.width += this.parentElement.clientHeight;
+        this.width = -this.parentElement.offsetHeight * (1 - coordinatePercent);
+        this.width += this.parentElement.offsetHeight;
         this.progressElement.style.minHeight = `${this.width}px`;
       }
     }

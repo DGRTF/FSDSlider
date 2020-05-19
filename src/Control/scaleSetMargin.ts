@@ -26,18 +26,24 @@ export default class ScaleSetMargin {
   private marginPercentArr: number[] = [];
 
   private Init() {
+    this.Create();
+    this.AddContent();
+    this.AdddClasses();
+    this.AdddHandle();
+  }
+
+  private Create() {
     this.scale = document.createElement("div");
     this.lineFirst = document.createElement("div");
     this.centralLine = document.createElement("div");
     this.lineLast = document.createElement("div");
+  }
 
+  private AddContent() {
     this.scale.appendChild(this.lineFirst);
     this.scale.appendChild(this.centralLine);
     this.scale.appendChild(this.lineLast);
-
     this.parentElement.appendChild(this.scale);
-    this.AdddClasses();
-    this.AdddHandle();
   }
 
   private AdddClasses() {
@@ -99,6 +105,18 @@ export default class ScaleSetMargin {
 
   ShowScale() {
     this.scale.classList.remove("slider-scaleSetMargin-hidden");
+  }
+
+
+
+  // for tests
+
+  GetMovePercent(): number {
+    return this.movePercent.length;
+  }
+
+  GetScaleClass(): string{
+    return this.scale.className;
   }
 
 }

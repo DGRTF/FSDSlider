@@ -85,13 +85,30 @@ export default class ScaleValue {
   // таким образом можно передать другую модель этому объекту без необходимости создавать новый экземпляр этого класса
   SetIValue(model: IValue) {
     this.model = model;
+    this.SetValues();
   }
 
-  HideScale(){
+  HideScale() {
     this.valuesContainer.classList.add("slider-view-hide");
   }
 
-  ShowScale(){
+  ShowScale() {
     this.valuesContainer.classList.remove("slider-view-hide");
+  }
+
+
+
+  // fot tests
+
+  GetClassesValueContainer(): string {
+    return this.valuesContainer.className;
+  }
+
+  GetIValue(): IValue {
+    return this.model;
+  }
+
+  GetSettingValue() {
+    return this.minValue.innerText + " " + this.middleValue.innerText + " " + this.maxValue.innerText;
   }
 }
