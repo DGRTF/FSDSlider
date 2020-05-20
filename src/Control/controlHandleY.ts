@@ -55,10 +55,7 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
   private AddListener() {
     this.handle.addEventListener('mousedown', this.AddEventMouseMove.bind(this));
     this.handle.addEventListener("touchstart", this.AddEventTouchMove.bind(this));
-
     document.addEventListener('mouseup', this.MouseUpListener.bind(this));
-
-    document.addEventListener('touchcancel', this.TouchCancelListener.bind(this));
   }
 
   private MouseUpListener() {
@@ -66,8 +63,9 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
   }
 
   private TouchCancelListener() {
-    alert("touch end");
+    // alert("touch end");
     document.removeEventListener('touchmove', this.moveTouch);
+    document.removeEventListener('touchend', this.TouchCancelListener.bind(this));
   }
 
   private AddEventMouseMove(event: MouseEvent) {
@@ -103,6 +101,7 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
   private AddEventTouchMove(event: TouchEvent) {
     this.mouseY = event.targetTouches[0].pageY;
     document.addEventListener("touchmove", this.moveTouch);
+    document.addEventListener('touchend', this.TouchCancelListener.bind(this));
     this.handleY = this.handle.getBoundingClientRect().top;
   }
 
