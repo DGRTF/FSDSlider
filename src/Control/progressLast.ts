@@ -20,8 +20,16 @@ export default class ProgressLast implements IControlObserverCoordinate {
   private width: number;
 
   private Init() {
-    this.progressElement = document.createElement('div');
+    this.Create();
+    this.AddClasses();
+    this.AddContentHTML();
+  }
 
+  private Create() {
+    this.progressElement = document.createElement('div');
+  }
+
+  private AddClasses() {
     if (this.orientation) {
       this.progressElement.className += ' slider-progress slider-progress-last';
     } else if (this.range) {
@@ -29,7 +37,9 @@ export default class ProgressLast implements IControlObserverCoordinate {
     } else {
       this.progressElement.className += ' slider-progress-vertical slider-progress-vertical-last';
     }
-    
+  }
+
+  private AddContentHTML() {
     this.parentElement.appendChild(this.progressElement);
   }
 

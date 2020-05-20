@@ -62,4 +62,12 @@ export class View implements IView, IModelObserver, IControlObserverCoordinate {
     this.selectValueElement.className += classes;
   }
 
+
+
+  // for tests
+
+  GetClasses(): string{
+    return this.selectValueElement.className;
+  }
+
 }

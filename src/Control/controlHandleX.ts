@@ -8,8 +8,6 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
 
   private parentElement: HTMLElement;
 
-  private maxSpace: number;
-
   private currentMargin: number;
 
   private mouseX: number;
@@ -35,23 +33,14 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
   }
 
   private init() {
-    this.handle = document.createElement('div');
-
+    this.Create();
     this.AddClasses();
     this.AddContentHtml();
+    this.AddListener();
+  }
 
-    this.handle.addEventListener('mousedown', this.AddEventMouseMove.bind(this));
-    this.handle.addEventListener("touchstart", this.AddEventTouchMove.bind(this));
-
-    document.addEventListener('mouseup', () => {
-      document.removeEventListener('mousemove', this.move);
-    });
-
-    document.addEventListener('touchcancel', () => {
-      alert("touch end");
-      document.removeEventListener('touchmove', this.moveTouch);
-    });
-
+  private Create() {
+    this.handle = document.createElement('div');
   }
 
   private AddClasses() {
@@ -63,16 +52,36 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
     this.parentElement.appendChild(this.handle);
   }
 
+  private AddListener() {
+    this.handle.addEventListener('mousedown', this.AddEventMouseMove.bind(this));
+    this.handle.addEventListener("touchstart", this.AddEventTouchMove.bind(this));
+    document.addEventListener('mouseup', this.MouseUpListener.bind(this));
+    document.addEventListener('touchcancel', this.TouchCancelListener.bind(this));
+  }
+
+  private MouseUpListener() {
+    document.removeEventListener('mousemove', this.mouseMoveHandler);
+  }
+
+  private TouchCancelListener() {
+    alert("touch end");
+    document.removeEventListener('touchmove', this.moveTouch);
+  }
+
   private AddEventMouseMove(event: MouseEvent) {
     this.handle.classList.add("slider-foreground");
     this.mouseX = event.clientX;
-    document.addEventListener('mousemove', this.move);
+    document.addEventListener('mousemove', this.mouseMoveHandler);
     this.handleX = this.handle.getBoundingClientRect().left;
   }
 
-  private MoveBlock(event: MouseEvent) {
+  private MouseMoveHandler(event: MouseEvent) {
     this.currentMargin = this.handleX - this.mouseX + event.clientX;
     this.currentMargin -= this.parentElement.getBoundingClientRect().left;
+    this.MoveHandle();
+  }
+
+  private MoveHandle(){
     if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
       this.handle.style.left = `${this.currentMargin}px`;
       this.setSelectValue = (this.currentMargin + this.handle.offsetWidth / 2) / this.parentElement.offsetWidth;
@@ -97,19 +106,10 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
   private MoveBlockTouch(event: TouchEvent) {
     this.currentMargin = this.handleX - this.mouseX + event.targetTouches[0].pageX;
     this.currentMargin -= this.parentElement.getBoundingClientRect().left;
-    this.maxSpace = this.parentElement.offsetWidth;
-    if (this.currentMargin <= this.maxSpace
-      && this.currentMargin >= 0 - this.handle.offsetWidth / 2) {
-      if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
-        this.handle.style.left = `${this.currentMargin}px`;
-        this.setSelectValue = this.currentMargin + this.handle.offsetWidth / 2;
-        this.setSelectValue = (this.setSelectValue / this.maxSpace) * 100;
-        this.Notify();
-      }
-    }
+    this.MoveHandle();
   }
 
-  private move = this.MoveBlock.bind(this);
+  private mouseMoveHandler = this.MouseMoveHandler.bind(this);
 
   private moveTouch = this.MoveBlockTouch.bind(this);
 
@@ -175,10 +175,6 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
 
   GetHandleStyleLeft(): string {
     return this.handle.style.left;
-  }
-
-  GetHandleOffsetWidth(): number {
-    return this.handle.offsetWidth;
   }
 
   GetObserver(): IControlObserverCoordinate[] {

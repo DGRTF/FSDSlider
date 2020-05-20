@@ -18,8 +18,16 @@ export default class ProgressFirst implements IControlObserverCoordinate {
   private progressElement: HTMLElement;
 
   private Init() {
-    this.progressElement = document.createElement('div');
+    this.Create();
+    this.AddClasses();
+    this.AddContentHTML();
+  }
 
+  private Create() {
+    this.progressElement = document.createElement('div');
+  }
+
+  private AddClasses() {
     if (this.orientation) {
       if (this.range) {
         this.progressElement.className += ' slider-progress slider-progress-first';
@@ -29,7 +37,9 @@ export default class ProgressFirst implements IControlObserverCoordinate {
     } else {
       this.progressElement.className += ' slider-progress-vertical slider-progress-first';
     }
+  }
 
+  private AddContentHTML() {
     this.parentElement.appendChild(this.progressElement);
   }
 

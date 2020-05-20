@@ -81,5 +81,10 @@ describe('Class HandleX', () => {
     expect(observer.coordinatePercent).toEqual(.4);
   });
 
+  test('HandleX.GetSetSelectValue() возвращает текущую координату в процентах( от 0 до 1)', () => {
+    handle = new HandleX(parentElement);
+    handle.SetCurrentMarginPercent(0);
+    expect(handle.GetSetSelectValue()).toEqual(0);
+  });
 
 });

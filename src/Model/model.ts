@@ -156,12 +156,20 @@ export class ModelNumber implements IModel, IModelObservable, IControlObserverCo
 
   // For tests
 
-  GetObserver(): IModelObserver[] {
-    let observer: IModelObserver[] = [];
-    this.observer.forEach((el, index) => {
-      observer[index] = el;
-    });
-    return observer;
+  GetObserverLength(): number {
+    return this.observer.length;
+  }
+
+  GetStep(): number {
+    return this.step;
+  }
+
+  GetMinValue(): number {
+    return this.minValue;
+  }
+
+  GetMaxValue(): number {
+    return this.maxValue;
   }
 
 }

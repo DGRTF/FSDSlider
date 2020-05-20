@@ -25,6 +25,9 @@ function FactoryScaleValue() {
   return new ScaleValue(FactoryParentElement(), FactoryIValue());
 }
 
+function FactoryScaleValueVertical() {
+  return new ScaleValue(FactoryParentElement(), FactoryIValue(), false);
+}
 
 
 it('ScaleValue.SetValues() задаёт максимальное, минимальное и среднее значения из текущей модели', () => {
@@ -46,14 +49,14 @@ it('ScaleSetMargin.SetIValue(model: IValue) задаёт новую модель
 });
 
 it('ScaleValue.HideScale() скрывает значения', () => {
-  const scaleValue = FactoryScaleValue();
+  const scaleValue = FactoryScaleValueVertical();
   scaleValue.HideScale();
   const classes: string = scaleValue.GetClassesValueContainer();
   expect(classes.indexOf("slider-view-hide")).not.toEqual(-1);
 });
 
 it('ScaleValue.ShowScale() показывает значения', () => {
-  const scaleValue = FactoryScaleValue();
+  const scaleValue = FactoryScaleValueVertical();
   scaleValue.HideScale();
   scaleValue.ShowScale();
   const classes: string = scaleValue.GetClassesValueContainer();

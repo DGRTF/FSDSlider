@@ -34,7 +34,7 @@ describe('Class ProgressLast', () => {
     },
   })
 
-  const progressLastVertical = new ProgressLast(parentElementVertical, false);
+  const progressLastVertical = new ProgressLast(parentElementVertical, false, false);
 
   test('ProgressLast.SetCoordinatePercent(percent: number) задаёт отступ по входному процентному значению (от 0 до 1)', () => {
     let valuesPercent: number[] = [0, -.1, .2, -.8, 1.2, 1];

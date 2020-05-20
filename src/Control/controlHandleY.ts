@@ -8,8 +8,6 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
 
   private parentElement: HTMLElement;
 
-  private maxSpace: number;
-
   private currentMargin: number;
 
   private mouseY: number;
@@ -35,22 +33,14 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
   }
 
   private init() {
-    this.handle = document.createElement('div');
-
+    this.Create();
     this.AddClasses();
     this.AddContentHtml();
+    this.AddListener();
+  }
 
-    this.handle.addEventListener('mousedown', this.AddEventMouseMove.bind(this));
-    this.handle.addEventListener("touchstart", this.AddEventTouchMove.bind(this));
-
-    document.addEventListener('mouseup', () => {
-      document.removeEventListener('mousemove', this.move);
-    });
-
-    document.addEventListener('touchcancel', () => {
-      alert("touch end");
-      document.removeEventListener('touchmove', this.moveTouch);
-    });
+  private Create() {
+    this.handle = document.createElement('div');
   }
 
   private AddClasses() {
@@ -60,6 +50,24 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
 
   private AddContentHtml() {
     this.parentElement.appendChild(this.handle);
+  }
+
+  private AddListener() {
+    this.handle.addEventListener('mousedown', this.AddEventMouseMove.bind(this));
+    this.handle.addEventListener("touchstart", this.AddEventTouchMove.bind(this));
+
+    document.addEventListener('mouseup', this.MouseUpListener.bind(this));
+
+    document.addEventListener('touchcancel', this.TouchCancelListener.bind(this));
+  }
+
+  private MouseUpListener() {
+    document.removeEventListener('mousemove', this.move);
+  }
+
+  private TouchCancelListener() {
+    alert("touch end");
+    document.removeEventListener('touchmove', this.moveTouch);
   }
 
   private AddEventMouseMove(event: MouseEvent) {
@@ -72,6 +80,10 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
   private MoveBlock(event: MouseEvent) {
     this.currentMargin = this.handleY - this.mouseY + event.pageY;
     this.currentMargin -= this.parentElement.getBoundingClientRect().top;
+    this.Move();
+  }
+
+  private Move() {
     if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
       this.handle.style.top = `${this.currentMargin}px`;
       this.setSelectValue = this.currentMargin + this.handle.offsetHeight / 2;
@@ -97,22 +109,7 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
   private MoveBlockTouch(event: TouchEvent) {
     this.currentMargin = this.handleY - this.mouseY + event.targetTouches[0].pageY;
     this.currentMargin -= this.parentElement.getBoundingClientRect().top;
-    this.maxSpace = this.parentElement.offsetHeight;
-    if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
-      this.handle.style.top = `${this.currentMargin}px`;
-      this.setSelectValue = this.parentElement.offsetHeight
-        - this.currentMargin - this.handle.offsetHeight / 2;
-      this.setSelectValue = (this.setSelectValue / this.maxSpace) * 100;
-    } else {
-      if (this.currentMargin < this.minMargin) {
-        this.handle.style.left = `${this.minMargin}px`;
-        this.setSelectValue = (this.minMargin + this.handle.offsetWidth / 2) / this.maxSpace * 100;
-      } else {
-        this.handle.style.left = `${this.maxMargin}px`;
-        this.setSelectValue = (this.maxMargin + this.handle.offsetWidth / 2) / this.maxSpace * 100;
-      }
-    }
-    this.Notify();
+    this.Move();
   }
 
   private move = this.MoveBlock.bind(this);
@@ -122,6 +119,7 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
   SetCurrentMarginPercent(percent: number) {
     if (percent <= 1 && percent >= 0) {
       this.currentMargin = this.parentElement.offsetHeight * (1 - percent) - this.handle.offsetHeight / 2;
+
       if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
         this.setSelectValue = percent;
         this.handle.style.top = `${this.currentMargin}px`;
@@ -181,10 +179,6 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
 
   GetHandleStyleTop(): string {
     return this.handle.style.top;
-  }
-
-  GetHandleOffsetHeight(): number {
-    return this.handle.offsetHeight;
   }
 
   GetObserver(): IControlObserverCoordinate[] {

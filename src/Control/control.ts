@@ -45,36 +45,21 @@ export class Control {
 
   private range: HTMLElement;
 
+  private progressFirst: ProgressFirst;
+
+  private progressLast: ProgressLast;
+
   private Init() {
-    this.trackElement = document.createElement('div');
-    this.parentElement.appendChild(this.trackElement);
-
-    let progressFirst;
-    if (this.handleArr.length === 2) {
-      progressFirst = new ProgressFirst(this.trackElement, this.orientation);
-    } else {
-      progressFirst = new ProgressFirst(this.trackElement, this.orientation, false);
-    }
-
-    this.range = document.createElement('div');
-    this.trackElement.appendChild(this.range);
-
-    let progressLast;
-    if (this.handleArr.length === 2) {
-      progressLast = new ProgressLast(this.trackElement, this.orientation, false);
-    } else {
-      progressLast = new ProgressLast(this.trackElement, this.orientation);
-    }
-
-    if (this.orientation) {
-      this.handleArr[0].AddObserver(progressFirst);
-      this.handleArr[this.handleArr.length - 1].AddObserver(progressLast);
-    } else {
-      this.handleArr[0].AddObserver(progressLast);
-      this.handleArr[this.handleArr.length - 1].AddObserver(progressFirst);
-    }
-
+    this.CreateElementHTML();
+    this.AddContent();
+    this.AddProgress();
+    this.AddObservers();
     this.AddClasses();
+  }
+
+  private CreateElementHTML() {
+    this.trackElement = document.createElement('div');
+    this.range = document.createElement('div');
   }
 
   private AddClasses() {
@@ -83,6 +68,32 @@ export class Control {
       this.trackElement.className += ' slider-track-element';
     } else {
       this.trackElement.className += ' slider-track-element-vertical';
+    }
+  }
+
+  private AddContent() {
+    this.parentElement.appendChild(this.trackElement);
+  }
+
+  private AddProgress() {
+    if (this.handleArr.length === 2) {
+      this.progressFirst = new ProgressFirst(this.trackElement, this.orientation);
+      this.trackElement.appendChild(this.range);
+      this.progressLast = new ProgressLast(this.trackElement, this.orientation, false);
+    } else {
+      this.progressFirst = new ProgressFirst(this.trackElement, this.orientation, false);
+      this.trackElement.appendChild(this.range);
+      this.progressLast = new ProgressLast(this.trackElement, this.orientation);
+    }
+  }
+
+  private AddObservers() {
+    if (this.orientation) {
+      this.handleArr[0].AddObserver(this.progressFirst);
+      this.handleArr[this.handleArr.length - 1].AddObserver(this.progressLast);
+    } else {
+      this.handleArr[0].AddObserver(this.progressLast);
+      this.handleArr[this.handleArr.length - 1].AddObserver(this.progressFirst);
     }
   }
 }

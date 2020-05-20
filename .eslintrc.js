@@ -4,9 +4,10 @@ module.exports = {
         "es6": true
     },
     "extends": [
-        'airbnb-typescript/base',
-        "eslint:recommended",
-        "plugin:react/recommended",
+        "plugin:fsd/all",
+        // 'airbnb-typescript/base',
+        // "eslint:recommended",
+        // "plugin:react/recommended",
         "plugin:@typescript-eslint/eslint-recommended"
     ],
     "globals": {
@@ -24,7 +25,8 @@ module.exports = {
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "fsd"
     ],
     "rules": {
         // "indent": ["error", 4],

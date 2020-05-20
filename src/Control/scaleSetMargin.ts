@@ -28,8 +28,8 @@ export default class ScaleSetMargin {
   private Init() {
     this.Create();
     this.AddContent();
-    this.AdddClasses();
-    this.AdddHandle();
+    this.AddClasses();
+    this.AddHandleClick();
   }
 
   private Create() {
@@ -46,7 +46,7 @@ export default class ScaleSetMargin {
     this.parentElement.appendChild(this.scale);
   }
 
-  private AdddClasses() {
+  private AddClasses() {
     if (this.orientation) {
       this.scale.className = " slider-scaleSetMargin-horizontal";
       this.lineFirst.className = " slider-scaleSetMargin-line"
@@ -60,8 +60,8 @@ export default class ScaleSetMargin {
     }
   }
 
-  private AdddHandle() {
-    this.scale.addEventListener("mousedown", this.PercentInit.bind(this));
+  private AddHandleClick() {
+    this.scale.addEventListener("click", this.PercentInit.bind(this));
   }
 
   private PercentInit(event: MouseEvent) {

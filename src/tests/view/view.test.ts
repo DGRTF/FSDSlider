@@ -29,6 +29,13 @@ describe('Class View', () => {
     expect(viewElement.hidden).toEqual(false);
   });
 
+  test('View.AddClassesCss(classes: string) добавляет класс HTML-элементу', () => {
+    const classes = "i b";
+    view.AddClassesCss(classes);
+    const returnClasses = view.GetClasses();
+    expect(returnClasses.indexOf).not.toEqual(-1);
+  });
+
   test('View.SetCoordinate(coordinate: number) Задаёт отступ HTML-элемента ', () => {
     const valuesArr: number[] = [0, 1, -.2, .3, 1.2];
     const answerArr: number[] = [0, 200, 200, 60, 60];
