@@ -1,31 +1,31 @@
 import ProgressFirst from './progressFirst';
 import ProgressLast from './progressLast';
 
-export interface IControlObserverCoordinate {
+interface IControlObserverCoordinate {
   SetCoordinatePercent(coordinate: number): void;
 }
 
-export interface IControlObservable {
+interface IControlObservable {
   AddObserver(modelObserver: IControlObserverCoordinate): void;
   DeleteObserver(modelObserver: IControlObserverCoordinate): void;
   Notify(): void
 }
 
-export interface IHandle {
+interface IHandle {
   SetCurrentMarginPercent(percent: number): void;
   GetSetSelectValue(): number;
 }
 
-export interface IControlMin {
+interface IControlMin {
   SetMinMargin(minMargin: number): void;
 }
 
-export interface IControlMax {
+interface IControlMax {
   SetMaxMargin(maxMargin: number): void;
 }
 
 
-export class Control {
+class Control {
   constructor(
     parentElement: HTMLElement, orientation: boolean = true, handleArr: IControlObservable[],
   ) {
@@ -97,3 +97,12 @@ export class Control {
     }
   }
 }
+
+export {
+  IControlObserverCoordinate,
+  IControlObservable,
+  IHandle,
+  IControlMin,
+  IControlMax,
+  Control,
+} 

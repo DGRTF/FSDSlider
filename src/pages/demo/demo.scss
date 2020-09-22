@@ -1,21 +1,18 @@
 @import "./../../blockUI/checkbox/checkbox.scss";
 
-.parent
-{
+.parent {
     height: 300px;
     width: 50%;
 }
 
-.slider
-{
+.slider {
     display: flex;
     align-items: center;
     margin: auto;
     min-height: 350px;
 }
 
-.panel-settings
-{
+.panel-settings {
     height: 250px;
     width: 250px;
     display: flex;
@@ -24,15 +21,13 @@
     margin-bottom: 50px;
 }
 
-.container-value
-{
+.container-value {
     display: flex;
     justify-content: space-between;
     color: rgb(98, 117, 161);
 }
 
-input
-{
+input {
     width: 100px;
     height: 25px;
     border: 1px solid rgb(7, 127, 226);
@@ -43,8 +38,7 @@ input
     outline: none;
 }
 
-div
-{
+div {
     -ms-user-select: none;
     -moz-user-select: none;
     -khtml-user-select: none;
@@ -52,8 +46,7 @@ div
     user-select: none;
 }
 
-.value
-{
+.value {
     width: 100px;
     height: 25px;
     border: 1px solid rgb(7, 127, 226);
@@ -65,23 +58,19 @@ div
     outline: none;
 }
 
-.slider-parent-element
-{
+.slider-parent-element {
     min-width: 380px;
     margin: 70px;
 }
 
-@media (max-width:800px)
-{
-    .slider
-    {
+@media (max-width: 800px) {
+    .slider {
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
     }
 
-    .slider-parent-element
-    {
+    .slider-parent-element {
         min-width: 80%;
         // margin: auto;
     }

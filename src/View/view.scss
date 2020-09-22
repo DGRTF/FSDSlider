@@ -1,7 +1,5 @@
-.slider-view
-{
-    &-horizontal
-    {
+.slider-view {
+    &-horizontal {
         width: 150px;
         position: absolute;
         text-align: center;
@@ -9,8 +7,7 @@
         color: rgb(98, 117, 161);
     }
 
-    &-vertical
-    {
+    &-vertical {
         width: 30px;
         height: 18px;
         line-height: 18px;
@@ -20,27 +17,21 @@
         color: rgb(98, 117, 161);
     }
 
-    &-vertical-offset
-    {
+    &-vertical-offset {
         left: -50px;
     }
 
-    &-horizontal-offset
-    {
+    &-horizontal-offset {
         top: -23px;
     }
 
-
-
-    &-scale-value
-    {
+    &-scale-value {
         position: absolute;
         top: 70px;
         width: 100%;
     }
 
-    &-scale-value-vertical
-    {
+    &-scale-value-vertical {
         position: absolute;
         top: 0px;
         left: 100px;
@@ -49,8 +40,7 @@
         align-items: center;
     }
 
-    &-scale-values
-    {
+    &-scale-values {
         width: 60px;
         position: absolute;
         text-align: center;
@@ -62,35 +52,29 @@
         line-height: 18px;
     }
 
-    &-scale-central-value
-    {
+    &-scale-central-value {
         position: relative;
         margin: auto;
     }
 
-    &-scale-min-value
-    {
+    &-scale-min-value {
         left: -30px;
     }
 
-    &-scale-max-value
-    {
+    &-scale-max-value {
         right: -30px;
         top: 0;
     }
 
-    &-scale-min-value-vertical
-    {
+    &-scale-min-value-vertical {
         bottom: -9px;
     }
 
-    &-scale-max-value-vertical
-    {
+    &-scale-max-value-vertical {
         top: -9px;
     }
 
-    &-hide
-    {
+    &-hide {
         display: none;
     }
 }

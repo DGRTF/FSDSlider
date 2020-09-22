@@ -1,16 +1,16 @@
 import { IControlObserverCoordinate } from "../Control/control";
 
-export interface IModelObservable {
+interface IModelObservable {
   AddObserver(modelObserver: IModelObserver): void;
   DeleteObserver(modelObserver: IModelObserver): void;
   Notify(): void;
 }
 
-export interface IModelObserver {
+interface IModelObserver {
   GetValue(selectValue: string): void;
 }
 
-export interface IModel {
+interface IModel {
   PercentInValue(selectValue: string): number;
   SetStep(step: number): void;
   SetMaxValue(maxValue: number): void;
@@ -18,11 +18,11 @@ export interface IModel {
   GetSelectValue(): string;
 }
 
-export interface IValue {
+interface IValue {
   ValueInPercent(percent: number): string;
 }
 
-export class ModelNumber implements IModel, IModelObservable, IControlObserverCoordinate, IValue {
+class ModelNumber implements IModel, IModelObservable, IControlObserverCoordinate, IValue {
 
   private minValue: number;
 
@@ -172,4 +172,12 @@ export class ModelNumber implements IModel, IModelObservable, IControlObserverCo
     return this.maxValue;
   }
 
+}
+
+export{
+  IModelObservable,
+  IModelObserver,
+  IModel,
+  IValue,
+  ModelNumber,
 }

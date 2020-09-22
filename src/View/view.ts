@@ -2,13 +2,13 @@ import { IModelObserver } from '../Model/model';
 import { IControlObserverCoordinate } from '../Control/control';
 
 
-export interface IView {
+interface IView {
   ShowView(): void;
   HiddenView(): void;
   AddClassesCss(classes: string): void;
 }
 
-export class View implements IView, IModelObserver, IControlObserverCoordinate {
+class View implements IView, IModelObserver, IControlObserverCoordinate {
   private selectValueElement: HTMLElement;
 
   private parentElement: HTMLElement;
@@ -66,8 +66,14 @@ export class View implements IView, IModelObserver, IControlObserverCoordinate {
 
   // for tests
 
-  GetClasses(): string{
+  GetClasses(): string {
     return this.selectValueElement.className;
   }
 
+}
+
+
+export {
+  IView,
+  View,
 }

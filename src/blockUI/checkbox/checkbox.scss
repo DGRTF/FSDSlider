@@ -1,21 +1,14 @@
-
-@import "__label/checkbox__label.scss";
-@import "__label/_move/checkbox__label_move.scss";
-
-.checkbox
-{
+.checkbox {
     position: relative;
     display: inline-flex;
     justify-content: flex-start;
     align-items: flex-start;
-    
-    &__input
-    {
+
+    &__input {
         display: none;
     }
 
-    &__div-content
-    {
+    &__div-content {
         display: inline-block;
         margin-left: 10px;
 
@@ -24,5 +17,87 @@
         font-weight: normal;
         font-size: 14px;
         color: rgb(98, 117, 161);
+    }
+
+    __label {
+        position: relative;
+        color: rgb(98, 117, 161);
+        line-height: 0px;
+
+        &::before {
+            content: '';
+            display: inline-block;
+            position: relative;
+            height: 18px;
+            width: 18px;
+            min-height: 18px;
+            min-width: 18px;
+            border-radius: 4px;
+            border: 1px solid rgb(7, 127, 226);
+        }
+
+        &::after {
+            content: none;
+            display: inline-block;
+            position: absolute;
+            left: 6px;
+            top: 6px;
+            height: 4px;
+            width: 6px;
+            border-left: 2px solid rgb(7, 127, 226);
+            border-bottom: 2px solid rgb(7, 127, 226);
+            transform: rotate(-45deg);
+        }
+
+        .checkbox__input:checked + &::after {
+            content: '';
+        }
+
+        .checkbox__input:checked + &::before {
+            border-color: rgb(7, 127, 226);
+        }
+    }
+
+    &__label_move {
+        position: relative;
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 18px;
+        color: rgb(115, 177, 192);
+
+        &::before {
+            content: '';
+            display: inline-block;
+            position: relative;
+            height: 18px;
+            width: 38px;
+            min-height: 18px;
+            min-width: 38px;
+            border-radius: 10px;
+            border: 1px solid rgb(115, 177, 192);
+        }
+
+        &::after {
+            content: '';
+            display: inline-block;
+            position: absolute;
+            left: 4px;
+            top: 4px;
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            background: rgb(115, 177, 192);
+            transition: 0.2s;
+        }
+
+        .checkbox__input:checked + &::after {
+            left: 24px;
+            background: rgb(7, 127, 226);
+        }
+        .checkbox__input:checked + &::before {
+            border-color: rgb(7, 127, 226);
+        }
     }
 }

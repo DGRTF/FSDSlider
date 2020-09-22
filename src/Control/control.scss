@@ -1,15 +1,9 @@
-.slider
-{
-
-    
-
-    &-parent-element
-    {
+.slider {
+    &-parent-element {
         position: relative;
     }
 
-    &-track-element
-    {
+    &-track-element {
         position: relative;
         display: flex;
         height: 6px;
@@ -19,8 +13,7 @@
         top: 4px;
     }
 
-    &-track-element-vertical
-    {
+    &-track-element-vertical {
         position: relative;
         display: flex;
         flex-direction: column;
@@ -32,60 +25,49 @@
         left: 4px;
     }
 
-    &-progress-range
-    {
+    &-progress-range {
         width: 100%;
         height: 100%;
         background-color: rgb(115, 177, 192);
     }
 
-    &-progress
-    {
+    &-progress {
         height: 100%;
     }
 
-    &-progress-first
-    {
+    &-progress-first {
         background-color: transparent;
     }
 
-    &-progress-first-one
-    {
+    &-progress-first-one {
         background-color: rgb(115, 177, 192);
     }
 
-    &-progress-last
-    {
+    &-progress-last {
         background-color: transparent;
     }
 
-    &-progress-vertical
-    {
+    &-progress-vertical {
         width: 100%;
     }
 
-    &-progress-vertical-last
-    {
+    &-progress-vertical-last {
         background-color: transparent;
     }
 
-    &-progress-vertical-last-one
-    {
+    &-progress-vertical-last-one {
         background-color: rgb(115, 177, 192);
     }
 
-    &-progress-vertical-first
-    {
+    &-progress-vertical-first {
         background-color: transparent;
     }
 
-    &-progress-vertical-first-one
-    {
+    &-progress-vertical-first-one {
         background-color: rgb(115, 177, 192);
     }
 
-    &-handle
-    {
+    &-handle {
         position: absolute;
         z-index: 1;
         display: inline-block;
@@ -97,8 +79,7 @@
         top: 0px;
     }
 
-    &-scaleSetMargin-horizontal
-    {
+    &-scaleSetMargin-horizontal {
         display: flex;
         align-items: center;
         justify-content: space-around;
@@ -106,13 +87,12 @@
         height: 20px;
         width: 100%;
         border-left: 1px solid rgb(7, 127, 226);
-        border-right:1px solid rgb(7, 127, 226);
+        border-right: 1px solid rgb(7, 127, 226);
         top: 40px;
         box-sizing: border-box;
     }
 
-    &-scaleSetMargin-vertical
-    {
+    &-scaleSetMargin-vertical {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -124,48 +104,39 @@
         border-bottom: 1px solid rgb(7, 127, 226);
         left: 70px;
         box-sizing: border-box;
-
     }
 
-    &-scaleSetMargin
-    {
-        &-hidden
-        {
+    &-scaleSetMargin {
+        &-hidden {
             display: none;
         }
 
-        &-central-line
-        {
+        &-central-line {
             border-right: 1px solid rgb(7, 127, 226);
             height: 100%;
             box-sizing: border-box;
         }
 
-        &-line
-        {
+        &-line {
             border-top: 1px solid rgb(7, 127, 226);
             box-sizing: border-box;
             width: 45%;
         }
 
-        &-central-line-vertical
-        {
+        &-central-line-vertical {
             border-top: 1px solid rgb(7, 127, 226);
             width: 100%;
             box-sizing: border-box;
         }
 
-        &-line-vertical
-        {
+        &-line-vertical {
             border-left: 1px solid rgb(7, 127, 226);
             box-sizing: border-box;
             height: 45%;
         }
     }
 
-    &-foreground
-    {
+    &-foreground {
         z-index: 3;
     }
-
 }
