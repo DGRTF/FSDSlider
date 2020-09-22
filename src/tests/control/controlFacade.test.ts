@@ -83,21 +83,4 @@ describe('Class ControlFacade', () => {
     expect(handleX.DeleteObserver).toHaveBeenCalledWith(observer);
   });
 
-  // beforeEach(() => {
-  //   (ScaleSetMargin as jest.Mock<ScaleSetMargin>).mockClear();
-  // });
-
-  // test('ControlFacade.HideScale() скрывает шкалу', () => {
-  //   scale = (ScaleSetMargin as jest.Mock<ScaleSetMargin>).mock.instances[0];
-  //   controlFacade.HideScale();
-  //   expect(scale.HideScale).toHaveBeenCalledWith();
-  // });
-
-  // test('ControlFacade.ShowScale() показывает шкалу', () => {
-  //   // controlFacade = new ControlFacade(parentElement);
-  //   scale = (ScaleSetMargin as jest.Mock<ScaleSetMargin>).mock.instances[1];
-  //   controlFacade.ShowScale();
-  //   expect(scale.ShowScale).toHaveBeenCalledWith();
-  // });
-
 });
