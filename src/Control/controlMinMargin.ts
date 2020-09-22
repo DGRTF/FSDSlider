@@ -1,4 +1,7 @@
-import { IControlObserverCoordinate, IControlMin } from './control';
+import {
+  IControlObserverCoordinate,
+  IControlMin
+} from './control';
 
 
 export default class MinMargin implements IControlObserverCoordinate {
@@ -34,5 +37,5 @@ export default class MinMargin implements IControlObserverCoordinate {
   GetObserver(): IControlMin[] {
     return this.minValue.slice();
   }
-  
+
 }

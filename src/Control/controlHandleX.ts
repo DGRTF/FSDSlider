@@ -1,5 +1,9 @@
 import {
-  IHandle, IControlObservable, IControlObserverCoordinate, IControlMax, IControlMin,
+  IHandle,
+  IControlObservable,
+  IControlObserverCoordinate,
+  IControlMax,
+  IControlMin,
 } from './control';
 
 
@@ -56,7 +60,6 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
     this.handle.addEventListener('mousedown', this.AddEventMouseMove.bind(this));
     this.handle.addEventListener("touchstart", this.AddEventTouchMove.bind(this));
     document.addEventListener('mouseup', this.MouseUpListener.bind(this));
-    // document.addEventListener('touchend', this.TouchCancelListener.bind(this));
   }
 
   private MouseUpListener() {
@@ -64,7 +67,6 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
   }
 
   private TouchCancelListener() {
-    // alert("touch end");
     document.removeEventListener('touchmove', this.moveTouch);
     document.removeEventListener('touchend', this.TouchCancelListener.bind(this));
   }
@@ -82,7 +84,7 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
     this.MoveHandle();
   }
 
-  private MoveHandle(){
+  private MoveHandle() {
     if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
       this.handle.style.left = `${this.currentMargin}px`;
       this.setSelectValue = (this.currentMargin + this.handle.offsetWidth / 2) / this.parentElement.offsetWidth;

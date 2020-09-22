@@ -5,7 +5,7 @@ import { View, IView } from './View/view';
 import './View/view.scss';
 import './index.scss';
 import './Control/control.scss';
-import AddListener from './Model/addListener';
+import AddListener from './Model/AddListener';
 import ScaleValue from './View/scaleValue';
 
 $(document).ready(function ($) {

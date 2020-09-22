@@ -1,4 +1,7 @@
-import { IControlMax, IControlObserverCoordinate } from './control';
+import {
+  IControlMax,
+  IControlObserverCoordinate
+} from './control';
 
 
 export default class MaxMargin implements IControlObserverCoordinate {
@@ -16,18 +19,18 @@ export default class MaxMargin implements IControlObserverCoordinate {
     }
   }
 
-  AddMaxMarginObserver(maxValue: IControlMax){
+  AddMaxMarginObserver(maxValue: IControlMax) {
     this.maxValue.push(maxValue);
   }
 
-  DeleteMaxMarginObserver(maxValue: IControlMax){
+  DeleteMaxMarginObserver(maxValue: IControlMax) {
     const index = this.maxValue.indexOf(maxValue);
     if (index > -1) {
       this.maxValue.splice(index, 1);
     }
   }
 
-  
+
 
   // for tests
 

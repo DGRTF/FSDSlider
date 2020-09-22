@@ -1,5 +1,9 @@
 import {
-  IHandle, IControlObservable, IControlObserverCoordinate, Control, IControlMax,
+  IHandle,
+  IControlObservable,
+  IControlObserverCoordinate,
+  Control,
+  IControlMax,
 } from './control';
 import HandleX from './controlHandleX';
 import HandleY from './controlHandleY';

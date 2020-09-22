@@ -1,5 +1,9 @@
 import {
-  IHandle, IControlObservable, IControlObserverCoordinate, IControlMax, IControlMin,
+  IHandle,
+  IControlObservable,
+  IControlObserverCoordinate,
+  IControlMax,
+  IControlMin,
 } from './control';
 
 
@@ -63,7 +67,6 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
   }
 
   private TouchCancelListener() {
-    // alert("touch end");
     document.removeEventListener('touchmove', this.moveTouch);
     document.removeEventListener('touchend', this.TouchCancelListener.bind(this));
   }
