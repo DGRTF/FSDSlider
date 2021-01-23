@@ -44,7 +44,9 @@ export default class ProgressLast implements IControlObserverCoordinate {
   }
 
   SetCoordinatePercent(coordinatePercent: number) {
-    if (coordinatePercent <= 1 && coordinatePercent >= 0) {
+    const isCoordinatePercentRange = coordinatePercent <= 1 && coordinatePercent >= 0;
+
+    if (isCoordinatePercentRange) {
       if (this.orientation) {
         this.width = -this.parentElement.offsetWidth * coordinatePercent;
         this.width += this.parentElement.offsetWidth;

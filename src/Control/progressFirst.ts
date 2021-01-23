@@ -44,7 +44,9 @@ export default class ProgressFirst implements IControlObserverCoordinate {
   }
 
   SetCoordinatePercent(coordinatePercent: number) {
-    if (coordinatePercent <= 1 && coordinatePercent >= 0) {
+    const isCoordinatePercentRange = coordinatePercent <= 1 && coordinatePercent >= 0;
+
+    if (isCoordinatePercentRange) {
       if (this.orientation) {
         this.progressElement.style.minWidth = `${this.parentElement.offsetWidth * coordinatePercent}px`;
       } else {

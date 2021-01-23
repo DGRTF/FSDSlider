@@ -1,4 +1,4 @@
-import AddListener from "../../Model/addListener";
+import AddListener from "../../Model/AddListener";
 
 class Func {
   str: string = "";

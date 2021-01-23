@@ -55,17 +55,20 @@ class ModelNumber implements IModel, IModelObservable, IControlObserverCoordinat
   private Init() {
     const afterDecimalStr = this.step.toString().split('.')[1] || '';
     const minValueStr = this.minValue.toString().split('.')[1] || '';
+    
     if (afterDecimalStr.length >= minValueStr.length) this.precision = afterDecimalStr.length;
     else this.precision = minValueStr.length;
   }
 
 
   SetCoordinatePercent(percent: number): void {
-    if (percent < 1 && percent > 0) {
+    const isPercentRange = percent < 1 && percent > 0;
+    if (isPercentRange) {
       const currentValue = this.differentValue * percent;
       let stepValue: number;
+      const value = (currentValue % this.step) / this.step;
 
-      if ((currentValue % this.step) / this.step > 0.5) {
+      if (value > 0.5) {
         stepValue = (this.differentValue * percent - (currentValue % this.step)) / this.step + 1;
       }
       else {
@@ -101,7 +104,7 @@ class ModelNumber implements IModel, IModelObservable, IControlObserverCoordinat
   }
 
   Notify(): void {
-    if (this.observer !== null && this.observer !== undefined) {
+    if (this.observer) {
       this.observer.forEach((el) => {
         el.GetValue(this.selectValue);
       });
@@ -111,15 +114,21 @@ class ModelNumber implements IModel, IModelObservable, IControlObserverCoordinat
   PercentInValue(selectValue: string): number {
     let percent = null;
     let numberValue = Number(selectValue);
-    if (numberValue !== NaN)
-      if (numberValue <= this.maxValue && numberValue >= this.minValue) {
+
+    if (numberValue){
+      const isValueRange = numberValue <= this.maxValue && numberValue >= this.minValue;
+
+      if (isValueRange) {
         percent = (numberValue - this.minValue) / this.differentValue;
       }
+    }
+    
     return percent;
   }
 
   SetStep(step: number) {
-    if (step <= this.maxValue && step >= this.minValue) {
+    const isStepRange = step <= this.maxValue && step >= this.minValue;
+    if (isStepRange) {
       this.step = step;
       this.Init();
     }
@@ -146,7 +155,9 @@ class ModelNumber implements IModel, IModelObservable, IControlObserverCoordinat
 
   ValueInPercent(percent: number): string {
     let value: string = null;
-    if (percent <= 1 && percent >= 0) {
+    const isRange = percent <= 1 && percent >= 0;
+
+    if (isRange) {
       value = `${this.minValue + this.differentValue * percent}`;
     }
     return value;

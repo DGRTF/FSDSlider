@@ -12,7 +12,7 @@ export default class MaxMargin implements IControlObserverCoordinate {
   private maxValue: IControlMax[];
 
   SetCoordinatePercent(coordinatePercent: number) {
-    if (this.maxValue !== null) {
+    if (this.maxValue) {
       this.maxValue.forEach((el) => {
         el.SetMaxMargin(coordinatePercent);
       });
@@ -25,6 +25,7 @@ export default class MaxMargin implements IControlObserverCoordinate {
 
   DeleteMaxMarginObserver(maxValue: IControlMax) {
     const index = this.maxValue.indexOf(maxValue);
+    
     if (index > -1) {
       this.maxValue.splice(index, 1);
     }

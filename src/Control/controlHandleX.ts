@@ -85,7 +85,9 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
   }
 
   private MoveHandle() {
-    if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
+    const isCurrentMarginRange = this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin;
+
+    if (isCurrentMarginRange) {
       this.handle.style.left = `${this.currentMargin}px`;
       this.setSelectValue = (this.currentMargin + this.handle.offsetWidth / 2) / this.parentElement.offsetWidth;
     } else {
@@ -118,10 +120,13 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
   private moveTouch = this.MoveBlockTouch.bind(this);
 
   SetCurrentMarginPercent(percent: number) {
-    if (percent <= 1 && percent >= 0) {
-      this.currentMargin = this.parentElement.offsetWidth * percent - this.handle.offsetWidth / 2;
+    const isPercentRange = percent <= 1 && percent >= 0;
 
-      if (this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin) {
+    if (isPercentRange) {
+      this.currentMargin = this.parentElement.offsetWidth * percent - this.handle.offsetWidth / 2;
+      const isCurrentMarginRange = this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin;
+
+      if (isCurrentMarginRange) {
         this.setSelectValue = percent;
         this.handle.style.left = `${this.currentMargin}px`;
         this.Notify();
@@ -130,14 +135,18 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
   }
 
   SetMinMargin(minMargin: number) {
-    if (minMargin <= 1 && minMargin >= 0) {
+    const isMinMarginRange = minMargin <= 1 && minMargin >= 0;
+
+    if (isMinMarginRange) {
       this.minMargin = this.parentElement.offsetWidth * minMargin - this.handle.offsetWidth / 2;
     }
     this.handle.classList.remove("slider-foreground");
   }
 
   SetMaxMargin(maxMargin: number) {
-    if (maxMargin <= 1 && maxMargin >= 0) {
+    const isMaxMarginRange = maxMargin <= 1 && maxMargin >= 0;
+
+    if (isMaxMarginRange) {
       this.maxMargin = this.parentElement.offsetWidth * maxMargin - this.handle.offsetWidth / 2;
     }
     this.handle.classList.remove("slider-foreground");
@@ -149,13 +158,14 @@ export default class HandleX implements IControlObservable, IHandle, IControlMin
 
   DeleteObserver(controlObserver: IControlObserverCoordinate) {
     const index = this.observer.indexOf(controlObserver);
+    
     if (index > -1) {
       this.observer.splice(index, 1);
     }
   }
 
   Notify() {
-    if (this.observer !== null || this.observer !== undefined) {
+    if (this.observer) {
       this.observer.forEach((el) => {
         el.SetCoordinatePercent(this.setSelectValue);
       });

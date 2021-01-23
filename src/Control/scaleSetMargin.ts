@@ -90,7 +90,9 @@ export default class ScaleSetMargin {
 
   private Move() {
     this.movePercent.forEach(el => {
-      if (Math.abs(el.GetSetSelectValue() - this.percent) === this.marginPercentArr[0])
+      const value = Math.abs(el.GetSetSelectValue() - this.percent);
+
+      if (value === this.marginPercentArr[0])
         el.SetCurrentMarginPercent(this.percent);
     });
   }

@@ -12,7 +12,7 @@ export default class MinMargin implements IControlObserverCoordinate {
   private minValue: IControlMin[];
 
   SetCoordinatePercent(coordinatePercent: number) {
-    if (this.minValue !== null) {
+    if (this.minValue) {
       this.minValue.forEach((el) => {
         el.SetMinMargin(coordinatePercent);
       });
@@ -25,6 +25,7 @@ export default class MinMargin implements IControlObserverCoordinate {
 
   DeleteMinMarginObserver(minValue: IControlMin) {
     const index = this.minValue.indexOf(minValue);
+    
     if (index > -1) {
       this.minValue.splice(index, 1);
     }

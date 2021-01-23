@@ -44,7 +44,8 @@ class View implements IView, IModelObserver, IControlObserverCoordinate {
   }
 
   SetCoordinatePercent(coordinatePercent: number) {
-    if (coordinatePercent <= 1 && coordinatePercent >= 0) {
+    const isCoordinatePercentRange = coordinatePercent <= 1 && coordinatePercent >= 0;
+    if (isCoordinatePercentRange) {
       if (this.orientation) {
         this.currentMargin = this.parentElement.offsetWidth * coordinatePercent;
         this.currentMargin -= this.selectValueElement.offsetWidth / 2;

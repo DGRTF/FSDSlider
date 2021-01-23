@@ -102,6 +102,7 @@ export default class ControlFacade {
     setInterval(() => {
       if (this.parentElement.offsetWidth !== this.size) {
         this.handleMaxMargin[this.handleMaxMargin.length - 1].SetMaxMargin(1);
+
         if (this.parentElement.offsetWidth > this.size) {
           for (let i = this.handleArr.length - 1; i >= 0; i--) {
             this.handleArr[i].SetCurrentMarginPercent(this.handleArr[i].GetSetSelectValue())
@@ -111,6 +112,7 @@ export default class ControlFacade {
           this.handleArr.forEach(el => {
             el.SetCurrentMarginPercent(el.GetSetSelectValue());
           });
+
         this.size = this.parentElement.offsetWidth;
       }
     }, 50);
@@ -118,19 +120,25 @@ export default class ControlFacade {
 
 
   SetCurrentMarginPercent(percent: number, numb: number) {
-    if (numb < this.handleArr.length && numb >= 0) {
+    const isNumbRange = numb < this.handleArr.length && numb >= 0;
+
+    if (isNumbRange) {
       this.handleArr[numb].SetCurrentMarginPercent(percent);
     }
   }
 
   AddObserverHandle(observer: IControlObserverCoordinate, numb: number) {
-    if (numb < this.handleArrObservable.length && numb >= 0) {
+    const isNumbRange = numb < this.handleArrObservable.length && numb >= 0;
+
+    if (isNumbRange) {
       this.handleArrObservable[numb].AddObserver(observer);
     }
   }
 
   DeleteObserverHandle(observer: IControlObserverCoordinate, numb: number) {
-    if (numb < this.handleArrObservable.length && numb >= 0) {
+    const isNumbRange = numb < this.handleArrObservable.length && numb >= 0;
+
+    if (isNumbRange) {
       this.handleArrObservable[numb].DeleteObserver(observer);
     }
   }
