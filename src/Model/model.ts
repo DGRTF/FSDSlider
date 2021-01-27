@@ -1,25 +1,25 @@
 import { IControlObserverCoordinate } from "../Control/control";
 
 interface IModelObservable {
-  AddObserver(modelObserver: IModelObserver): void;
-  DeleteObserver(modelObserver: IModelObserver): void;
-  Notify(): void;
+  addObserver(modelObserver: IModelObserver): void;
+  deleteObserver(modelObserver: IModelObserver): void;
+  notify(): void;
 }
 
 interface IModelObserver {
-  GetValue(selectValue: string): void;
+  getValue(selectValue: string): void;
 }
 
 interface IModel {
-  PercentInValue(selectValue: string): number;
-  SetStep(step: number): void;
-  SetMaxValue(maxValue: number): void;
-  SetMinValue(minValue: number): void;
-  GetSelectValue(): string;
+  getPercentFromValue(selectValue: string): number;
+  setStep(step: number): void;
+  setMaxValue(maxValue: number): void;
+  setMinValue(minValue: number): void;
+  getSelectValue(): string;
 }
 
 interface IValue {
-  ValueInPercent(percent: number): string;
+  getValueFromPercent(percent: number): string;
 }
 
 class ModelNumber implements IModel, IModelObservable, IControlObserverCoordinate, IValue {
@@ -48,11 +48,11 @@ class ModelNumber implements IModel, IModelObservable, IControlObserverCoordinat
     this.differentValue = Math.abs(maxValue - minValue);
     this.observer = observer;
     this.selectValue = '';
-    this.Init();
+    this.initialize();
   }
 
 
-  private Init() {
+  private initialize() {
     const afterDecimalStr = this.step.toString().split('.')[1] || '';
     const minValueStr = this.minValue.toString().split('.')[1] || '';
     
@@ -61,7 +61,7 @@ class ModelNumber implements IModel, IModelObservable, IControlObserverCoordinat
   }
 
 
-  SetCoordinatePercent(percent: number): void {
+  setCoordinatePercent(percent: number): void {
     const isPercentRange = percent < 1 && percent > 0;
     if (isPercentRange) {
       const currentValue = this.differentValue * percent;
@@ -89,29 +89,29 @@ class ModelNumber implements IModel, IModelObservable, IControlObserverCoordinat
       this.selectValue = `${this.minValue}`;
     } else
       this.selectValue = `${this.maxValue}`;
-    this.Notify();
+    this.notify();
   }
 
-  AddObserver(modelObserver: IModelObserver): void {
+  addObserver(modelObserver: IModelObserver): void {
     this.observer.push(modelObserver);
   }
 
-  DeleteObserver(modelObserver: IModelObserver): void {
+  deleteObserver(modelObserver: IModelObserver): void {
     const index = this.observer.indexOf(modelObserver);
     if (index > -1) {
       this.observer.splice(index, 1);
     }
   }
 
-  Notify(): void {
+  notify(): void {
     if (this.observer) {
       this.observer.forEach((el) => {
-        el.GetValue(this.selectValue);
+        el.getValue(this.selectValue);
       });
     }
   }
 
-  PercentInValue(selectValue: string): number {
+  getPercentFromValue(selectValue: string): number {
     let percent = null;
     let numberValue = Number(selectValue);
 
@@ -126,34 +126,34 @@ class ModelNumber implements IModel, IModelObservable, IControlObserverCoordinat
     return percent;
   }
 
-  SetStep(step: number) {
+  setStep(step: number) {
     const isStepRange = step <= this.maxValue && step >= this.minValue;
     if (isStepRange) {
       this.step = step;
-      this.Init();
+      this.initialize();
     }
   }
 
-  SetMaxValue(maxValue: number) {
+  setMaxValue(maxValue: number) {
     if (maxValue >= this.minValue) {
       this.maxValue = maxValue;
       this.differentValue = Math.abs(this.maxValue - this.minValue);
     }
   }
 
-  SetMinValue(minValue: number) {
+  setMinValue(minValue: number) {
     if (minValue <= this.maxValue) {
       this.minValue = minValue;
       this.differentValue = Math.abs(this.maxValue - this.minValue);
-      this.Init();
+      this.initialize();
     }
   }
 
-  GetSelectValue(): string {
+  getSelectValue(): string {
     return this.selectValue;
   }
 
-  ValueInPercent(percent: number): string {
+  getValueFromPercent(percent: number): string {
     let value: string = null;
     const isRange = percent <= 1 && percent >= 0;
 
@@ -167,19 +167,19 @@ class ModelNumber implements IModel, IModelObservable, IControlObserverCoordinat
 
   // For tests
 
-  GetObserverLength(): number {
+  getObserverLength(): number {
     return this.observer.length;
   }
 
-  GetStep(): number {
+  getStep(): number {
     return this.step;
   }
 
-  GetMinValue(): number {
+  getMinValue(): number {
     return this.minValue;
   }
 
-  GetMaxValue(): number {
+  getMaxValue(): number {
     return this.maxValue;
   }
 

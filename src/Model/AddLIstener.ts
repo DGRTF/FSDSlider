@@ -10,7 +10,7 @@ export default class AddListener implements IModelObserver {
 
   private listener: (selectValue: string) => void;
 
-  GetValue(selectValue: string) {
+  getValue(selectValue: string) {
     this.listener(selectValue);
   }
 

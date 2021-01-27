@@ -4,7 +4,7 @@ export default class ScaleSetMargin {
   constructor(parentElement: HTMLElement, orientation: boolean = true) {
     this.parentElement = parentElement;
     this.orientation = orientation;
-    this.Init();
+    this.initialize();
   }
 
   private parentElement: HTMLElement;
@@ -25,28 +25,28 @@ export default class ScaleSetMargin {
 
   private marginPercentArr: number[] = [];
 
-  private Init() {
-    this.Create();
-    this.AddContent();
-    this.AddClasses();
-    this.AddHandleClick();
+  private initialize() {
+    this.create();
+    this.addContent();
+    this.addClasses();
+    this.addHandleClick();
   }
 
-  private Create() {
+  private create() {
     this.scale = document.createElement("div");
     this.lineFirst = document.createElement("div");
     this.centralLine = document.createElement("div");
     this.lineLast = document.createElement("div");
   }
 
-  private AddContent() {
+  private addContent() {
     this.scale.appendChild(this.lineFirst);
     this.scale.appendChild(this.centralLine);
     this.scale.appendChild(this.lineLast);
     this.parentElement.appendChild(this.scale);
   }
 
-  private AddClasses() {
+  private addClasses() {
     if (this.orientation) {
       this.scale.className = " slider-scaleSetMargin-horizontal";
       this.lineFirst.className = " slider-scaleSetMargin-line"
@@ -60,26 +60,26 @@ export default class ScaleSetMargin {
     }
   }
 
-  private AddHandleClick() {
-    this.scale.addEventListener("click", this.PercentInit.bind(this));
+  private addHandleClick() {
+    this.scale.addEventListener("click", this.handlePercentInit.bind(this));
   }
 
-  private PercentInit(event: MouseEvent) {
+  private handlePercentInit(event: MouseEvent) {
     if (this.orientation)
       this.percent = (event.clientX - this.parentElement.getBoundingClientRect().left) / this.parentElement.offsetWidth;
     else
       this.percent = 1 - (event.clientY - this.parentElement.getBoundingClientRect().top) / this.parentElement.offsetHeight;
 
-    this.SearchNear();
+    this.searchNear();
   }
 
-  private SearchNear() {
+  private searchNear() {
     this.movePercent.forEach((el, item) => {
-      this.marginPercentArr[item] = Math.abs(el.GetSetSelectValue() - this.percent);
+      this.marginPercentArr[item] = Math.abs(el.getSetSelectValue() - this.percent);
     });
 
     this.marginPercentArr.sort(this.Compare);
-    this.Move();
+    this.move();
   }
 
   private Compare(a: number, b: number) {
@@ -88,24 +88,24 @@ export default class ScaleSetMargin {
     if (a < b) return -1;
   }
 
-  private Move() {
+  private move() {
     this.movePercent.forEach(el => {
-      const value = Math.abs(el.GetSetSelectValue() - this.percent);
+      const value = Math.abs(el.getSetSelectValue() - this.percent);
 
       if (value === this.marginPercentArr[0])
-        el.SetCurrentMarginPercent(this.percent);
+        el.setCurrentMarginPercent(this.percent);
     });
   }
 
-  AddHandle(handle: IHandle) {
+  addHandle(handle: IHandle) {
     this.movePercent.push(handle);
   }
 
-  HideScale() {
+  hideScale() {
     this.scale.classList.add("slider-scaleSetMargin-hidden");
   }
 
-  ShowScale() {
+  showScale() {
     this.scale.classList.remove("slider-scaleSetMargin-hidden");
   }
 
@@ -113,11 +113,11 @@ export default class ScaleSetMargin {
 
   // for tests
 
-  GetMovePercent(): number {
+  getMovePercent(): number {
     return this.movePercent.length;
   }
 
-  GetScaleClass(): string{
+  getScaleClass(): string{
     return this.scale.className;
   }
 

@@ -17,24 +17,24 @@ describe('Class View', () => {
   const viewElement = <HTMLElement>parentElement.firstChild;
 
   test('View.GetValue() Получает строковое значение и задаёт его HTML-элементу', () => {
-    view.GetValue('gena');
+    view.getValue('gena');
     expect(viewElement.innerText).toEqual('gena');
   });
 
   test('View.HiddenView() Показывает HTML-элемент', () => {
-    view.HiddenView();
+    view.hiddenView();
     expect(viewElement.hidden).toEqual(true);
   });
 
   test('View.ShowView() Скрывает HTML-элемент ', () => {
-    view.ShowView();
+    view.showView();
     expect(viewElement.hidden).toEqual(false);
   });
 
   test('View.AddClassesCss(classes: string) добавляет класс HTML-элементу', () => {
     const classes = "i b";
-    view.AddClassesCss(classes);
-    const returnClasses = view.GetClasses();
+    view.addClassesCss(classes);
+    const returnClasses = view.getClasses();
     expect(returnClasses.indexOf).not.toEqual(-1);
   });
 
@@ -42,7 +42,7 @@ describe('Class View', () => {
     const valuesArr: number[] = [0, 1, -.2, .3, 1.2];
     const answerArr: number[] = [0, 200, 200, 60, 60];
     valuesArr.forEach((el, index) => {
-      view.SetCoordinatePercent(el);
+      view.setCoordinatePercent(el);
       expect(viewElement.style.left).toEqual(`${answerArr[index]}px`);
     });
   });
@@ -62,7 +62,7 @@ describe('Class View', () => {
     const valuesArr: number[] = [1, .3, -.1, .2, 1.2, 0];
     const answerArr: number[] = [0, 140, 140, 160, 160, 200];
     valuesArr.forEach((el, index) => {
-      viewVertical.SetCoordinatePercent(el);
+      viewVertical.setCoordinatePercent(el);
       expect(viewElementVertical.style.top).toEqual(`${answerArr[index]}px`);
     });
   });

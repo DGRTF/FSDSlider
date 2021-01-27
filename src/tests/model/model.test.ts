@@ -7,7 +7,7 @@ import { ModelNumber, IModelObserver } from '../../Model/model';
 class Observer implements IModelObserver {
   str: string;
 
-  GetValue(selectValue: string) {
+  getValue(selectValue: string) {
     this.str = selectValue;
   }
 }
@@ -25,29 +25,29 @@ describe('Class ModelNumber', () => {
     const outputValues: number[] = [-100, 100, -100, 60, 100];
 
     valuesPercent.forEach((el, index) => {
-      modelNumber.SetCoordinatePercent(el);
-      expect(modelNumber.GetSelectValue()).toEqual(`${outputValues[index]}`);
+      modelNumber.setCoordinatePercent(el);
+      expect(modelNumber.getSelectValue()).toEqual(`${outputValues[index]}`);
     });
   });
 
   test('ModelNumber.AddObserver(modelObserver: IModelObserver) Добавляет значение в массив', () => {
     const modelNumber = FactoryModelNumber();
-    modelNumber.AddObserver(null);
-    modelNumber.AddObserver(null);
-    modelNumber.AddObserver(null);
+    modelNumber.addObserver(null);
+    modelNumber.addObserver(null);
+    modelNumber.addObserver(null);
 
-    const length = modelNumber.GetObserverLength();
+    const length = modelNumber.getObserverLength();
     expect(length).toEqual(3);
   });
 
   test('ModelNumber.DeleteObserver(modelObserver: IModelObserver) Удаляет значение из массива', () => {
     const modelNumber = FactoryModelNumber();
-    modelNumber.AddObserver(null);
-    modelNumber.AddObserver(null);
-    modelNumber.AddObserver(null)
+    modelNumber.addObserver(null);
+    modelNumber.addObserver(null);
+    modelNumber.addObserver(null)
 
-    modelNumber.DeleteObserver(null);
-    const length = modelNumber.GetObserverLength();
+    modelNumber.deleteObserver(null);
+    const length = modelNumber.getObserverLength();
     expect(length).toEqual(2);
   });
 
@@ -57,7 +57,7 @@ describe('Class ModelNumber', () => {
     const outputValues: number[] = [.45, null, .6, .9, 1, null];
 
     valuesPercent.forEach((el, index) => {
-      const percent = modelNumber.PercentInValue(`${el}`);
+      const percent = modelNumber.getPercentFromValue(`${el}`);
       expect(percent).toEqual(outputValues[index]);
     });
   });
@@ -68,8 +68,8 @@ describe('Class ModelNumber', () => {
     const outputValues: number[] = [1, -100, -20, 100, 80, 80];
 
     valuesStep.forEach((el, item) => {
-      modelNumber.SetStep(el);
-      const step = modelNumber.GetStep();
+      modelNumber.setStep(el);
+      const step = modelNumber.getStep();
       expect(step).toEqual(outputValues[item]);
     });
   });
@@ -80,8 +80,8 @@ describe('Class ModelNumber', () => {
     const outputValues: number[] = [-120, -20, 100, 80, 80];
 
     inputValues.forEach((el, item) => {
-      modelNumber.SetMinValue(el);
-      const minValue = modelNumber.GetMinValue();
+      modelNumber.setMinValue(el);
+      const minValue = modelNumber.getMinValue();
       expect(minValue).toEqual(outputValues[item]);
     });
   });
@@ -92,8 +92,8 @@ describe('Class ModelNumber', () => {
     const outputValues: number[] = [100, -100, 100, 80, 120];
 
     inputValues.forEach((el, item) => {
-      modelNumber.SetMaxValue(el);
-      const maxValue = modelNumber.GetMaxValue();
+      modelNumber.setMaxValue(el);
+      const maxValue = modelNumber.getMaxValue();
       expect(maxValue).toEqual(outputValues[item]);
     });
   });
@@ -104,7 +104,7 @@ describe('Class ModelNumber', () => {
     const outputValues: number[] = [null, -100, 100, 60, null];
 
     inputValues.forEach((el, item) => {
-      const percent = modelNumber.ValueInPercent(el);
+      const percent = modelNumber.getValueFromPercent(el);
       expect(`${percent}`).toEqual(`${outputValues[item]}`);
     });
   });
@@ -113,9 +113,9 @@ describe('Class ModelNumber', () => {
     const modelNumber = FactoryModelNumber();
     const observer = new Observer();
 
-    modelNumber.AddObserver(observer)
-    modelNumber.SetCoordinatePercent(.5);
-    modelNumber.Notify();
+    modelNumber.addObserver(observer)
+    modelNumber.setCoordinatePercent(.5);
+    modelNumber.notify();
 
     expect(observer.str).toEqual("0");
   });

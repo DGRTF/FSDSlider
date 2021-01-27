@@ -11,19 +11,19 @@ export default class MaxMargin implements IControlObserverCoordinate {
 
   private maxValue: IControlMax[];
 
-  SetCoordinatePercent(coordinatePercent: number) {
+  setCoordinatePercent(coordinatePercent: number) {
     if (this.maxValue) {
       this.maxValue.forEach((el) => {
-        el.SetMaxMargin(coordinatePercent);
+        el.setMaxMargin(coordinatePercent);
       });
     }
   }
 
-  AddMaxMarginObserver(maxValue: IControlMax) {
+  addMaxMarginObserver(maxValue: IControlMax) {
     this.maxValue.push(maxValue);
   }
 
-  DeleteMaxMarginObserver(maxValue: IControlMax) {
+  deleteMaxMarginObserver(maxValue: IControlMax) {
     const index = this.maxValue.indexOf(maxValue);
     
     if (index > -1) {
@@ -35,7 +35,7 @@ export default class MaxMargin implements IControlObserverCoordinate {
 
   // for tests
 
-  GetObserver(): IControlMax[] {
+  getObserver(): IControlMax[] {
     return this.maxValue.slice();
   }
 

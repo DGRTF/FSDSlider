@@ -9,7 +9,7 @@ class Observer implements IControlObserverCoordinate {
 
   coordinatePercent: number = null;
 
-  SetCoordinatePercent(coordinatePercent: number) {
+  setCoordinatePercent(coordinatePercent: number) {
     this.coordinatePercent = coordinatePercent;
   }
 
@@ -33,8 +33,8 @@ describe('Class HandleX', () => {
     let valuesPercent: number[] = [0, -.1, .2, -0.1, .8, 1.2, 1];
     let outputValues: number[] = [0, 0, 40, 40, 160, 160, 200];
     valuesPercent.forEach((el, index) => {
-      handle.SetCurrentMarginPercent(el);
-      expect(handle.GetHandleStyleLeft()).toEqual(`${outputValues[index]}px`);
+      handle.setCurrentMarginPercent(el);
+      expect(handle.getHandleStyleLeft()).toEqual(`${outputValues[index]}px`);
     });
   });
 
@@ -43,8 +43,8 @@ describe('Class HandleX', () => {
     let valuesPercent: number[] = [0, -.1, .2, -1, .8, 120];
     let outputValues: number[] = [0, 0, 40, 40, 160, 160];
     valuesPercent.forEach((el, index) => {
-      handle.SetMinMargin(el);
-      expect(handle.GetMinMargin()).toEqual(outputValues[index]);
+      handle.setMinMargin(el);
+      expect(handle.getMinMargin()).toEqual(outputValues[index]);
     });
   });
 
@@ -53,8 +53,8 @@ describe('Class HandleX', () => {
     let valuesPercent: number[] = [0, -.1, .2, -.8, 1.2, 1];
     let outputValues: number[] = [0, 0, 40, 40, 40, 200];
     valuesPercent.forEach((el, index) => {
-      handle.SetMaxMargin(el);
-      expect(handle.GetMaxMargin()).toEqual(outputValues[index]);
+      handle.setMaxMargin(el);
+      expect(handle.getMaxMargin()).toEqual(outputValues[index]);
     });
   });
 
@@ -63,30 +63,30 @@ describe('Class HandleX', () => {
 
   test('HandleX.AddObserver(controlObserver: IControlObserverCoordinate) Добавляет наблюдателя в массив', () => {
     handle = new HandleX(parentElement);
-    handle.AddObserver(new Observer());
-    handle.AddObserver(new Observer());
-    handle.AddObserver(deleteObserver);
-    expect(handle.GetObserver().length).toEqual(3);
+    handle.addObserver(new Observer());
+    handle.addObserver(new Observer());
+    handle.addObserver(deleteObserver);
+    expect(handle.getObserver().length).toEqual(3);
   });
 
   test('HandleX.DeleteObserver(controlObserver: IControlObserverCoordinate) Удаляет наблюдателя из массива', () => {
-    handle.DeleteObserver(deleteObserver);
-    expect(handle.GetObserver().length).toEqual(2);
+    handle.deleteObserver(deleteObserver);
+    expect(handle.getObserver().length).toEqual(2);
   });
 
   let observer = new Observer();
     
   test('HandleX.Notify() Уведомляет наблюдателя', () => {
     handle = new HandleX(parentElement);
-    handle.AddObserver(observer);
-    handle.SetCurrentMarginPercent(.4);
+    handle.addObserver(observer);
+    handle.setCurrentMarginPercent(.4);
     expect(observer.coordinatePercent).toEqual(.4);
   });
 
   test('HandleX.GetSetSelectValue() возвращает текущую координату в процентах( от 0 до 1)', () => {
     handle = new HandleX(parentElement);
-    handle.SetCurrentMarginPercent(0);
-    expect(handle.GetSetSelectValue()).toEqual(0);
+    handle.setCurrentMarginPercent(0);
+    expect(handle.getSetSelectValue()).toEqual(0);
   });
 
 });

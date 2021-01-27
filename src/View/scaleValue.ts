@@ -8,7 +8,7 @@ export default class ScaleValue {
     this.parentElement = parentElement;
     this.orientation = orientation;
     this.model = model;
-    this.Init();
+    this.initialize();
   }
 
   private parentElement: HTMLElement;
@@ -25,22 +25,21 @@ export default class ScaleValue {
 
   private model: IValue;
 
-  private Init() {
-    this.CreateElement();
-    this.AddClasses();
-    this.AddContentHTML();
-    this.SetValues();
-
+  private initialize() {
+    this.createElements();
+    this.addClasses();
+    this.addContentHTML();
+    this.setValues();
   }
 
-  private CreateElement() {
+  private createElements() {
     this.valuesContainer = document.createElement("div");
     this.minValue = document.createElement("div");
     this.middleValue = document.createElement("div");
     this.maxValue = document.createElement("div");
   }
 
-  private AddClasses() {
+  private addClasses() {
     if (this.orientation) {
       this.valuesContainer.classList.add("slider-view-scale-value");
 
@@ -66,33 +65,33 @@ export default class ScaleValue {
     }
   }
 
-  private AddContentHTML() {
+  private addContentHTML() {
     this.parentElement.appendChild(this.valuesContainer);
     this.valuesContainer.appendChild(this.minValue);
     this.valuesContainer.appendChild(this.middleValue);
     this.valuesContainer.appendChild(this.maxValue);
   }
 
-  SetValues() {
+  setValues() {
     if (this.model) {
-      this.minValue.innerText = this.model.ValueInPercent(0);
-      this.middleValue.innerText = this.model.ValueInPercent(.5);
-      this.maxValue.innerText = this.model.ValueInPercent(1);
+      this.minValue.innerText = this.model.getValueFromPercent(0);
+      this.middleValue.innerText = this.model.getValueFromPercent(.5);
+      this.maxValue.innerText = this.model.getValueFromPercent(1);
     }
   }
 
   // сделано, что бы предать гибкости коду
   // таким образом можно передать другую модель этому объекту без необходимости создавать новый экземпляр этого класса
-  SetIValue(model: IValue) {
+  setIValue(model: IValue) {
     this.model = model;
-    this.SetValues();
+    this.setValues();
   }
 
-  HideScale() {
+  hideScale() {
     this.valuesContainer.classList.add("slider-view-hide");
   }
 
-  ShowScale() {
+  showScale() {
     this.valuesContainer.classList.remove("slider-view-hide");
   }
 
@@ -100,15 +99,15 @@ export default class ScaleValue {
 
   // fot tests
 
-  GetClassesValueContainer(): string {
+  getClassesValueContainer(): string {
     return this.valuesContainer.className;
   }
 
-  GetIValue(): IValue {
+  getIValue(): IValue {
     return this.model;
   }
 
-  GetSettingValue() {
+  getSettingValue() {
     return this.minValue.innerText + " " + this.middleValue.innerText + " " + this.maxValue.innerText;
   }
 }

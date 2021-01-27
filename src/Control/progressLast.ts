@@ -6,7 +6,7 @@ export default class ProgressLast implements IControlObserverCoordinate {
     this.parentElement = parentElement;
     this.orientation = orientation;
     this.range = range;
-    this.Init();
+    this.initialize();
   }
 
   private range: boolean;
@@ -19,17 +19,17 @@ export default class ProgressLast implements IControlObserverCoordinate {
 
   private width: number;
 
-  private Init() {
-    this.Create();
-    this.AddClasses();
-    this.AddContentHTML();
+  private initialize() {
+    this.create();
+    this.addClasses();
+    this.addContentHTML();
   }
 
-  private Create() {
+  private create() {
     this.progressElement = document.createElement('div');
   }
 
-  private AddClasses() {
+  private addClasses() {
     if (this.orientation) {
       this.progressElement.className += ' slider-progress slider-progress-last';
     } else if (this.range) {
@@ -39,11 +39,11 @@ export default class ProgressLast implements IControlObserverCoordinate {
     }
   }
 
-  private AddContentHTML() {
+  private addContentHTML() {
     this.parentElement.appendChild(this.progressElement);
   }
 
-  SetCoordinatePercent(coordinatePercent: number) {
+  setCoordinatePercent(coordinatePercent: number) {
     const isCoordinatePercentRange = coordinatePercent <= 1 && coordinatePercent >= 0;
 
     if (isCoordinatePercentRange) {
@@ -62,7 +62,7 @@ export default class ProgressLast implements IControlObserverCoordinate {
 
   // for tests
 
-  GetWidthOrHeight(): string {
+  getWidthOrHeight(): string {
     if (this.orientation)
       return this.progressElement.style.minWidth;
     return this.progressElement.style.minHeight;

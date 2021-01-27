@@ -11,19 +11,19 @@ export default class MinMargin implements IControlObserverCoordinate {
 
   private minValue: IControlMin[];
 
-  SetCoordinatePercent(coordinatePercent: number) {
+  setCoordinatePercent(coordinatePercent: number) {
     if (this.minValue) {
       this.minValue.forEach((el) => {
-        el.SetMinMargin(coordinatePercent);
+        el.setMinMargin(coordinatePercent);
       });
     }
   }
 
-  AddMinMarginObserver(minValue: IControlMin) {
+  addMinMarginObserver(minValue: IControlMin) {
     this.minValue.push(minValue);
   }
 
-  DeleteMinMarginObserver(minValue: IControlMin) {
+  deleteMinMarginObserver(minValue: IControlMin) {
     const index = this.minValue.indexOf(minValue);
     
     if (index > -1) {
@@ -35,7 +35,7 @@ export default class MinMargin implements IControlObserverCoordinate {
 
   // for tests
 
-  GetObserver(): IControlMin[] {
+  getObserver(): IControlMin[] {
     return this.minValue.slice();
   }
 

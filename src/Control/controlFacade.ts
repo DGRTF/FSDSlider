@@ -18,7 +18,7 @@ export default class ControlFacade {
     this.parentElement = parentElement;
     this.orientation = orientation;
     this.range = range;
-    this.Init();
+    this.initialize();
   }
 
   private parentElement: HTMLElement;
@@ -37,10 +37,10 @@ export default class ControlFacade {
 
   private scale: ScaleSetMargin;
 
-  private Init() {
+  private initialize() {
 
     if (this.orientation)
-      this.IntervalCheckSize();
+      this.intervalCheckSize();
     let controlOne;
 
     if (this.orientation) {
@@ -71,21 +71,21 @@ export default class ControlFacade {
 
       if (!this.orientation) {
         minMargin = new MinMargin([controlOne]);
-        controlOne1.AddObserver(minMargin);
+        controlOne1.addObserver(minMargin);
         maxMargin = new MaxMargin([controlOne1]);
-        controlOne.AddObserver(maxMargin);
+        controlOne.addObserver(maxMargin);
       } else {
         minMargin = new MinMargin([controlOne1]);
-        controlOne.AddObserver(minMargin);
+        controlOne.addObserver(minMargin);
         maxMargin = new MaxMargin([controlOne]);
-        controlOne1.AddObserver(maxMargin);
+        controlOne1.addObserver(maxMargin);
       }
       this.handleArr = [controlOne, controlOne1];
       this.handleArrObservable = [controlOne, controlOne1];
       this.handleMaxMargin = [controlOne, controlOne1];
 
-      this.scale.AddHandle(controlOne1);
-      this.scale.AddHandle(controlOne);
+      this.scale.addHandle(controlOne1);
+      this.scale.addHandle(controlOne);
     } else {
       control = new Control(this.parentElement, this.orientation, [controlOne]);
 
@@ -93,24 +93,24 @@ export default class ControlFacade {
       this.handleArrObservable = [controlOne];
       this.handleMaxMargin = [controlOne];
 
-      this.scale.AddHandle(controlOne);
+      this.scale.addHandle(controlOne);
     }
   }
 
-  private IntervalCheckSize() {
+  private intervalCheckSize() {
     this.size = this.parentElement.offsetWidth;
     setInterval(() => {
       if (this.parentElement.offsetWidth !== this.size) {
-        this.handleMaxMargin[this.handleMaxMargin.length - 1].SetMaxMargin(1);
+        this.handleMaxMargin[this.handleMaxMargin.length - 1].setMaxMargin(1);
 
         if (this.parentElement.offsetWidth > this.size) {
           for (let i = this.handleArr.length - 1; i >= 0; i--) {
-            this.handleArr[i].SetCurrentMarginPercent(this.handleArr[i].GetSetSelectValue())
+            this.handleArr[i].setCurrentMarginPercent(this.handleArr[i].getSetSelectValue())
           }
         }
         else
           this.handleArr.forEach(el => {
-            el.SetCurrentMarginPercent(el.GetSetSelectValue());
+            el.setCurrentMarginPercent(el.getSetSelectValue());
           });
 
         this.size = this.parentElement.offsetWidth;
@@ -119,41 +119,41 @@ export default class ControlFacade {
   }
 
 
-  SetCurrentMarginPercent(percent: number, numb: number) {
+  setCurrentMarginPercent(percent: number, numb: number) {
     const isNumbRange = numb < this.handleArr.length && numb >= 0;
 
     if (isNumbRange) {
-      this.handleArr[numb].SetCurrentMarginPercent(percent);
+      this.handleArr[numb].setCurrentMarginPercent(percent);
     }
   }
 
-  AddObserverHandle(observer: IControlObserverCoordinate, numb: number) {
+  addObserverHandle(observer: IControlObserverCoordinate, numb: number) {
     const isNumbRange = numb < this.handleArrObservable.length && numb >= 0;
 
     if (isNumbRange) {
-      this.handleArrObservable[numb].AddObserver(observer);
+      this.handleArrObservable[numb].addObserver(observer);
     }
   }
 
-  DeleteObserverHandle(observer: IControlObserverCoordinate, numb: number) {
+  deleteObserverHandle(observer: IControlObserverCoordinate, numb: number) {
     const isNumbRange = numb < this.handleArrObservable.length && numb >= 0;
 
     if (isNumbRange) {
-      this.handleArrObservable[numb].DeleteObserver(observer);
+      this.handleArrObservable[numb].deleteObserver(observer);
     }
   }
 
-  HideScale() {
-    this.scale.HideScale();
+  hideScale() {
+    this.scale.hideScale();
   }
 
-  ShowScale() {
-    this.scale.ShowScale();
+  showScale() {
+    this.scale.showScale();
   }
 
-  UpdateHandle() {
+  updateHandle() {
     this.handleArr.forEach(el => {
-      el.SetCurrentMarginPercent(el.GetSetSelectValue());
+      el.setCurrentMarginPercent(el.getSetSelectValue());
     });
   }
 

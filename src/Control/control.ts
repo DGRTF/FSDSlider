@@ -2,26 +2,26 @@ import ProgressFirst from './progressFirst';
 import ProgressLast from './progressLast';
 
 interface IControlObserverCoordinate {
-  SetCoordinatePercent(coordinate: number): void;
+  setCoordinatePercent(coordinate: number): void;
 }
 
 interface IControlObservable {
-  AddObserver(modelObserver: IControlObserverCoordinate): void;
-  DeleteObserver(modelObserver: IControlObserverCoordinate): void;
-  Notify(): void
+  addObserver(modelObserver: IControlObserverCoordinate): void;
+  deleteObserver(modelObserver: IControlObserverCoordinate): void;
+  notify(): void
 }
 
 interface IHandle {
-  SetCurrentMarginPercent(percent: number): void;
-  GetSetSelectValue(): number;
+  setCurrentMarginPercent(percent: number): void;
+  getSetSelectValue(): number;
 }
 
 interface IControlMin {
-  SetMinMargin(minMargin: number): void;
+  setMinMargin(minMargin: number): void;
 }
 
 interface IControlMax {
-  SetMaxMargin(maxMargin: number): void;
+  setMaxMargin(maxMargin: number): void;
 }
 
 
@@ -32,7 +32,7 @@ class Control {
     this.parentElement = parentElement;
     this.orientation = orientation;
     this.handleArr = handleArr;
-    this.Init();
+    this.initialize();
   }
 
   private orientation: boolean;
@@ -49,20 +49,20 @@ class Control {
 
   private progressLast: ProgressLast;
 
-  private Init() {
-    this.CreateElementHTML();
-    this.AddContent();
-    this.AddProgress();
-    this.AddObservers();
-    this.AddClasses();
+  private initialize() {
+    this.createElementsHTML();
+    this.addContent();
+    this.addProgress();
+    this.addObservers();
+    this.addClasses();
   }
 
-  private CreateElementHTML() {
+  private createElementsHTML() {
     this.trackElement = document.createElement('div');
     this.range = document.createElement('div');
   }
 
-  private AddClasses() {
+  private addClasses() {
     this.range.className = "slider-progress-range";
     if (this.orientation) {
       this.trackElement.className += ' slider-track-element';
@@ -71,11 +71,11 @@ class Control {
     }
   }
 
-  private AddContent() {
+  private addContent() {
     this.parentElement.appendChild(this.trackElement);
   }
 
-  private AddProgress() {
+  private addProgress() {
     if (this.handleArr.length === 2) {
       this.progressFirst = new ProgressFirst(this.trackElement, this.orientation);
       this.trackElement.appendChild(this.range);
@@ -87,13 +87,13 @@ class Control {
     }
   }
 
-  private AddObservers() {
+  private addObservers() {
     if (this.orientation) {
-      this.handleArr[0].AddObserver(this.progressFirst);
-      this.handleArr[this.handleArr.length - 1].AddObserver(this.progressLast);
+      this.handleArr[0].addObserver(this.progressFirst);
+      this.handleArr[this.handleArr.length - 1].addObserver(this.progressLast);
     } else {
-      this.handleArr[0].AddObserver(this.progressLast);
-      this.handleArr[this.handleArr.length - 1].AddObserver(this.progressFirst);
+      this.handleArr[0].addObserver(this.progressLast);
+      this.handleArr[this.handleArr.length - 1].addObserver(this.progressFirst);
     }
   }
 }

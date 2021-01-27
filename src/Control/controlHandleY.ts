@@ -31,60 +31,60 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
     this.parentElement = parentElement;
     this.observer = controlObserver;
 
-    this.init();
+    this.initialize();
     this.minMargin = 0 - this.handle.offsetHeight / 2;
     this.maxMargin = -this.handle.offsetHeight / 2 + this.parentElement.offsetHeight;
   }
 
-  private init() {
-    this.Create();
-    this.AddClasses();
-    this.AddContentHtml();
-    this.AddListener();
+  private initialize() {
+    this.create();
+    this.addClasses();
+    this.addContentHtml();
+    this.addListener();
   }
 
-  private Create() {
+  private create() {
     this.handle = document.createElement('div');
   }
 
-  private AddClasses() {
+  private addClasses() {
     this.parentElement.className += ' slider-parent-element';
     this.handle.className += 'slider-handle';
   }
 
-  private AddContentHtml() {
+  private addContentHtml() {
     this.parentElement.appendChild(this.handle);
   }
 
-  private AddListener() {
-    this.handle.addEventListener('mousedown', this.AddEventMouseMove.bind(this));
-    this.handle.addEventListener("touchstart", this.AddEventTouchMove.bind(this));
-    document.addEventListener('mouseup', this.MouseUpListener.bind(this));
+  private addListener() {
+    this.handle.addEventListener('mousedown', this.handleAddEventMouseMove.bind(this));
+    this.handle.addEventListener("touchstart", this.handleAddEventTouchMove.bind(this));
+    document.addEventListener('mouseup', this.handleMouseUpListener.bind(this));
   }
 
-  private MouseUpListener() {
+  private handleMouseUpListener() {
     document.removeEventListener('mousemove', this.move);
   }
 
-  private TouchCancelListener() {
+  private handleTouchCancelListener() {
     document.removeEventListener('touchmove', this.moveTouch);
-    document.removeEventListener('touchend', this.TouchCancelListener.bind(this));
+    document.removeEventListener('touchend', this.handleTouchCancelListener.bind(this));
   }
 
-  private AddEventMouseMove(event: MouseEvent) {
+  private handleAddEventMouseMove(event: MouseEvent) {
     this.handle.classList.add("slider-foreground");
     this.mouseY = event.pageY;
     document.addEventListener('mousemove', this.move);
     this.handleY = this.handle.getBoundingClientRect().top;
   }
 
-  private MoveBlock(event: MouseEvent) {
+  private handleMoveBlock(event: MouseEvent) {
     this.currentMargin = this.handleY - this.mouseY + event.pageY;
     this.currentMargin -= this.parentElement.getBoundingClientRect().top;
-    this.Move();
+    this.handleMove();
   }
 
-  private Move() {
+  private handleMove() {
     const isCurrentMarginRange = this.currentMargin >= this.minMargin && this.currentMargin <= this.maxMargin;
 
     if (isCurrentMarginRange) {
@@ -100,27 +100,27 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
         this.setSelectValue = 1 - (this.maxMargin + this.handle.offsetHeight / 2) / this.parentElement.offsetHeight;
       }
     }
-    this.Notify();
+    this.notify();
   }
 
-  private AddEventTouchMove(event: TouchEvent) {
+  private handleAddEventTouchMove(event: TouchEvent) {
     this.mouseY = event.targetTouches[0].pageY;
     document.addEventListener("touchmove", this.moveTouch);
-    document.addEventListener('touchend', this.TouchCancelListener.bind(this));
+    document.addEventListener('touchend', this.handleTouchCancelListener.bind(this));
     this.handleY = this.handle.getBoundingClientRect().top;
   }
 
-  private MoveBlockTouch(event: TouchEvent) {
+  private handleMoveBlockTouch(event: TouchEvent) {
     this.currentMargin = this.handleY - this.mouseY + event.targetTouches[0].pageY;
     this.currentMargin -= this.parentElement.getBoundingClientRect().top;
-    this.Move();
+    this.handleMove();
   }
 
-  private move = this.MoveBlock.bind(this);
+  private move = this.handleMoveBlock.bind(this);
 
-  private moveTouch = this.MoveBlockTouch.bind(this);
+  private moveTouch = this.handleMoveBlockTouch.bind(this);
 
-  SetCurrentMarginPercent(percent: number) {
+  setCurrentMarginPercent(percent: number) {
     const isPercentRange = percent <= 1 && percent >= 0;
 
     if (isPercentRange) {
@@ -132,10 +132,10 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
         this.handle.style.top = `${this.currentMargin}px`;
       }
     }
-    this.Notify();
+    this.notify();
   }
 
-  SetMinMargin(minMargin: number) {
+  setMinMargin(minMargin: number) {
     const isMinMarginRange = minMargin <= 1 && minMargin >= 0;
 
     if (isMinMarginRange) {
@@ -145,7 +145,7 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
     this.handle.classList.remove("slider-foreground");
   }
 
-  SetMaxMargin(maxMargin: number) {
+  setMaxMargin(maxMargin: number) {
     const isMaxMarginRange = maxMargin <= 1 && maxMargin >= 0;
 
     if (isMaxMarginRange) {
@@ -155,11 +155,11 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
     this.handle.classList.remove("slider-foreground");
   }
 
-  AddObserver(controlObserver: IControlObserverCoordinate) {
+  addObserver(controlObserver: IControlObserverCoordinate) {
     this.observer.push(controlObserver);
   }
 
-  DeleteObserver(controlObserver: IControlObserverCoordinate) {
+  deleteObserver(controlObserver: IControlObserverCoordinate) {
     const index = this.observer.indexOf(controlObserver);
 
     if (index > -1) {
@@ -167,33 +167,33 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
     }
   }
 
-  Notify() {
+  notify() {
     if (this.observer) {
       this.observer.forEach((el) => {
-        el.SetCoordinatePercent(this.setSelectValue);
+        el.setCoordinatePercent(this.setSelectValue);
       });
     }
   }
 
-  GetSetSelectValue(): number {
+  getSetSelectValue(): number {
     return this.setSelectValue;
   }
 
 
   // get values for tests
-  GetMinMargin(): number {
+  getMinMargin(): number {
     return this.minMargin;
   }
 
-  GetMaxMargin(): number {
+  getMaxMargin(): number {
     return this.maxMargin;
   }
 
-  GetHandleStyleTop(): string {
+  getHandleStyleTop(): string {
     return this.handle.style.top;
   }
 
-  GetObserver(): IControlObserverCoordinate[] {
+  getObservers(): IControlObserverCoordinate[] {
     const observer: IControlObserverCoordinate[] = [];
     this.observer.forEach((el, index) => {
       observer[index] = el;

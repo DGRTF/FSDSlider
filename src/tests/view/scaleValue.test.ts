@@ -34,33 +34,33 @@ function FactoryScaleValueVertical() {
 
 it('ScaleValue.SetValues() задаёт максимальное, минимальное и среднее значения из текущей модели', () => {
   const scaleValue = FactoryScaleValue();
-  scaleValue.SetValues();
-  const values: string = scaleValue.GetSettingValue();
+  scaleValue.setValues();
+  const values: string = scaleValue.getSettingValue();
   expect(values).toEqual("-1000 0 1000");
 });
 
 it('ScaleSetMargin.SetIValue(model: IValue) задаёт новую модель для расчётов', () => {
   const scaleValue = FactoryScaleValue();
   const model: IValue = new ModelNumber(-100, 50);
-  scaleValue.SetIValue(model);
-  const retIValue: IValue = scaleValue.GetIValue();
+  scaleValue.setIValue(model);
+  const retIValue: IValue = scaleValue.getIValue();
   expect(retIValue).toEqual(model);
 
-  const values: string = scaleValue.GetSettingValue();
+  const values: string = scaleValue.getSettingValue();
   expect(values).toEqual("-100 -25 50");
 });
 
 it('ScaleValue.HideScale() скрывает значения', () => {
   const scaleValue = FactoryScaleValueVertical();
-  scaleValue.HideScale();
-  const classes: string = scaleValue.GetClassesValueContainer();
+  scaleValue.hideScale();
+  const classes: string = scaleValue.getClassesValueContainer();
   expect(classes.indexOf("slider-view-hide")).not.toEqual(-1);
 });
 
 it('ScaleValue.ShowScale() показывает значения', () => {
   const scaleValue = FactoryScaleValueVertical();
-  scaleValue.HideScale();
-  scaleValue.ShowScale();
-  const classes: string = scaleValue.GetClassesValueContainer();
+  scaleValue.hideScale();
+  scaleValue.showScale();
+  const classes: string = scaleValue.getClassesValueContainer();
   expect(classes.indexOf("slider-view-hide")).toEqual(-1);
 });

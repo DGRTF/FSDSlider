@@ -56,9 +56,9 @@ $(document).ready(function ($) {
 
       const view = new View(this.parentElement, sliderOb.orientation);
 
-      this.controlFacade.AddObserverHandle(view, 0);
-      this.controlFacade.AddObserverHandle(modelNumber, 0);
-      modelNumber.AddObserver(view);
+      this.controlFacade.addObserverHandle(view, 0);
+      this.controlFacade.addObserverHandle(modelNumber, 0);
+      modelNumber.addObserver(view);
 
 
       if (sliderOb.range) {
@@ -66,9 +66,9 @@ $(document).ready(function ($) {
 
         const view1 = new View(this.parentElement, sliderOb.orientation);
 
-        this.controlFacade.AddObserverHandle(view1, 1);
-        this.controlFacade.AddObserverHandle(modelNumber1, 1);
-        modelNumber1.AddObserver(view1);
+        this.controlFacade.addObserverHandle(view1, 1);
+        this.controlFacade.addObserverHandle(modelNumber1, 1);
+        modelNumber1.addObserver(view1);
 
         this.modelArr = [modelNumber, modelNumber1];
         this.viewArr = [view, view1];
@@ -95,102 +95,102 @@ $(document).ready(function ($) {
 
     ShowValue(numb: number) {
       if (numb < this.viewArr.length && numb >= 0) {
-        this.viewArr[numb].ShowView();
+        this.viewArr[numb].showView();
       }
     }
 
     HiddenValue(numb: number) {
       if (numb < this.viewArr.length && numb >= 0) {
-        this.viewArr[numb].HiddenView();
+        this.viewArr[numb].hiddenView();
       }
     }
 
     SetValuePercent(percent: number, numb: number) {
-      this.controlFacade.SetCurrentMarginPercent(percent, numb);
+      this.controlFacade.setCurrentMarginPercent(percent, numb);
     }
 
     SetValue(selectValue: number, numb: number) {
       if (numb < this.modelArr.length && numb >= 0) {
-        let percent = this.modelArr[numb].PercentInValue(`${selectValue}`);
-        this.controlFacade.SetCurrentMarginPercent(percent, numb);
+        let percent = this.modelArr[numb].getPercentFromValue(`${selectValue}`);
+        this.controlFacade.setCurrentMarginPercent(percent, numb);
       }
     }
 
     SetStep(step: number) {
       this.modelArr.forEach(el => {
-        el.SetStep(step);
+        el.setStep(step);
       })
-      this.controlFacade.UpdateHandle();
+      this.controlFacade.updateHandle();
     }
 
     SetMaxValue(maxValue: number) {
       let percent: number;
-      if (maxValue < Number(this.modelArr[this.modelArr.length - 1].GetSelectValue())) {
+      if (maxValue < Number(this.modelArr[this.modelArr.length - 1].getSelectValue())) {
         for (let i = this.modelArr.length - 1; i >= 0; i--) {
-          this.modelArr[i].SetMaxValue(maxValue);
-          if (maxValue < Number(this.modelArr[i].GetSelectValue())) {
+          this.modelArr[i].setMaxValue(maxValue);
+          if (maxValue < Number(this.modelArr[i].getSelectValue())) {
             percent = 100;
           } else {
-            percent = this.modelArr[i].PercentInValue(this.modelArr[i].GetSelectValue());
+            percent = this.modelArr[i].getPercentFromValue(this.modelArr[i].getSelectValue());
           }
           this.SetValuePercent(percent, i);
         }
-        this.scale.SetValues();
+        this.scale.setValues();
       } else {
         this.modelArr.forEach((el, item) => {
-          el.SetMaxValue(maxValue);
-          this.SetValue(Number(el.GetSelectValue()), item);
+          el.setMaxValue(maxValue);
+          this.SetValue(Number(el.getSelectValue()), item);
         });
-        this.scale.SetValues();
+        this.scale.setValues();
       }
     }
 
     SetMinValue(minValue: number) {
-      if (minValue > Number(this.modelArr[0].GetSelectValue())) {
+      if (minValue > Number(this.modelArr[0].getSelectValue())) {
         this.modelArr.forEach((el, item) => {
-          el.SetMinValue(minValue);
-          if (minValue > Number(el.GetSelectValue()))
+          el.setMinValue(minValue);
+          if (minValue > Number(el.getSelectValue()))
             this.SetValuePercent(0, item);
           else
-            this.SetValue(Number(el.GetSelectValue()), item);
+            this.SetValue(Number(el.getSelectValue()), item);
         });
-        this.scale.SetValues();
+        this.scale.setValues();
       } else {
         for (let i = this.modelArr.length - 1; i >= 0; i--) {
-          this.modelArr[i].SetMinValue(minValue);
-          this.SetValue(Number(this.modelArr[i].GetSelectValue()), i);
+          this.modelArr[i].setMinValue(minValue);
+          this.SetValue(Number(this.modelArr[i].getSelectValue()), i);
         }
-        this.scale.SetValues();
+        this.scale.setValues();
       }
 
     }
 
     AddHandlerChangeValue(listener: (selectValue: string) => void, numb: number) {
       if (numb < this.modelObserverArr.length && numb >= 0) {
-        this.modelObserverArr[numb].AddObserver(new AddListener(listener));
+        this.modelObserverArr[numb].addObserver(new AddListener(listener));
       }
     }
 
     GetSelectValue(numb: number): string {
       if (numb < this.modelArr.length && numb >= 0) {
-        return this.modelArr[numb].GetSelectValue();
+        return this.modelArr[numb].getSelectValue();
       }
     }
 
     AddClassesCssView(classes: string, item: number) {
       if (item < this.viewArr.length && item >= 0) {
-        this.viewArr[item].AddClassesCss(classes);
+        this.viewArr[item].addClassesCss(classes);
       }
     }
 
     HideScale() {
-      this.controlFacade.HideScale();
-      this.scale.HideScale();
+      this.controlFacade.hideScale();
+      this.scale.hideScale();
     }
 
     ShowScale() {
-      this.controlFacade.ShowScale();
-      this.scale.ShowScale();
+      this.controlFacade.showScale();
+      this.scale.showScale();
     }
 
   }

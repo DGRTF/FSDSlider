@@ -3,9 +3,9 @@ import { IControlObserverCoordinate } from '../Control/control';
 
 
 interface IView {
-  ShowView(): void;
-  HiddenView(): void;
-  AddClassesCss(classes: string): void;
+  showView(): void;
+  hiddenView(): void;
+  addClassesCss(classes: string): void;
 }
 
 class View implements IView, IModelObserver, IControlObserverCoordinate {
@@ -20,10 +20,10 @@ class View implements IView, IModelObserver, IControlObserverCoordinate {
   constructor(parentElement: HTMLElement, orientation: boolean = true) {
     this.orientation = orientation;
     this.parentElement = parentElement;
-    this.init();
+    this.initialize();
   }
 
-  private init() {
+  private initialize() {
     // здесь создаётся див, потому что он может центрировать текст в отличие от input
     this.selectValueElement = document.createElement('div');
     if (this.orientation) this.selectValueElement.className += 'slider-view-horizontal';
@@ -31,19 +31,19 @@ class View implements IView, IModelObserver, IControlObserverCoordinate {
     this.parentElement.appendChild(this.selectValueElement);
   }
 
-  GetValue(selectValue: string) {
+  getValue(selectValue: string) {
     this.selectValueElement.innerText = selectValue;
   }
 
-  HiddenView() {
+  hiddenView() {
     this.selectValueElement.hidden = true;
   }
 
-  ShowView() {
+  showView() {
     this.selectValueElement.hidden = false;
   }
 
-  SetCoordinatePercent(coordinatePercent: number) {
+  setCoordinatePercent(coordinatePercent: number) {
     const isCoordinatePercentRange = coordinatePercent <= 1 && coordinatePercent >= 0;
     if (isCoordinatePercentRange) {
       if (this.orientation) {
@@ -59,7 +59,7 @@ class View implements IView, IModelObserver, IControlObserverCoordinate {
     }
   }
 
-  AddClassesCss(classes: string) {
+  addClassesCss(classes: string) {
     this.selectValueElement.className += classes;
   }
 
@@ -67,7 +67,7 @@ class View implements IView, IModelObserver, IControlObserverCoordinate {
 
   // for tests
 
-  GetClasses(): string {
+  getClasses(): string {
     return this.selectValueElement.className;
   }
 

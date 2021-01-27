@@ -20,8 +20,8 @@ describe('Class ProgressFirst', () => {
     let valuesPercent: number[] = [0, -.1, .2, -.8, 1.2, 1];
     let outputValues: number[] = [0, 0, 40, 40, 40, 200];
     valuesPercent.forEach((el, index) => {
-      progressFirst.SetCoordinatePercent(el);
-      expect(progressFirst.GetWidthOrHeight()).toEqual(`${outputValues[index]}px`);
+      progressFirst.setCoordinatePercent(el);
+      expect(progressFirst.getWidthOrHeight()).toEqual(`${outputValues[index]}px`);
     });
   });
 
@@ -41,8 +41,8 @@ describe('Class ProgressFirst', () => {
     let valuesPercent: number[] = [0, -.1, .2, -.8, 1.2, 1];
     let outputValues: number[] = [200, 200, 160, 160, 160, 0];
     valuesPercent.forEach((el, index) => {
-      progressFirstVertical.SetCoordinatePercent(el);
-      expect(progressFirstVertical.GetWidthOrHeight()).toEqual(`${outputValues[index]}px`);
+      progressFirstVertical.setCoordinatePercent(el);
+      expect(progressFirstVertical.getWidthOrHeight()).toEqual(`${outputValues[index]}px`);
     });
   });
 

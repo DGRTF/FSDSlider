@@ -42,23 +42,23 @@ function FactoryScaleHorizontal() {
 
 it('ScaleSetMargin.AddHandle(handle: IHandle) добавляет экземпляр типа IHandle', () => {
   const scaleSetMargin = FactoryScale();
-  scaleSetMargin.AddHandle(FactoryHandle());
-  const length = scaleSetMargin.GetMovePercent();
+  scaleSetMargin.addHandle(FactoryHandle());
+  const length = scaleSetMargin.getMovePercent();
   expect(length).toEqual(1);
 });
 
 it('ScaleSetMargin.HideScale() скрывает шкалу', () => {
   const scaleSetMargin = FactoryScale();
-  scaleSetMargin.HideScale();
-  const classes: string = scaleSetMargin.GetScaleClass();
+  scaleSetMargin.hideScale();
+  const classes: string = scaleSetMargin.getScaleClass();
   expect(classes.indexOf("slider-scaleSetMargin-hidden")).not.toEqual(-1);
 });
 
 it('ScaleSetMargin.ShowScale() показывает шкалу', () => {
   const scaleSetMargin = FactoryScale();
-  scaleSetMargin.HideScale();
-  scaleSetMargin.ShowScale();
-  const classes: string = scaleSetMargin.GetScaleClass();
+  scaleSetMargin.hideScale();
+  scaleSetMargin.showScale();
+  const classes: string = scaleSetMargin.getScaleClass();
   expect(classes.indexOf("slider-scaleSetMargin-hidden")).toEqual(-1);
 });
 
@@ -68,23 +68,23 @@ it('ScaleSetMargin.ShowScale() показывает шкалу', () => {
 
 it('ScaleSetMargin.AddHandle(handle: IHandle) добавляет экземпляр типа IHandle', () => {
   const scaleSetMargin = FactoryScaleHorizontal();
-  scaleSetMargin.AddHandle(FactoryHandleY());
-  const length = scaleSetMargin.GetMovePercent();
+  scaleSetMargin.addHandle(FactoryHandleY());
+  const length = scaleSetMargin.getMovePercent();
   expect(length).toEqual(1);
 });
 
 it('ScaleSetMargin.HideScale() скрывает шкалу', () => {
   const scaleSetMargin = FactoryScaleHorizontal();
-  scaleSetMargin.HideScale();
-  const classes: string = scaleSetMargin.GetScaleClass();
+  scaleSetMargin.hideScale();
+  const classes: string = scaleSetMargin.getScaleClass();
   expect(classes.indexOf("slider-scaleSetMargin-hidden")).not.toEqual(-1);
 });
 
 it('ScaleSetMargin.ShowScale() показывает шкалу', () => {
   const scaleSetMargin = FactoryScaleHorizontal();
-  scaleSetMargin.HideScale();
-  scaleSetMargin.ShowScale();
-  const classes: string = scaleSetMargin.GetScaleClass();
+  scaleSetMargin.hideScale();
+  scaleSetMargin.showScale();
+  const classes: string = scaleSetMargin.getScaleClass();
   expect(classes.indexOf("slider-scaleSetMargin-hidden")).toEqual(-1);
 });
 
