@@ -56,47 +56,47 @@ class Demo {
   _setMinPossibleValue() {
     let minValueOne = this.parentElement.querySelector(".js-min-value-one");
     minValueOne.value = this.minValue;
-    minValueOne.addEventListener("change", this._initRangeSliderWrapperSetMinValue.bind(this));
+    minValueOne.addEventListener("change", this._handleMinValueInputChange.bind(this));
   }
 
-  _initRangeSliderWrapperSetMinValue(element) {
+  _handleMinValueInputChange(element) {
     this.slider.RangeSliderInit("setMinValue", Number(element.currentTarget.value));
   }
 
   _setMaxPossibleValue() {
     let maxValueOne = this.parentElement.querySelector(".js-max-value-one");
     maxValueOne.value = this.maxValue;
-    maxValueOne.addEventListener("change", this._initRangeSliderWrapperSetMaxValue.bind(this));
+    maxValueOne.addEventListener("change", this._handleMaxValueInputChange.bind(this));
   }
 
-  _initRangeSliderWrapperSetMaxValue(element) {
+  _handleMaxValueInputChange(element) {
     this.slider.RangeSliderInit("setMaxValue", Number(element.currentTarget.value));
   }
 
   _setMinValue() {
     let minValue = this.parentElement.querySelector(".js-min-select-value-one");
-    minValue.addEventListener("change", this._initRangeSliderWrapperSetValueZero.bind(this));
+    minValue.addEventListener("change", this._handleMinSelectValueInputChange.bind(this));
   }
 
-  _initRangeSliderWrapperSetValueZero(element) {
+  _handleMinSelectValueInputChange(element) {
     this.slider.RangeSliderInit("setValue", Number(element.currentTarget.value), 0)
   }
 
   _setMaxValue() {
     let maxValue = this.parentElement.querySelector(".js-max-select-value-one");
-    maxValue.addEventListener("change", this._initRangeSliderWrapperSetValueOne.bind(this));
+    maxValue.addEventListener("change", this._handleMaxSelectValueInputChange.bind(this));
   }
 
-  _initRangeSliderWrapperSetValueOne(element) {
+  _handleMaxSelectValueInputChange(element) {
     this.slider.RangeSliderInit("setValue", Number(element.currentTarget.value), 1)
   }
 
   _setStep() {
     let step = this.parentElement.querySelector(".js-step-one");
-    step.addEventListener("change", this._changeHandler.bind(this));
+    step.addEventListener("change", this._handleStepInputChange.bind(this));
   }
 
-  _changeHandler(element) {
+  _handleStepInputChange(element) {
     this.slider.RangeSliderInit("setStep", Number(element.currentTarget.value));
     this.showCurrentValueMax.step = element.currentTarget.value;
     this.showCurrentValueMin.step = element.currentTarget.value;
@@ -110,11 +110,11 @@ class Demo {
     let check = this.parentElement.querySelectorAll(".checkbox__input");
 
     check.forEach((el, index) => {
-      el.addEventListener("click", this._clickHandler.bind(this, el, index));
+      el.addEventListener("click", this._handleHandleShowOrHideValueInputClick.bind(this, el, index));
     });
   }
 
-  _clickHandler(checkBox, index) {
+  _handleHandleShowOrHideValueInputClick(checkBox, index) {
     if (checkBox.checked) {
       this.slider.RangeSliderInit("hiddenValue", index);
     } else {
@@ -124,10 +124,10 @@ class Demo {
 
   _showOrHiddenScale() {
     let check = this.parentElement.querySelectorAll(".checkbox__input")[2];
-    check.addEventListener("click", this._checkBoxHideScaleClickHandler.bind(this));
+    check.addEventListener("click", this._handleHandleShowOrHideScaleInputClick.bind(this));
   }
 
-  _checkBoxHideScaleClickHandler(event) {
+  _handleHandleShowOrHideScaleInputClick(event) {
     if (event.target.checked) {
       this.slider.RangeSliderInit("hideScale");
     } else {
