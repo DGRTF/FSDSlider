@@ -1,6 +1,8 @@
+require('jsdom-global')();
+
 import { View } from '../../View/view';
 
-require('jsdom-global')();
+
 
 describe('Class View', () => {
   const parentElement = document.createElement('div');

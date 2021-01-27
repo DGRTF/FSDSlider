@@ -1,8 +1,10 @@
+require('jsdom-global')();
+
 import ScaleSetMargin from "../../Control/scaleSetMargin";
 import HandleX from "../../Control/controlHandleX";
 import HandleY from "../../Control/controlHandleY";
 
-require('jsdom-global')();
+
 
 function FactoryParentElement() {
   let parentElement = document.createElement("div");

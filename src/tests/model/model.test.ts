@@ -1,6 +1,6 @@
-import { ModelNumber, IModelObserver } from '../../Model/model';
-
 jest.mock("../../Control/controlHandleX");
+
+import { ModelNumber, IModelObserver } from '../../Model/model';
 
 
 

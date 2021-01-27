@@ -1,7 +1,9 @@
+require('jsdom-global')();
+
 import HandleY from "../../Control/controlHandleY";
 import { IControlObserverCoordinate } from "../../Control/control";
 
-require('jsdom-global')();
+
 
 class Observer implements IControlObserverCoordinate {
 

@@ -1,5 +1,5 @@
-import "./../../index.ts";
 import "./demo.scss";
+import "./../../index.ts";
 
 
 class Demo {
@@ -44,13 +44,11 @@ class Demo {
     this.showCurrentValueMax.value = strLast;
 
     this.slider.RangeSliderInit("AddHandlerChangeValue", (selectValue) => {
-      str = selectValue;
-      this.showCurrentValueMin.value = str;
+      this.showCurrentValueMin.value = selectValue;
     }, 0);
 
     this.slider.RangeSliderInit("AddHandlerChangeValue", (selectValue) => {
-      strLast = selectValue;
-      this.showCurrentValueMax.value = strLast;
+      this.showCurrentValueMax.value = selectValue;
     }, 1);
 
   }
@@ -61,7 +59,7 @@ class Demo {
     minValueOne.addEventListener("change", this._RangeSliderInitWrapperSetMinValue.bind(this));
   }
 
-  _RangeSliderInitWrapperSetMinValue(element){
+  _RangeSliderInitWrapperSetMinValue(element) {
     this.slider.RangeSliderInit("SetMinValue", Number(element.currentTarget.value));
   }
 
@@ -71,7 +69,7 @@ class Demo {
     maxValueOne.addEventListener("change", this._RangeSliderInitWrapperSetMaxValue.bind(this));
   }
 
-  _RangeSliderInitWrapperSetMaxValue(element){
+  _RangeSliderInitWrapperSetMaxValue(element) {
     this.slider.RangeSliderInit("SetMaxValue", Number(element.currentTarget.value));
   }
 
@@ -80,7 +78,7 @@ class Demo {
     minValue.addEventListener("change", this._RangeSliderInitWrapperSetValueZero.bind(this));
   }
 
-  _RangeSliderInitWrapperSetValueZero(element){
+  _RangeSliderInitWrapperSetValueZero(element) {
     this.slider.RangeSliderInit("SetValue", Number(element.currentTarget.value), 0)
   }
 
@@ -89,7 +87,7 @@ class Demo {
     maxValue.addEventListener("change", this._RangeSliderInitWrapperSetValueOne.bind(this));
   }
 
-  _RangeSliderInitWrapperSetValueOne(element){
+  _RangeSliderInitWrapperSetValueOne(element) {
     this.slider.RangeSliderInit("SetValue", Number(element.currentTarget.value), 1)
   }
 
@@ -104,44 +102,39 @@ class Demo {
     this.showCurrentValueMin.step = element.currentTarget.value;
   }
 
-  _rangeSliderInitWrapper(method, element){
+  _rangeSliderInitWrapper(method, element) {
     this.slider.RangeSliderInit(method, Number(element.currentTarget.value))
   }
 
   _ShowOrHiddenValue() {
-    let check = this.parentElement.querySelectorAll(".checkbox__label_move");
+    let check = this.parentElement.querySelectorAll(".checkbox__input");
 
     check.forEach((el, index) => {
-      let change = true;
-      el.addEventListener("click", this._clickHandler.bind(this, change, index));
+      el.addEventListener("click", this._clickHandler.bind(this, el, index));
     });
   }
 
-  _clickHandler(change, index) {
-    if (change) {
+  _clickHandler(checkBox, index) {
+    if (checkBox.checked) {
       this.slider.RangeSliderInit("HiddenValue", index);
-      change = false;
     } else {
       this.slider.RangeSliderInit("ShowValue", index);
-      change = true;
     }
   }
 
   _ShowOrHiddenScale() {
-    let check = this.parentElement.querySelectorAll(".checkbox__label_move")[2];
-
-    let change = true;
-    check.addEventListener("click", () => {
-      if (change) {
-        this.slider.RangeSliderInit("HideScale");
-        change = false;
-      } else {
-        this.slider.RangeSliderInit("ShowScale");
-        change = true;
-      }
-    });
-
+    let check = this.parentElement.querySelectorAll(".checkbox__input")[2];
+    check.addEventListener("click", this._checkBoxHideScaleClickHandler.bind(this));
   }
+
+  _checkBoxHideScaleClickHandler(event) {
+    if (event.target.checked) {
+      this.slider.RangeSliderInit("HideScale");
+    } else {
+      this.slider.RangeSliderInit("ShowScale");
+    }
+  }
+
 }
 
 let parent = document.querySelectorAll(".slider");

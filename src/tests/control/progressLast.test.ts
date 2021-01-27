@@ -1,6 +1,7 @@
+require('jsdom-global')();
+
 import ProgressLast from "../../Control/progressLast";
 
-require('jsdom-global')();
 
 
 describe('Class ProgressLast', () => {

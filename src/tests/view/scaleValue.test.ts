@@ -1,7 +1,9 @@
+require('jsdom-global')();
+
 import ScaleValue from "../../View/scaleValue";
 import { ModelNumber, IModel, IValue } from "../../Model/model";
 
-require('jsdom-global')();
+
 
 function FactoryParentElement() {
   let parentElement = document.createElement("div");

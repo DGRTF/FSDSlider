@@ -1,9 +1,10 @@
+require('jsdom-global')();
+
 import ControlFacade from "../../Control/controlFacade";
 import HandleX from "../../Control/controlHandleX";
 import { IControlObserverCoordinate } from "../../Control/control";
 import ScaleSetMargin from "../../Control/scaleSetMargin";
 
-require('jsdom-global')();
 jest.mock("../../Control/controlHandleX");
 
 class Observer implements IControlObserverCoordinate {
