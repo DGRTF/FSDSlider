@@ -6,7 +6,7 @@ import HandleY from "../../Control/controlHandleY";
 
 
 
-function FactoryParentElement() {
+function getParentElement() {
   let parentElement = document.createElement("div");
 
   Object.defineProperties(parentElement, {
@@ -20,20 +20,20 @@ function FactoryParentElement() {
   return parentElement
 }
 
-function FactoryHandle() {
-  return new HandleX(FactoryParentElement());
+function getHandle() {
+  return new HandleX(getParentElement());
 }
 
-function FactoryScale() {
-  return new ScaleSetMargin(FactoryParentElement());
+function getScale() {
+  return new ScaleSetMargin(getParentElement());
 }
 
-function FactoryHandleY() {
-  return new HandleY(FactoryParentElement());
+function getHandleY() {
+  return new HandleY(getParentElement());
 }
 
-function FactoryScaleHorizontal() {
-  return new ScaleSetMargin(FactoryParentElement(), false);
+function getScaleHorizontal() {
+  return new ScaleSetMargin(getParentElement(), false);
 }
 
 
@@ -41,21 +41,21 @@ function FactoryScaleHorizontal() {
 
 
 it('ScaleSetMargin.AddHandle(handle: IHandle) добавляет экземпляр типа IHandle', () => {
-  const scaleSetMargin = FactoryScale();
-  scaleSetMargin.addHandle(FactoryHandle());
+  const scaleSetMargin = getScale();
+  scaleSetMargin.addHandle(getHandle());
   const length = scaleSetMargin.getMovePercent();
   expect(length).toEqual(1);
 });
 
 it('ScaleSetMargin.HideScale() скрывает шкалу', () => {
-  const scaleSetMargin = FactoryScale();
+  const scaleSetMargin = getScale();
   scaleSetMargin.hideScale();
   const classes: string = scaleSetMargin.getScaleClass();
   expect(classes.indexOf("slider-scaleSetMargin-hidden")).not.toEqual(-1);
 });
 
 it('ScaleSetMargin.ShowScale() показывает шкалу', () => {
-  const scaleSetMargin = FactoryScale();
+  const scaleSetMargin = getScale();
   scaleSetMargin.hideScale();
   scaleSetMargin.showScale();
   const classes: string = scaleSetMargin.getScaleClass();
@@ -67,21 +67,21 @@ it('ScaleSetMargin.ShowScale() показывает шкалу', () => {
 // horizontal
 
 it('ScaleSetMargin.AddHandle(handle: IHandle) добавляет экземпляр типа IHandle', () => {
-  const scaleSetMargin = FactoryScaleHorizontal();
-  scaleSetMargin.addHandle(FactoryHandleY());
+  const scaleSetMargin = getScaleHorizontal();
+  scaleSetMargin.addHandle(getHandleY());
   const length = scaleSetMargin.getMovePercent();
   expect(length).toEqual(1);
 });
 
 it('ScaleSetMargin.HideScale() скрывает шкалу', () => {
-  const scaleSetMargin = FactoryScaleHorizontal();
+  const scaleSetMargin = getScaleHorizontal();
   scaleSetMargin.hideScale();
   const classes: string = scaleSetMargin.getScaleClass();
   expect(classes.indexOf("slider-scaleSetMargin-hidden")).not.toEqual(-1);
 });
 
 it('ScaleSetMargin.ShowScale() показывает шкалу', () => {
-  const scaleSetMargin = FactoryScaleHorizontal();
+  const scaleSetMargin = getScaleHorizontal();
   scaleSetMargin.hideScale();
   scaleSetMargin.showScale();
   const classes: string = scaleSetMargin.getScaleClass();

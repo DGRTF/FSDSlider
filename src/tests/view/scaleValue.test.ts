@@ -5,7 +5,7 @@ import { ModelNumber, IModel, IValue } from "../../Model/model";
 
 
 
-function FactoryParentElement() {
+function getParentElement() {
   let parentElement = document.createElement("div");
 
   Object.defineProperties(parentElement, {
@@ -19,28 +19,28 @@ function FactoryParentElement() {
   return parentElement
 }
 
-function FactoryIValue() {
+function getIValue() {
   return new ModelNumber(-1000, 1000);
 }
 
-function FactoryScaleValue() {
-  return new ScaleValue(FactoryParentElement(), FactoryIValue());
+function getScaleValue() {
+  return new ScaleValue(getParentElement(), getIValue());
 }
 
-function FactoryScaleValueVertical() {
-  return new ScaleValue(FactoryParentElement(), FactoryIValue(), false);
+function getScaleValueVertical() {
+  return new ScaleValue(getParentElement(), getIValue(), false);
 }
 
 
 it('ScaleValue.SetValues() задаёт максимальное, минимальное и среднее значения из текущей модели', () => {
-  const scaleValue = FactoryScaleValue();
+  const scaleValue = getScaleValue();
   scaleValue.setValues();
   const values: string = scaleValue.getSettingValue();
   expect(values).toEqual("-1000 0 1000");
 });
 
 it('ScaleSetMargin.SetIValue(model: IValue) задаёт новую модель для расчётов', () => {
-  const scaleValue = FactoryScaleValue();
+  const scaleValue = getScaleValue();
   const model: IValue = new ModelNumber(-100, 50);
   scaleValue.setIValue(model);
   const retIValue: IValue = scaleValue.getIValue();
@@ -51,14 +51,14 @@ it('ScaleSetMargin.SetIValue(model: IValue) задаёт новую модель
 });
 
 it('ScaleValue.HideScale() скрывает значения', () => {
-  const scaleValue = FactoryScaleValueVertical();
+  const scaleValue = getScaleValueVertical();
   scaleValue.hideScale();
   const classes: string = scaleValue.getClassesValueContainer();
   expect(classes.indexOf("slider-view-hide")).not.toEqual(-1);
 });
 
 it('ScaleValue.ShowScale() показывает значения', () => {
-  const scaleValue = FactoryScaleValueVertical();
+  const scaleValue = getScaleValueVertical();
   scaleValue.hideScale();
   scaleValue.showScale();
   const classes: string = scaleValue.getClassesValueContainer();

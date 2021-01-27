@@ -14,13 +14,13 @@ class Observer implements IModelObserver {
 
 describe('Class ModelNumber', () => {
 
-  function FactoryModelNumber() {
+  function getModelNumber() {
     return new ModelNumber(-100, 100);
   }
 
 
   test('ModelNumber.SetCoordinatePercent(percent: number) Получает процентное значение и задаёт свойству selectValue соответствующее значение', () => {
-    const modelNumber = FactoryModelNumber();
+    const modelNumber = getModelNumber();
     const valuesPercent: number[] = [0, 1, -.2, .8, 1.2];
     const outputValues: number[] = [-100, 100, -100, 60, 100];
 
@@ -31,7 +31,7 @@ describe('Class ModelNumber', () => {
   });
 
   test('ModelNumber.AddObserver(modelObserver: IModelObserver) Добавляет значение в массив', () => {
-    const modelNumber = FactoryModelNumber();
+    const modelNumber = getModelNumber();
     modelNumber.addObserver(null);
     modelNumber.addObserver(null);
     modelNumber.addObserver(null);
@@ -41,7 +41,7 @@ describe('Class ModelNumber', () => {
   });
 
   test('ModelNumber.DeleteObserver(modelObserver: IModelObserver) Удаляет значение из массива', () => {
-    const modelNumber = FactoryModelNumber();
+    const modelNumber = getModelNumber();
     modelNumber.addObserver(null);
     modelNumber.addObserver(null);
     modelNumber.addObserver(null)
@@ -52,7 +52,7 @@ describe('Class ModelNumber', () => {
   });
 
   test('ModelNumber.PercentInValue(selectValue: number) Получает значение и возвращает из него процентное', () => {
-    const modelNumber = FactoryModelNumber();
+    const modelNumber = getModelNumber();
     const valuesPercent: number[] = [-10, -120, 20, 80, 100, 120];
     const outputValues: number[] = [.45, null, .6, .9, 1, null];
 
@@ -63,7 +63,7 @@ describe('Class ModelNumber', () => {
   });
 
   test('ModelNumber.SetStep(step: number) задаёт шаг', () => {
-    const modelNumber = FactoryModelNumber();
+    const modelNumber = getModelNumber();
     const valuesStep: number[] = [-120, -100, -20, 100, 80, 120];
     const outputValues: number[] = [1, -100, -20, 100, 80, 80];
 
@@ -75,7 +75,7 @@ describe('Class ModelNumber', () => {
   });
 
   test('ModelNumber.SetMinValue(minValue: number) минимальное значение', () => {
-    const modelNumber = FactoryModelNumber();
+    const modelNumber = getModelNumber();
     const inputValues: number[] = [-120, -20, 100, 80, 120];
     const outputValues: number[] = [-120, -20, 100, 80, 80];
 
@@ -87,7 +87,7 @@ describe('Class ModelNumber', () => {
   });
 
   test('ModelNumber.SetMaxValue(maxValue: number) максимальное значение', () => {
-    const modelNumber = FactoryModelNumber();
+    const modelNumber = getModelNumber();
     const inputValues: number[] = [-120, -100, 100, 80, 120];
     const outputValues: number[] = [100, -100, 100, 80, 120];
 
@@ -99,7 +99,7 @@ describe('Class ModelNumber', () => {
   });
 
   test('ModelNumber.ValueInPercent(percent: number): string максимальное значение', () => {
-    const modelNumber = FactoryModelNumber();
+    const modelNumber = getModelNumber();
     const inputValues: number[] = [-120, 0, 1, .8, 120];
     const outputValues: number[] = [null, -100, 100, 60, null];
 
@@ -110,7 +110,7 @@ describe('Class ModelNumber', () => {
   });
 
   test('ModelNumber.Notify() уведомляет наблюдателей', () => {
-    const modelNumber = FactoryModelNumber();
+    const modelNumber = getModelNumber();
     const observer = new Observer();
 
     modelNumber.addObserver(observer)

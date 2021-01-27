@@ -14,10 +14,10 @@ class Demo {
     this.slider;
     this.showCurrentValueMax;
     this.showCurrentValueMin;
-    this.Init();
+    this.initialize();
   }
 
-  Init() {
+  initialize() {
     this.slider = $(this.parentElement).find('.parent');
     this.slider.RangeSliderInit({
       minValue: this.minValue, maxValue: this.maxValue, range: this.range, orientation: this.orientation
@@ -26,87 +26,87 @@ class Demo {
     this.showCurrentValueMax = this.parentElement.querySelector(".js-max-select-value-one");
     this.showCurrentValueMin = this.parentElement.querySelector(".js-min-select-value-one");
 
-    this._ShowCurrentValue();
-    this._SetMinPossibleValue();
-    this._SetMaxPossibleValue();
-    this._SetMinValue();
-    this._SetMaxValue();
-    this._SetStep();
-    this._ShowOrHiddenValue();
-    this._ShowOrHiddenScale();
+    this._showCurrentValue();
+    this._setMinPossibleValue();
+    this._setMaxPossibleValue();
+    this._setMinValue();
+    this._setMaxValue();
+    this._setStep();
+    this._showOrHiddenValue();
+    this._showOrHiddenScale();
   }
 
-  _ShowCurrentValue() {
-    let str = this.slider.RangeSliderInit("GetSelectValue", 0);
-    let strLast = this.slider.RangeSliderInit("GetSelectValue", 1);
+  _showCurrentValue() {
+    let str = this.slider.RangeSliderInit("getSelectValue", 0);
+    let strLast = this.slider.RangeSliderInit("getSelectValue", 1);
 
     this.showCurrentValueMin.value = str;
     this.showCurrentValueMax.value = strLast;
 
-    this.slider.RangeSliderInit("AddHandlerChangeValue", (selectValue) => {
+    this.slider.RangeSliderInit("addHandlerChangeValue", (selectValue) => {
       this.showCurrentValueMin.value = selectValue;
     }, 0);
 
-    this.slider.RangeSliderInit("AddHandlerChangeValue", (selectValue) => {
+    this.slider.RangeSliderInit("addHandlerChangeValue", (selectValue) => {
       this.showCurrentValueMax.value = selectValue;
     }, 1);
 
   }
 
-  _SetMinPossibleValue() {
+  _setMinPossibleValue() {
     let minValueOne = this.parentElement.querySelector(".js-min-value-one");
     minValueOne.value = this.minValue;
-    minValueOne.addEventListener("change", this._RangeSliderInitWrapperSetMinValue.bind(this));
+    minValueOne.addEventListener("change", this._initRangeSliderWrapperSetMinValue.bind(this));
   }
 
-  _RangeSliderInitWrapperSetMinValue(element) {
-    this.slider.RangeSliderInit("SetMinValue", Number(element.currentTarget.value));
+  _initRangeSliderWrapperSetMinValue(element) {
+    this.slider.RangeSliderInit("setMinValue", Number(element.currentTarget.value));
   }
 
-  _SetMaxPossibleValue() {
+  _setMaxPossibleValue() {
     let maxValueOne = this.parentElement.querySelector(".js-max-value-one");
     maxValueOne.value = this.maxValue;
-    maxValueOne.addEventListener("change", this._RangeSliderInitWrapperSetMaxValue.bind(this));
+    maxValueOne.addEventListener("change", this._initRangeSliderWrapperSetMaxValue.bind(this));
   }
 
-  _RangeSliderInitWrapperSetMaxValue(element) {
-    this.slider.RangeSliderInit("SetMaxValue", Number(element.currentTarget.value));
+  _initRangeSliderWrapperSetMaxValue(element) {
+    this.slider.RangeSliderInit("setMaxValue", Number(element.currentTarget.value));
   }
 
-  _SetMinValue() {
+  _setMinValue() {
     let minValue = this.parentElement.querySelector(".js-min-select-value-one");
-    minValue.addEventListener("change", this._RangeSliderInitWrapperSetValueZero.bind(this));
+    minValue.addEventListener("change", this._initRangeSliderWrapperSetValueZero.bind(this));
   }
 
-  _RangeSliderInitWrapperSetValueZero(element) {
-    this.slider.RangeSliderInit("SetValue", Number(element.currentTarget.value), 0)
+  _initRangeSliderWrapperSetValueZero(element) {
+    this.slider.RangeSliderInit("setValue", Number(element.currentTarget.value), 0)
   }
 
-  _SetMaxValue() {
+  _setMaxValue() {
     let maxValue = this.parentElement.querySelector(".js-max-select-value-one");
-    maxValue.addEventListener("change", this._RangeSliderInitWrapperSetValueOne.bind(this));
+    maxValue.addEventListener("change", this._initRangeSliderWrapperSetValueOne.bind(this));
   }
 
-  _RangeSliderInitWrapperSetValueOne(element) {
-    this.slider.RangeSliderInit("SetValue", Number(element.currentTarget.value), 1)
+  _initRangeSliderWrapperSetValueOne(element) {
+    this.slider.RangeSliderInit("setValue", Number(element.currentTarget.value), 1)
   }
 
-  _SetStep() {
+  _setStep() {
     let step = this.parentElement.querySelector(".js-step-one");
     step.addEventListener("change", this._changeHandler.bind(this));
   }
 
   _changeHandler(element) {
-    this.slider.RangeSliderInit("SetStep", Number(element.currentTarget.value));
+    this.slider.RangeSliderInit("setStep", Number(element.currentTarget.value));
     this.showCurrentValueMax.step = element.currentTarget.value;
     this.showCurrentValueMin.step = element.currentTarget.value;
   }
 
-  _rangeSliderInitWrapper(method, element) {
+  _initRangeSliderWrapper(method, element) {
     this.slider.RangeSliderInit(method, Number(element.currentTarget.value))
   }
 
-  _ShowOrHiddenValue() {
+  _showOrHiddenValue() {
     let check = this.parentElement.querySelectorAll(".checkbox__input");
 
     check.forEach((el, index) => {
@@ -116,22 +116,22 @@ class Demo {
 
   _clickHandler(checkBox, index) {
     if (checkBox.checked) {
-      this.slider.RangeSliderInit("HiddenValue", index);
+      this.slider.RangeSliderInit("hiddenValue", index);
     } else {
-      this.slider.RangeSliderInit("ShowValue", index);
+      this.slider.RangeSliderInit("showValue", index);
     }
   }
 
-  _ShowOrHiddenScale() {
+  _showOrHiddenScale() {
     let check = this.parentElement.querySelectorAll(".checkbox__input")[2];
     check.addEventListener("click", this._checkBoxHideScaleClickHandler.bind(this));
   }
 
   _checkBoxHideScaleClickHandler(event) {
     if (event.target.checked) {
-      this.slider.RangeSliderInit("HideScale");
+      this.slider.RangeSliderInit("hideScale");
     } else {
-      this.slider.RangeSliderInit("ShowScale");
+      this.slider.RangeSliderInit("showScale");
     }
   }
 

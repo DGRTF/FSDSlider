@@ -3,7 +3,7 @@ import AddListener from "../../Model/AddListener";
 class Func {
   str: string = "";
 
-  Listener(selectValue: string) {
+  listener(selectValue: string) {
     this.str = selectValue;
   }
 }
@@ -11,7 +11,7 @@ class Func {
 it('ScaleSetMargin.ShowScale() показывает шкалу', () => {
   let str: string = "Yes";
   const func = new Func();
-  const addListener = new AddListener(func.Listener.bind(func));
+  const addListener = new AddListener(func.listener.bind(func));
   addListener.getValue(str);
   expect(func.str).toEqual("Yes");
 });
