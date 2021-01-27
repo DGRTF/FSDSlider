@@ -61,10 +61,10 @@ export default class ScaleSetMargin {
   }
 
   private addHandleClick() {
-    this.scale.addEventListener("click", this.handlePercentInit.bind(this));
+    this.scale.addEventListener("click", this.handleScaleDivClick.bind(this));
   }
 
-  private handlePercentInit(event: MouseEvent) {
+  private handleScaleDivClick(event: MouseEvent) {
     if (this.orientation)
       this.percent = (event.clientX - this.parentElement.getBoundingClientRect().left) / this.parentElement.offsetWidth;
     else

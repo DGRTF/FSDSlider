@@ -32,8 +32,6 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
     this.observer = controlObserver;
 
     this.initialize();
-    this.minMargin = 0 - this.handle.offsetHeight / 2;
-    this.maxMargin = -this.handle.offsetHeight / 2 + this.parentElement.offsetHeight;
   }
 
   private initialize() {
@@ -41,6 +39,7 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
     this.addClasses();
     this.addContentHtml();
     this.addListener();
+    this.setMargins();
   }
 
   private create() {
@@ -57,24 +56,24 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
   }
 
   private addListener() {
-    this.handle.addEventListener('mousedown', this.handleAddEventMouseMove.bind(this));
-    this.handle.addEventListener("touchstart", this.handleAddEventTouchMove.bind(this));
-    document.addEventListener('mouseup', this.handleMouseUpListener.bind(this));
+    this.handle.addEventListener('mousedown', this.handleHandleDivMouseDown.bind(this));
+    this.handle.addEventListener("touchstart", this.handleHandleDivTouchStart.bind(this));
+    document.addEventListener('mouseup', this.handleSpaceDocumentMouseUp.bind(this));
   }
 
-  private handleMouseUpListener() {
-    document.removeEventListener('mousemove', this.move);
+  private handleSpaceDocumentMouseUp() {
+    document.removeEventListener('mousemove', this.handleSpaceDocumentMouseMove);
   }
 
-  private handleTouchCancelListener() {
-    document.removeEventListener('touchmove', this.moveTouch);
-    document.removeEventListener('touchend', this.handleTouchCancelListener.bind(this));
+  private handleSpaceDocumentTouchEnd() {
+    document.removeEventListener('touchmove', this.handleSpaceDocumentTouchMove);
+    document.removeEventListener('touchend', this.handleSpaceDocumentTouchEnd.bind(this));
   }
 
-  private handleAddEventMouseMove(event: MouseEvent) {
+  private handleHandleDivMouseDown(event: MouseEvent) {
     this.handle.classList.add("slider-foreground");
     this.mouseY = event.pageY;
-    document.addEventListener('mousemove', this.move);
+    document.addEventListener('mousemove', this.handleSpaceDocumentMouseMove);
     this.handleY = this.handle.getBoundingClientRect().top;
   }
 
@@ -103,10 +102,10 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
     this.notify();
   }
 
-  private handleAddEventTouchMove(event: TouchEvent) {
+  private handleHandleDivTouchStart(event: TouchEvent) {
     this.mouseY = event.targetTouches[0].pageY;
-    document.addEventListener("touchmove", this.moveTouch);
-    document.addEventListener('touchend', this.handleTouchCancelListener.bind(this));
+    document.addEventListener("touchmove", this.handleSpaceDocumentTouchMove);
+    document.addEventListener('touchend', this.handleSpaceDocumentTouchEnd.bind(this));
     this.handleY = this.handle.getBoundingClientRect().top;
   }
 
@@ -116,9 +115,14 @@ export default class HandleY implements IControlObservable, IHandle, IControlMin
     this.handleMove();
   }
 
-  private move = this.handleMoveBlock.bind(this);
+  private handleSpaceDocumentMouseMove = this.handleMoveBlock.bind(this);
 
-  private moveTouch = this.handleMoveBlockTouch.bind(this);
+  private handleSpaceDocumentTouchMove = this.handleMoveBlockTouch.bind(this);
+
+  setMargins(){
+    this.minMargin = 0 - this.handle.offsetHeight / 2;
+    this.maxMargin = -this.handle.offsetHeight / 2 + this.parentElement.offsetHeight;
+  }
 
   setCurrentMarginPercent(percent: number) {
     const isPercentRange = percent <= 1 && percent >= 0;
