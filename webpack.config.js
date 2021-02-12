@@ -3,77 +3,81 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 
+let rootDirectory = '';
 
-module.exports =
-{
-    entry: { index: './src/pages/demo/demo.js' },
-    resolve: {
-        extensions: [ '.tsx', '.ts', '.js' ],
-      },
-    output:
-    {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'scripts/[name].js',
-        //publicPath: './dist/'
-    },
-    plugins: 
-    [
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: './src/pages/demo/demo.pug',
-        }),
+module.exports = (env, options) => {
+    if (options.mode === 'production')
+        rootDirectory = '/FSDSlider';
 
-        new MiniCssExtractPlugin({
-            filename: "css/[name].css",
-        }),
-
-        new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery',
-            "window.jQuery": "jquery",
-        }),
-    ],
-    module:
-    {
-        rules:
+    return {
+        entry: { index: './src/pages/demo/demo.js' },
+        resolve: {
+            extensions: ['.tsx', '.ts', '.js'],
+        },
+        output:
+        {
+            path: path.resolve(__dirname, 'dist'),
+            filename: 'scripts/[name].js',
+        },
+        plugins:
             [
-                {
-                    test: /\.tsx?$/,
-                    use: 'ts-loader',
-                    exclude: /tests/,
-                },
+                new HtmlWebpackPlugin({
+                    filename: 'index.html',
+                    template: './src/pages/demo/demo.pug',
+                }),
 
-                {
-                    test: /\.pug$/,
-                    loader: 'pug-loader',
-                    options:
-                    {
-                        pretty: true
-                    }
-                },
+                new MiniCssExtractPlugin({
+                    filename: "css/[name].css",
+                }),
 
-                {
-                    test: /\.scss$/,
-                    use: [
-                        // Creates `style` nodes from JS strings
-                        { loader: 'style-loader' },
-                        {
-                            loader: MiniCssExtractPlugin.loader,
-                        },
-                        // Translates CSS into CommonJS
-                        { loader: 'css-loader' },
-                        { loader: 'postcss-loader' },
-                        { loader: 'resolve-url-loader' },
-                        {
-                            // Compiles Sass to CSS
-                            loader: 'sass-loader',
-                            options: {
-                                sourceMap: true
-                            }
-                        }
-                    ]
-                },
-
+                new webpack.ProvidePlugin({
+                    $: 'jquery',
+                    jQuery: 'jquery',
+                    "window.jQuery": "jquery",
+                }),
             ],
-    },
-};
+        module:
+        {
+            rules:
+                [
+                    {
+                        test: /\.tsx?$/,
+                        use: 'ts-loader',
+                        exclude: /tests/,
+                    },
+
+                    {
+                        test: /\.pug$/,
+                        loader: 'pug-loader',
+                        options:
+                        {
+                            pretty: true
+                        }
+                    },
+
+                    {
+                        test: /\.scss$/,
+                        use: [
+                            // Creates `style` nodes from JS strings
+                            { loader: 'style-loader' },
+                            {
+                                loader: MiniCssExtractPlugin.loader,
+                            },
+                            // Translates CSS into CommonJS
+                            { loader: 'css-loader' },
+                            { loader: 'postcss-loader' },
+                            { loader: 'resolve-url-loader' },
+                            {
+                                // Compiles Sass to CSS
+                                loader: 'sass-loader',
+                                options: {
+                                    sourceMap: true
+                                }
+                            }
+                        ]
+                    },
+
+                ],
+        },
+    }
+}
