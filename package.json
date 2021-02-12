@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --mode production",
     "dev": "webpack-dev-server --mode development --open",
     "test": "jest --coverage",
     "deploy": "gh-pages -d dist",
